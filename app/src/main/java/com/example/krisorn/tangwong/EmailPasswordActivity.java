@@ -203,7 +203,6 @@ public class EmailPasswordActivity extends AppCompatActivity implements
           // viewModel.gotoUsers();
             Intent i = new Intent(this, UsersActivity.class);
             this.startActivity(i);
-
            mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
                     user.getEmail(), user.isEmailVerified()));
             mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
