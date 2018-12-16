@@ -226,7 +226,9 @@ public class EmailPasswordActivity extends AppCompatActivity implements
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.emailCreateAccountButton) {
-            createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+            //createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+            Intent i1 =new Intent(this,registerActivity.class);
+            startActivity(i1);
         } else if (i == R.id.emailSignInButton) {
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
         } else if (i == R.id.signOutButton) {
