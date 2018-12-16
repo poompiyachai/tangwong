@@ -51,8 +51,21 @@ public class UsersActivity extends AppCompatActivity {
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
               String name=dataSnapshot.child(uid).child("name").getValue(String.class);
-                viewModel.setName(name);
-                binding.kri.setText(viewModel.getName());
+              String sername=dataSnapshot.child(uid).child("sername").getValue(String.class);
+              String phoneNuber=dataSnapshot.child(uid).child("phoneNumber").getValue(String.class);
+              String faculty=dataSnapshot.child(uid).child("faculty").getValue(String.class);
+              String university=dataSnapshot.child(uid).child("university").getValue(String.class);
+              viewModel.setName(name);
+              viewModel.setSername(sername);
+              viewModel.setPhoneNumber(phoneNuber);
+              viewModel.setFaculty(faculty);
+              viewModel.setUniversity(university);
+
+              binding.name.setText(viewModel.getName());
+              binding.sername.setText(viewModel.getSername());
+              binding.phoneNumber.setText(viewModel.getPhoneNumber());
+              binding.facuty.setText(viewModel.getFaculty());
+              binding.uiversity.setText(viewModel.getUniversity());
 
             }
 

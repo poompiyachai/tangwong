@@ -37,37 +37,37 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/kri"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewmodel.name}"
                 android:textSize="30sp" />
 
             <TextView
-                android:id="@+id/kachai"
+                android:id="@+id/sername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/kri"
+                android:layout_toRightOf="@+id/name"
                 android:paddingLeft="10dp"
-                android:text="@string/lastNameKri"
+                android:text="@{viewmodel.sername}"
                 android:textSize="30sp" />
 
             <TextView
-                android:id="@+id/facutyKri"
+                android:id="@+id/facuty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/kri"
-                android:text="@string/facutyKri"
+                android:layout_below="@+id/name"
+                android:text="@{viewmodel.faculty}"
                 android:textSize="30sp"
 
                 />
 
             <TextView
-                android:id="@+id/phoneNumberKri"
+                android:id="@+id/phoneNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/facutyKri"
-                android:text="@string/phoneNumberKri"
+                android:layout_below="@+id/facuty"
+                android:text="@{viewmodel.phoneNumber}"
                 android:textSize="30sp"
 
                 />
@@ -76,17 +76,17 @@
                 android:id="@+id/uiversity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/phoneNumberKri"
-                android:text="@string/universityKri"
+                android:layout_below="@+id/phoneNumber"
+                android:text="@{viewmodel.university}"
                 android:textSize="30sp"
 
                 />
 
             <ImageView
-                android:id="@+id/profilekri"
+                android:id="@+id/profile"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:layout_toRightOf="@+id/facutyKri"
+                android:layout_toRightOf="@+id/facuty"
 
                 android:paddingLeft="70dp"
                 android:scaleType="centerCrop"
@@ -110,7 +110,7 @@
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="38dp"
-                android:layout_below="@+id/profilekri"
+                android:layout_below="@+id/profile"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="227dp"

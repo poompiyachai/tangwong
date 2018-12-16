@@ -13,6 +13,10 @@ public class UsersViewModel extends ViewModel {
 
     private String string;
     private String name;
+    private String faculty;
+    private String sername;
+    private String university;
+    private String phoneNumber;
     private Context current;
     private boolean logout=false;
 
@@ -27,12 +31,22 @@ public class UsersViewModel extends ViewModel {
     public String getString() {
         return string;
     }
+
     public String getName(){return name;}
+    public String getFaculty(){return faculty;}
+    public String getSername(){return sername;}
+    public String getPhoneNumber(){return phoneNumber;}
+    public String getUniversity(){return university;}
 
     public void setString(String string) {
         this.string = string;
     }
     public void setName(String name){this.name = name;}
+    public void setSername(String sername){this.sername=sername;}
+    public void setUniversity(String university){this.university=university;}
+    public void setFaculty(String faculty){this.faculty=faculty;}
+    public void setPhoneNumber(String phoneNumber){this.phoneNumber=phoneNumber;}
+
 
     public void gotoUsers(){
         Intent i = new Intent(current, UsersActivity.class);
