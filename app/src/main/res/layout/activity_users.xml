@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--TODO Step 1: Add layout as root element-->
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+    <!--TODO Step 2: Add ViewModel variable-->
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.krisorn.tangwong.UsersViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/back_groud" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/kri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewmodel.name}"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/kachai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/kri"
+                android:paddingLeft="10dp"
+                android:text="@string/lastNameKri"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/facutyKri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kri"
+                android:text="@string/facutyKri"
+                android:textSize="30sp"
+
+                />
+
+            <TextView
+                android:id="@+id/phoneNumberKri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/facutyKri"
+                android:text="@string/phoneNumberKri"
+                android:textSize="30sp"
+
+                />
+
+            <TextView
+                android:id="@+id/uiversity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/phoneNumberKri"
+                android:text="@string/universityKri"
+                android:textSize="30sp"
+
+                />
+
+            <ImageView
+                android:id="@+id/profilekri"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_toRightOf="@+id/facutyKri"
+
+                android:paddingLeft="70dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profille_kri"
+
+                />
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/uiversity"
+                android:layout_margin="30dp"
+                android:onClick="swap"
+                android:text="swap"
+
+
+                />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:layout_below="@+id/profilekri"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="227dp"
+                android:layout_marginTop="42dp"
+                android:layout_marginEnd="108dp"
+                android:layout_marginBottom="26dp"
+                android:layout_toEndOf="@+id/next"
+                android:onClick="click"
+                android:text="Like" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="95dp"
+                android:layout_height="54dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="70dp"
+                android:text="@{viewmodel.string}"
+                android:textSize="20dp" />
+
+
+        </RelativeLayout>
+        <!--
+        <TextView
+        android:id="@+id/tv_display"
+        android:text="@{viewmodel.string}"
+        android:textSize="48sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="click"/>
+        -->
+    </android.support.constraint.ConstraintLayout>
+</layout>
