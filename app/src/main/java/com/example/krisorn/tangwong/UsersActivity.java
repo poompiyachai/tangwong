@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 //import android.widget.TextView;
@@ -45,6 +46,12 @@ public class UsersActivity extends AppCompatActivity {
     //private TextView textView;
     ActivityUsersBindingImpl binding;
 
+    private EditText mtypeField;
+    private EditText mdataField;
+    private EditText nameField;
+    private long roomid;
+
+
 
     private ProgressDialog mProgressDialog;
 
@@ -56,6 +63,9 @@ public class UsersActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -99,7 +109,6 @@ public class UsersActivity extends AppCompatActivity {
 
               binding.name.setText(viewModel.getName());
 
-
               new DownloadImageTask((ImageView)findViewById(R.id.profile)).execute(pathPhoto);
 
 
@@ -122,6 +131,17 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     public void click(View view) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        nameCard = database.getReference();
+        if(mDatabase.child("room").child("0").child("name").toString().equals("eiei"))
+        {
+            mDatabase.child("room").child("0").child("name").setValue("qwe");
+        }
+        else
+        {
+            mDatabase.child("room").child("0").child("name").setValue("eiei");
+        }
+
         if(view.getId()==R.id.button){
         int current=parseInt(viewModel.getString(),10);
         current++;
@@ -133,6 +153,39 @@ public class UsersActivity extends AppCompatActivity {
             Intent intent =new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
             startActivityForResult(intent,GALLERY_INTENT);
+        }
+        else if(view.getId()==R.id.addroom){
+            setContentView(R.layout.activity_addroom);
+
+        }
+        else if(view.getId()==R.id.createroom){
+
+
+            nameCard.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange (@NonNull DataSnapshot dataSnapshot){
+                    while (roomid<=0)
+                    {
+                        roomid = dataSnapshot.child("room").getChildrenCount() ;
+                    }
+                    roomid = dataSnapshot.child("room").getChildrenCount() + 1;
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+                    mtypeField = findViewById(R.id.type);
+            mdataField = findViewById(R.id.data);
+            nameField=findViewById(R.id.name);
+
+            mDatabase.child("room").child(Long.toString(roomid)).child("name").setValue(nameField.getText().toString());
+            mDatabase.child("room").child(Long.toString(roomid)).child("type").setValue(mtypeField.getText().toString());
+            mDatabase.child("room").child(Long.toString(roomid)).child("data").setValue(mdataField.getText().toString());
+            setContentView(R.layout.activity_users);
         }
     }
     public void signOut(View view) {
