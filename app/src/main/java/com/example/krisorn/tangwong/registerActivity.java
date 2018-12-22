@@ -67,10 +67,7 @@ public class registerActivity extends AppCompatActivity implements
         mEmailField = findViewById(R.id.email);
         mPasswordField = findViewById(R.id.password);
         nameField=findViewById(R.id.name);
-        sernameField=findViewById(R.id.sername);
-        phoneNumberField=findViewById(R.id.phoneNumber);
-        universityField=findViewById(R.id.university);
-        facultyField=findViewById(R.id.faculty);
+
 
 
 
@@ -124,11 +121,8 @@ public class registerActivity extends AppCompatActivity implements
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                           //  updateUI(user);
-                            mDatabase.child(user.getUid()).child("name").setValue(nameField.getText().toString());
-                            mDatabase.child(user.getUid()).child("sername").setValue(sernameField.getText().toString());
-                            mDatabase.child(user.getUid()).child("phoneNumber").setValue(phoneNumberField.getText().toString());
-                            mDatabase.child(user.getUid()).child("university").setValue(universityField.getText().toString());
-                            mDatabase.child(user.getUid()).child("faculty").setValue(facultyField.getText().toString());
+                            mDatabase.child("user").child(user.getUid()).child("name").setValue(nameField.getText().toString());
+
                             /*
 
                             if(tempRequestCode==GALLERY_INTENT && tempResultCode==RESULT_OK){

@@ -39,44 +39,12 @@
                         android:textSize="30sp"
                         android:textColor="@color/com_facebook_button_border_color_focused"/>
 
-                    <TextView
-                        android:id="@+id/sername"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/name"
-                        android:text="@{viewmodel.sername}"
-                        android:textSize="30sp"
-                        android:textColor="@color/com_facebook_button_border_color_focused"
-                        />
-                    <TextView
-                        android:id="@+id/facuty"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/name"
-                        android:text="@{viewmodel.faculty}"
-                        android:textSize="30sp"
-                        android:textColor="@color/com_facebook_button_border_color_focused"
-                        />
 
-                    <TextView
-                        android:id="@+id/phoneNumber"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/facuty"
-                        android:text="@{viewmodel.phoneNumber}"
-                        android:textSize="30sp"
-                        android:textColor="@color/com_facebook_button_border_color_focused"
-                        />
 
-                    <TextView
-                        android:id="@+id/uiversity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/phoneNumber"
-                        android:text="@{viewmodel.university}"
-                        android:textSize="30sp"
-                        android:textColor="@color/com_facebook_button_border_color_focused"
-                       />
+
+
+
+
 
             </LinearLayout>
 

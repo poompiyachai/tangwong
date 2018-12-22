@@ -89,25 +89,16 @@ public class UsersActivity extends AppCompatActivity {
                 String uid = user.getUid();
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
-              String name=dataSnapshot.child(uid).child("name").getValue(String.class);
-              String sername=dataSnapshot.child(uid).child("sername").getValue(String.class);
-              String phoneNuber=dataSnapshot.child(uid).child("phoneNumber").getValue(String.class);
-              String faculty=dataSnapshot.child(uid).child("faculty").getValue(String.class);
-              String university=dataSnapshot.child(uid).child("university").getValue(String.class);
+              String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
+
               String pathPhoto=dataSnapshot.child(uid).child("pathPhoto").getValue(String.class);
               viewModel.setName(name);
-              viewModel.setSername(sername);
-              viewModel.setPhoneNumber(phoneNuber);
-              viewModel.setFaculty(faculty);
-              viewModel.setUniversity(university);
+
              // viewModel.setPathPhoto(pathPhoto);
 
 
               binding.name.setText(viewModel.getName());
-              binding.sername.setText(viewModel.getSername());
-              binding.phoneNumber.setText(viewModel.getPhoneNumber());
-              binding.facuty.setText(viewModel.getFaculty());
-              binding.uiversity.setText(viewModel.getUniversity());
+
 
               new DownloadImageTask((ImageView)findViewById(R.id.profile)).execute(pathPhoto);
 
