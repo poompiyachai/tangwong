@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:hint="@string/email"
-                android:autofillHints="" tools:targetApi="o"/>
+                android:autofillHints="" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="@string/password"
-                android:autofillHints="" tools:targetApi="o"/>
+                android:autofillHints="" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
