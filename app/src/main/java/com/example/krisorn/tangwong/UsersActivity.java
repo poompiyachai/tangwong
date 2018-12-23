@@ -50,6 +50,7 @@ public class UsersActivity extends AppCompatActivity {
     private EditText mdataField;
     private EditText nameField;
     private long roomid;
+    private int i=0;
 
 
 
@@ -109,7 +110,7 @@ public class UsersActivity extends AppCompatActivity {
 
               binding.name.setText(viewModel.getName());
 
-              new DownloadImageTask((ImageView)findViewById(R.id.profile)).execute(pathPhoto);
+              //new DownloadImageTask((ImageView)findViewById(R.id.profile)).execute(pathPhoto);
 
 
 
@@ -133,14 +134,45 @@ public class UsersActivity extends AppCompatActivity {
     public void click(View view) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         nameCard = database.getReference();
-        if(mDatabase.child("room").child("0").child("name").toString().equals("eiei"))
-        {
+
             mDatabase.child("room").child("0").child("name").setValue("qwe");
-        }
-        else
-        {
+
             mDatabase.child("room").child("0").child("name").setValue("eiei");
-        }
+
+        mDatabase.child("room").child("0").child("data").setValue("qwe");
+
+        mDatabase.child("room").child("0").child("data").setValue("eiei");
+
+        mDatabase.child("room").child("0").child("type").setValue("qwe");
+
+        mDatabase.child("room").child("0").child("type").setValue("eiei");
+        nameCard.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange (@NonNull DataSnapshot dataSnapshot){
+                roomid = dataSnapshot.child("room").getChildrenCount() + 1;
+                  while (true)
+                  {
+
+
+                      if(!dataSnapshot.child("room").hasChild(Long.toString(roomid)))
+                      {
+                          break;
+                      }
+                        roomid++;
+
+
+
+                  }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
         if(view.getId()==R.id.button){
         int current=parseInt(viewModel.getString(),10);
@@ -161,22 +193,7 @@ public class UsersActivity extends AppCompatActivity {
         else if(view.getId()==R.id.createroom){
 
 
-            nameCard.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange (@NonNull DataSnapshot dataSnapshot){
-                    while (roomid<=0)
-                    {
-                        roomid = dataSnapshot.child("room").getChildrenCount() ;
-                    }
-                    roomid = dataSnapshot.child("room").getChildrenCount() + 1;
 
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
 
                     mtypeField = findViewById(R.id.type);
             mdataField = findViewById(R.id.data);
@@ -185,6 +202,8 @@ public class UsersActivity extends AppCompatActivity {
             mDatabase.child("room").child(Long.toString(roomid)).child("name").setValue(nameField.getText().toString());
             mDatabase.child("room").child(Long.toString(roomid)).child("type").setValue(mtypeField.getText().toString());
             mDatabase.child("room").child(Long.toString(roomid)).child("data").setValue(mdataField.getText().toString());
+            FirebaseUser user = mAuth.getCurrentUser();
+            mDatabase.child("user").child(user.getUid()).child("owner").child(Long.toString(roomid)).setValue(nameField.getText().toString());
             setContentView(R.layout.activity_users);
         }
     }
