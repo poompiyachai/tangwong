@@ -49,8 +49,12 @@ public class UsersActivity extends AppCompatActivity {
     private EditText mtypeField;
     private EditText mdataField;
     private EditText nameField;
+
+
+    private EditText jroomid;
     private long roomid;
     private int i=0;
+    private int change=0;
 
 
 
@@ -165,6 +169,8 @@ public class UsersActivity extends AppCompatActivity {
                   }
 
 
+
+
             }
 
             @Override
@@ -188,6 +194,25 @@ public class UsersActivity extends AppCompatActivity {
         }
         else if(view.getId()==R.id.addroom){
             setContentView(R.layout.activity_addroom);
+
+        }
+
+        else if(view.getId()==R.id.q){
+            jroomid = findViewById(R.id.roomid);
+            FirebaseUser user = mAuth.getCurrentUser();
+
+                mDatabase.child("user").child(user.getUid()).child("live").child(jroomid.getText().toString()).setValue("1");
+            
+
+
+            setContentView(R.layout.activity_addq);
+
+        }
+
+        else if(view.getId()==R.id.addq){
+
+            FirebaseUser user = mAuth.getCurrentUser();
+            setContentView(R.layout.activity_addq);
 
         }
         else if(view.getId()==R.id.createroom){
