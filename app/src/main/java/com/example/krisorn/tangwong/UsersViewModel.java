@@ -83,7 +83,7 @@ class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     public DownloadImageTask(ImageView bmImage) {
         this.bmImage = bmImage;
     }
-
+   // public ImageView getBmImage(){return bmImage;}
     protected Bitmap doInBackground(String... urls) {
         String urldisplay = urls[0];
         Bitmap mIcon11 = null;
@@ -101,4 +101,8 @@ class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     protected void onPostExecute(Bitmap result) {
         bmImage.setImageBitmap(result);
     }
+
 }
+
+
+

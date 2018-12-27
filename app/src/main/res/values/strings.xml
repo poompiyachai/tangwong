@@ -105,4 +105,9 @@
     <string name="universityGod">chiangmai university</string>
     <string name="title_activity_main2">Main2Activity</string>
 
+    <color name="colorPrimary">#004d40</color>
+    <color name="colorPrimaryDark">#00251a</color>
+    <color name="colorAccent">#39796b</color>
+    <color name="overlayoutBackground">#7f333639</color>
+    <color name="overlayActionBar">#0e0d0e</color>
 </resources>
