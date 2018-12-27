@@ -37,6 +37,7 @@ import com.bumptech.glide.module.AppGlideModule;
 import java.util.Map;
 
 import static java.lang.Integer.parseInt;
+import static java.lang.Integer.toUnsignedString;
 
 public class UsersActivity extends AppCompatActivity {
     public DatabaseReference nameCard;
@@ -55,6 +56,8 @@ public class UsersActivity extends AppCompatActivity {
     private long roomid;
     private int i=0;
     private int change=0;
+    private long turnq=1;
+    private String livenow;
 
 
 
@@ -167,6 +170,26 @@ public class UsersActivity extends AppCompatActivity {
 
 
                   }
+                FirebaseUser user = mAuth.getCurrentUser();
+
+                      livenow =dataSnapshot.child("user").child(user.getUid()).child("nowlive").getValue(String.class);
+
+                while (true)
+                {
+
+
+                    if(!dataSnapshot.child("room").child(livenow).child("q").hasChild(Long.toString(turnq)))
+                    {
+                        break;
+                    }
+                    turnq++;
+
+
+
+                }
+
+
+
 
 
 
@@ -202,7 +225,18 @@ public class UsersActivity extends AppCompatActivity {
             FirebaseUser user = mAuth.getCurrentUser();
 
                 mDatabase.child("user").child(user.getUid()).child("live").child(jroomid.getText().toString()).setValue("1");
-            
+
+
+
+            setContentView(R.layout.activity_addq);
+
+        }
+        else if(view.getId()==R.id.enter){
+            jroomid = findViewById(R.id.roomid);
+            FirebaseUser user = mAuth.getCurrentUser();
+
+            mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
+
 
 
             setContentView(R.layout.activity_addq);
@@ -212,7 +246,7 @@ public class UsersActivity extends AppCompatActivity {
         else if(view.getId()==R.id.addq){
 
             FirebaseUser user = mAuth.getCurrentUser();
-            setContentView(R.layout.activity_addq);
+            mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).setValue(user.getUid());
 
         }
         else if(view.getId()==R.id.createroom){
