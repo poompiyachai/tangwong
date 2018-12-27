@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 //import android.widget.TextView;
@@ -36,6 +37,7 @@ import com.bumptech.glide.module.AppGlideModule;
 import java.util.Map;
 
 import static java.lang.Integer.parseInt;
+import static java.lang.Integer.toUnsignedString;
 
 public class UsersActivity extends AppCompatActivity {
     public DatabaseReference nameCard;
@@ -44,6 +46,19 @@ public class UsersActivity extends AppCompatActivity {
     // TODO Step 1: Declare binding instance instead view's (binding class is auto-generated)
     //private TextView textView;
     ActivityUsersBindingImpl binding;
+
+    private EditText mtypeField;
+    private EditText mdataField;
+    private EditText nameField;
+
+
+    private EditText jroomid;
+    private long roomid;
+    private int i=0;
+    private int change=0;
+    private long turnq=1;
+    private String livenow;
+
 
 
     private ProgressDialog mProgressDialog;
@@ -56,6 +71,9 @@ public class UsersActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -89,27 +107,17 @@ public class UsersActivity extends AppCompatActivity {
                 String uid = user.getUid();
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
-              String name=dataSnapshot.child(uid).child("name").getValue(String.class);
-              String sername=dataSnapshot.child(uid).child("sername").getValue(String.class);
-              String phoneNuber=dataSnapshot.child(uid).child("phoneNumber").getValue(String.class);
-              String faculty=dataSnapshot.child(uid).child("faculty").getValue(String.class);
-              String university=dataSnapshot.child(uid).child("university").getValue(String.class);
+              String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
+
               String pathPhoto=dataSnapshot.child(uid).child("pathPhoto").getValue(String.class);
               viewModel.setName(name);
-              viewModel.setSername(sername);
-              viewModel.setPhoneNumber(phoneNuber);
-              viewModel.setFaculty(faculty);
-              viewModel.setUniversity(university);
+
              // viewModel.setPathPhoto(pathPhoto);
 
 
               binding.name.setText(viewModel.getName());
-              binding.sername.setText(viewModel.getSername());
-              binding.phoneNumber.setText(viewModel.getPhoneNumber());
-              binding.facuty.setText(viewModel.getFaculty());
-              binding.uiversity.setText(viewModel.getUniversity());
 
-              new DownloadImageTask((ImageView)findViewById(R.id.profile)).execute(pathPhoto);
+              //new DownloadImageTask((ImageView)findViewById(R.id.profile)).execute(pathPhoto);
 
 
 
@@ -131,6 +139,70 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     public void click(View view) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        nameCard = database.getReference();
+
+            mDatabase.child("room").child("0").child("name").setValue("qwe");
+
+            mDatabase.child("room").child("0").child("name").setValue("eiei");
+
+        mDatabase.child("room").child("0").child("data").setValue("qwe");
+
+        mDatabase.child("room").child("0").child("data").setValue("eiei");
+
+        mDatabase.child("room").child("0").child("type").setValue("qwe");
+
+        mDatabase.child("room").child("0").child("type").setValue("eiei");
+        nameCard.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange (@NonNull DataSnapshot dataSnapshot){
+                roomid = dataSnapshot.child("room").getChildrenCount() + 1;
+                  while (true)
+                  {
+
+
+                      if(!dataSnapshot.child("room").hasChild(Long.toString(roomid)))
+                      {
+                          break;
+                      }
+                        roomid++;
+
+
+
+                  }
+                FirebaseUser user = mAuth.getCurrentUser();
+
+                      livenow =dataSnapshot.child("user").child(user.getUid()).child("nowlive").getValue(String.class);
+
+                while (true)
+                {
+
+
+                    if(!dataSnapshot.child("room").child(livenow).child("q").hasChild(Long.toString(turnq)))
+                    {
+                        break;
+                    }
+                    turnq++;
+
+
+
+                }
+
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
         if(view.getId()==R.id.button){
         int current=parseInt(viewModel.getString(),10);
         current++;
@@ -142,6 +214,56 @@ public class UsersActivity extends AppCompatActivity {
             Intent intent =new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
             startActivityForResult(intent,GALLERY_INTENT);
+        }
+        else if(view.getId()==R.id.addroom){
+            setContentView(R.layout.activity_addroom);
+
+        }
+
+        else if(view.getId()==R.id.q){
+            jroomid = findViewById(R.id.roomid);
+            FirebaseUser user = mAuth.getCurrentUser();
+
+                mDatabase.child("user").child(user.getUid()).child("live").child(jroomid.getText().toString()).setValue("1");
+
+
+
+            setContentView(R.layout.activity_addq);
+
+        }
+        else if(view.getId()==R.id.enter){
+            jroomid = findViewById(R.id.roomid);
+            FirebaseUser user = mAuth.getCurrentUser();
+
+            mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
+
+
+
+            setContentView(R.layout.activity_addq);
+
+        }
+
+        else if(view.getId()==R.id.addq){
+
+            FirebaseUser user = mAuth.getCurrentUser();
+            mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).setValue(user.getUid());
+
+        }
+        else if(view.getId()==R.id.createroom){
+
+
+
+
+                    mtypeField = findViewById(R.id.type);
+            mdataField = findViewById(R.id.data);
+            nameField=findViewById(R.id.name);
+
+            mDatabase.child("room").child(Long.toString(roomid)).child("name").setValue(nameField.getText().toString());
+            mDatabase.child("room").child(Long.toString(roomid)).child("type").setValue(mtypeField.getText().toString());
+            mDatabase.child("room").child(Long.toString(roomid)).child("data").setValue(mdataField.getText().toString());
+            FirebaseUser user = mAuth.getCurrentUser();
+            mDatabase.child("user").child(user.getUid()).child("owner").child(Long.toString(roomid)).setValue(nameField.getText().toString());
+            setContentView(R.layout.activity_users);
         }
     }
     public void signOut(View view) {
