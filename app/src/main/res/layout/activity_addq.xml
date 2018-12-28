@@ -27,5 +27,18 @@
         app:layout_constraintTop_toBottomOf="@+id/data"
         app:layout_constraintVertical_bias="0.484" />
 
+    <Button
+        android:id="@+id/leave"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="252dp"
+        android:onClick="click"
+        android:text="leave"
+        android:theme="@style/ThemeOverlay.MyDarkButton"/>
+
 
 </android.support.constraint.ConstraintLayout>

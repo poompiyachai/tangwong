@@ -216,6 +216,7 @@ public class UsersActivity extends AppCompatActivity {
             startActivityForResult(intent,GALLERY_INTENT);
         }
         else if(view.getId()==R.id.addroom){
+
             setContentView(R.layout.activity_addroom);
 
         }
@@ -226,16 +227,20 @@ public class UsersActivity extends AppCompatActivity {
 
                 mDatabase.child("user").child(user.getUid()).child("live").child(jroomid.getText().toString()).setValue("1");
 
+            jroomid = findViewById(R.id.roomid);
 
+            mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
 
             setContentView(R.layout.activity_addq);
 
         }
         else if(view.getId()==R.id.enter){
-            jroomid = findViewById(R.id.roomid);
-            FirebaseUser user = mAuth.getCurrentUser();
 
-            mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
+            FirebaseUser user = mAuth.getCurrentUser();
+            jroomid = findViewById(R.id.roomid);
+                mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
+
+
 
 
 
@@ -247,6 +252,13 @@ public class UsersActivity extends AppCompatActivity {
 
             FirebaseUser user = mAuth.getCurrentUser();
             mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).setValue(user.getUid());
+
+        }
+        else if(view.getId()==R.id.leave){
+
+            FirebaseUser user = mAuth.getCurrentUser();
+            mDatabase.child("user").child(user.getUid()).child("nowlive").setValue("0");
+            setContentView(R.layout.activity_users);
 
         }
         else if(view.getId()==R.id.createroom){
@@ -263,6 +275,7 @@ public class UsersActivity extends AppCompatActivity {
             mDatabase.child("room").child(Long.toString(roomid)).child("data").setValue(mdataField.getText().toString());
             FirebaseUser user = mAuth.getCurrentUser();
             mDatabase.child("user").child(user.getUid()).child("owner").child(Long.toString(roomid)).setValue(nameField.getText().toString());
+
             setContentView(R.layout.activity_users);
         }
     }
