@@ -82,7 +82,7 @@ public class UsersActivity extends AppCompatActivity {
         final FirebaseUser user = mAuth.getCurrentUser();
         mProgressDialog= new ProgressDialog(this);
         mStorage=FirebaseStorage.getInstance().getReference();
-        mselectImage=(Button) findViewById(R.id.btn_addImage);
+       // mselectImage=(Button) findViewById(R.id.btn_addImage);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
        /* mselectImage.setOnClickListener(new View.OnClickListener(){
@@ -93,8 +93,10 @@ public class UsersActivity extends AppCompatActivity {
                 startActivityForResult(intent,GALLERY_INTENT);
             }
         });*/
-
-        new DownloadImageTask((ImageView)findViewById(R.id.profile)).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a");
+         try {
+             new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a");
+         }
+         catch (Exception e){}
         initView();
         //get firebase
 
@@ -109,17 +111,19 @@ public class UsersActivity extends AppCompatActivity {
                 String name = String.valueOf(map.get("name"));*/
               String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
 
-              String pathPhoto=dataSnapshot.child(uid).child("pathPhoto").getValue(String.class);
+             String pathPhoto=dataSnapshot.child(uid).child("pathPhoto").getValue(String.class);
               viewModel.setName(name);
 
-             // viewModel.setPathPhoto(pathPhoto);
+              viewModel.setPathPhoto(pathPhoto);
 
 
               binding.name.setText(viewModel.getName());
 
-              //new DownloadImageTask((ImageView)findViewById(R.id.profile)).execute(pathPhoto);
-
-
+              try {
+                  new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute(pathPhoto);
+              }
+              catch (Exception e) {
+              }
 
             }
 
@@ -143,21 +147,16 @@ public class UsersActivity extends AppCompatActivity {
         nameCard = database.getReference();
 
             mDatabase.child("room").child("0").child("name").setValue("qwe");
-
             mDatabase.child("room").child("0").child("name").setValue("eiei");
-
-        mDatabase.child("room").child("0").child("data").setValue("qwe");
-
-        mDatabase.child("room").child("0").child("data").setValue("eiei");
-
-        mDatabase.child("room").child("0").child("type").setValue("qwe");
-
-        mDatabase.child("room").child("0").child("type").setValue("eiei");
+            mDatabase.child("room").child("0").child("data").setValue("qwe");
+            mDatabase.child("room").child("0").child("data").setValue("eiei");
+            mDatabase.child("room").child("0").child("type").setValue("qwe");
+            mDatabase.child("room").child("0").child("type").setValue("eiei");
         nameCard.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange (@NonNull DataSnapshot dataSnapshot){
                 roomid = dataSnapshot.child("room").getChildrenCount() + 1;
-                  while (true)
+                 while (true)
                   {
 
 
@@ -171,23 +170,26 @@ public class UsersActivity extends AppCompatActivity {
 
                   }
                 FirebaseUser user = mAuth.getCurrentUser();
-
-                      livenow =dataSnapshot.child("user").child(user.getUid()).child("nowlive").getValue(String.class);
-
-                while (true)
-                {
-
-
-                    if(!dataSnapshot.child("room").child(livenow).child("q").hasChild(Long.toString(turnq)))
-                    {
-                        break;
-                    }
-                    turnq++;
-
-
+                      try {
+                      livenow =dataSnapshot.child("user").child(user.getUid()).child("nowlive").getValue(String.class);}
+                      catch (Exception e){
 
                 }
 
+                try {
+
+                    while (true) {
+
+                        if (!dataSnapshot.child("room").child(livenow).child("q").hasChild(Long.toString(turnq))) {
+                            break;
+                        }
+                        turnq++;
+
+
+                    }
+                }catch (Exception e){
+
+                }
 
 
 
@@ -209,7 +211,8 @@ public class UsersActivity extends AppCompatActivity {
         String strCurrent= String.valueOf(current);
 
         viewModel.setString(strCurrent);
-        binding.textView2.setText(viewModel.getString());}
+        binding.textView2.setText(viewModel.getString());
+        }
         else if(view.getId()==R.id.btn_addImage){
             Intent intent =new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
@@ -238,8 +241,10 @@ public class UsersActivity extends AppCompatActivity {
             mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
 
 
+            Intent i =new Intent(this,addqActivity.class);
+            startActivity(i);
+         //   setContentView(R.layout.activity_addq);
 
-            setContentView(R.layout.activity_addq);
 
         }
 
@@ -300,6 +305,7 @@ public class UsersActivity extends AppCompatActivity {
             });
 
             */
+           Log.d("11111111","11111111");
 
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -307,9 +313,10 @@ public class UsersActivity extends AppCompatActivity {
                     filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                           // Log.d(TAG, "onSuccess: uri= "+ uri.toString());
+                            Log.d("uploadscuccess", "onSuccess: uri= "+ uri.toString());
                             String url = uri.toString();
-                            mDatabase.child(mAuth.getCurrentUser().getUid()).child("pathPhoto").setValue(url);
+
+                            mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("pathPhoto").setValue(url);
                             Toast.makeText(UsersActivity.this,"upload Done",Toast.LENGTH_LONG).show();
                             mProgressDialog.dismiss();
                         }

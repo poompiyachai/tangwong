@@ -17,7 +17,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="252dp"
+        android:layout_marginBottom="246dp"
         android:onClick="click"
         android:text="addq"
         android:theme="@style/ThemeOverlay.MyDarkButton"
