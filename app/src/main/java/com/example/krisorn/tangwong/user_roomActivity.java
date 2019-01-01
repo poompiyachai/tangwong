@@ -1,15 +1,18 @@
 package com.example.krisorn.tangwong;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -22,6 +25,35 @@ public class user_roomActivity extends AppCompatActivity {
     private RecyclerView rcv;
     private RecyclerView.Adapter<MyViewHolder> adapter;
     private ArrayList<Mydata> dataset;
+    private  BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            switch (menuItem.getItemId()){
+                case R.id.home:
+                    Toast.makeText(user_roomActivity.this,"HOME",Toast.LENGTH_SHORT);
+                    //jump to activity
+                    return  true;
+                case R.id.search:
+                    Toast.makeText(user_roomActivity.this,"SEARCH",Toast.LENGTH_SHORT);
+                    //jump to activity
+                    return  true;
+                case R.id.alert:
+                    Toast.makeText(user_roomActivity.this,"ALERT",Toast.LENGTH_SHORT);
+                    //jump to activity
+                    return  true;
+
+                case R.id.profile:
+                    Toast.makeText(user_roomActivity.this,"PROFLIE",Toast.LENGTH_SHORT);
+                    //jump to activity
+                    return  true;
+
+                default:
+                    return  false;
+
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +69,10 @@ public class user_roomActivity extends AppCompatActivity {
 
             dataset.add(new Mydata(str,pictureNum,temImage));
         }
-
+        //bn_nav
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
+        bottomNavigationView.setOnNavigationItemReselectedListener((BottomNavigationView.OnNavigationItemReselectedListener) mOnNavigationItemSelectedListener);
+        //bn_nav
         rcv.setLayoutManager(new LinearLayoutManager(this));
         adapter =new RecyclerView.Adapter<MyViewHolder>(){
 

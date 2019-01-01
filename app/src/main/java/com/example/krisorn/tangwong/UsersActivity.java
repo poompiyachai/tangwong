@@ -6,9 +6,11 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,6 +71,41 @@ public class UsersActivity extends AppCompatActivity {
     // [END declare_auth]
     private static final int GALLERY_INTENT =2;
 
+    private  BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            switch (menuItem.getItemId()){
+                case R.id.home:
+                    Toast.makeText(UsersActivity.this,"HOME",Toast.LENGTH_SHORT);
+                    //jump to activity
+                    return  true;
+                case R.id.search:
+                    Toast.makeText(UsersActivity.this,"SEARCH",Toast.LENGTH_SHORT);
+                    //jump to activity
+                    return  true;
+                case R.id.alert:
+                    Toast.makeText(UsersActivity.this,"ALERT",Toast.LENGTH_SHORT);
+                    //jump to activity
+                    return  true;
+
+                case R.id.profile:
+                    Toast.makeText(UsersActivity.this,"PROFLIE",Toast.LENGTH_SHORT);
+                    //jump to activity
+                    return  true;
+
+                default:
+                    return  false;
+
+            }
+        }
+    };
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -80,6 +117,10 @@ public class UsersActivity extends AppCompatActivity {
         viewModel = new UsersViewModel(this);
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
+        //bn_nav
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
+        bottomNavigationView.setOnNavigationItemReselectedListener((BottomNavigationView.OnNavigationItemReselectedListener) mOnNavigationItemSelectedListener);
+        //bn_nav
         mProgressDialog= new ProgressDialog(this);
         mStorage=FirebaseStorage.getInstance().getReference();
        // mselectImage=(Button) findViewById(R.id.btn_addImage);
