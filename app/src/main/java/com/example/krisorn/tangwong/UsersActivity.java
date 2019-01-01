@@ -152,7 +152,7 @@ public class UsersActivity extends AppCompatActivity {
                 String name = String.valueOf(map.get("name"));*/
               String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
 
-             String pathPhoto=dataSnapshot.child(uid).child("pathPhoto").getValue(String.class);
+             String pathPhoto=dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
               viewModel.setName(name);
 
               viewModel.setPathPhoto(pathPhoto);
@@ -357,7 +357,7 @@ public class UsersActivity extends AppCompatActivity {
                             Log.d("uploadscuccess", "onSuccess: uri= "+ uri.toString());
                             String url = uri.toString();
 
-                            mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("pathPhoto").setValue(url);
+                            mDatabase.child("user").child(mAuth.getCurrentUser().getUid()).child("pathPhoto").setValue(url);
                             Toast.makeText(UsersActivity.this,"upload Done",Toast.LENGTH_LONG).show();
                             mProgressDialog.dismiss();
                         }
