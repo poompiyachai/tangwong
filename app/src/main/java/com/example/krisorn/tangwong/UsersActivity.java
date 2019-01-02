@@ -71,35 +71,7 @@ public class UsersActivity extends AppCompatActivity {
     // [END declare_auth]
     private static final int GALLERY_INTENT =2;
 
-    private  BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            switch (menuItem.getItemId()){
-                case R.id.home:
-                    Toast.makeText(UsersActivity.this,"HOME",Toast.LENGTH_SHORT);
-                    //jump to activity
-                    return  true;
-                case R.id.search:
-                    Toast.makeText(UsersActivity.this,"SEARCH",Toast.LENGTH_SHORT);
-                    //jump to activity
-                    return  true;
-                case R.id.alert:
-                    Toast.makeText(UsersActivity.this,"ALERT",Toast.LENGTH_SHORT);
-                    //jump to activity
-                    return  true;
 
-                case R.id.profile:
-                    Toast.makeText(UsersActivity.this,"PROFLIE",Toast.LENGTH_SHORT);
-                    //jump to activity
-                    return  true;
-
-                default:
-                    return  false;
-
-            }
-        }
-    };
 
 
 
@@ -118,9 +90,36 @@ public class UsersActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
         //bn_nav
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
-        bottomNavigationView.setOnNavigationItemReselectedListener((BottomNavigationView.OnNavigationItemReselectedListener) mOnNavigationItemSelectedListener);
-        //bn_nav
+        BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+                = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.home:
+                        Toast.makeText(UsersActivity.this,"HOME",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+                    case R.id.search:
+                        Toast.makeText(UsersActivity.this,"SEARCH",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+                    case R.id.alert:
+                        Toast.makeText(UsersActivity.this,"ALERT",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+
+                    case R.id.profile:
+                        Toast.makeText(UsersActivity.this,"PROFLIE",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+                    default:
+                        return  false;
+
+                }
+            }
+        };//bn_nav
         mProgressDialog= new ProgressDialog(this);
         mStorage=FirebaseStorage.getInstance().getReference();
        // mselectImage=(Button) findViewById(R.id.btn_addImage);
