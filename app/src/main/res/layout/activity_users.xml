@@ -36,6 +36,13 @@
                 android:layout_centerInParent="true"
                 android:orientation="vertical">
 
+                <Button
+                    android:id="@+id/btn_show_room_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="click"
+                    android:text="show room" />
+
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
