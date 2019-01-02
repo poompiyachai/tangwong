@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,20 +32,24 @@ public class user_roomActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()){
                 case R.id.home:
-                    Toast.makeText(user_roomActivity.this,"HOME",Toast.LENGTH_SHORT);
+                    Log.d("click","click home");
+                    //  Toast.makeText(UsersActivity.this,"HOME",Toast.LENGTH_SHORT);
                     //jump to activity
                     return  true;
                 case R.id.search:
-                    Toast.makeText(user_roomActivity.this,"SEARCH",Toast.LENGTH_SHORT);
+                    Log.d("click","click search");
+                    //  Toast.makeText(UsersActivity.this,"SEARCH",Toast.LENGTH_SHORT);
                     //jump to activity
                     return  true;
                 case R.id.alert:
-                    Toast.makeText(user_roomActivity.this,"ALERT",Toast.LENGTH_SHORT);
+                    Log.d("click","click alert");
+                    //   Toast.makeText(UsersActivity.this,"ALERT",Toast.LENGTH_SHORT);
                     //jump to activity
                     return  true;
 
                 case R.id.profile:
-                    Toast.makeText(user_roomActivity.this,"PROFLIE",Toast.LENGTH_SHORT);
+                    Log.d("click","click profile");
+                    //  Toast.makeText(UsersActivity.this,"PROFLIE",Toast.LENGTH_SHORT);
                     //jump to activity
                     return  true;
 
