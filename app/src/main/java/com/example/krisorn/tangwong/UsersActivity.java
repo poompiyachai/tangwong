@@ -123,45 +123,7 @@ public class UsersActivity extends AppCompatActivity {
         viewModel = new UsersViewModel(this);
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
-        //bn_nav
-         bottomNavigationView = findViewById(R.id.bottom_nav);
-         //bottomNavigationView.setOnNavigationItemReselectedListener((BottomNavigationView.OnNavigationItemReselectedListener) mOnNavigationItemSelectedListener);
-       Log.d("cancreateNavigation","can create navigation");
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.home:
-                        Log.d("click","click home");
-                        //  Toast.makeText(UsersActivity.this,"HOME",Toast.LENGTH_SHORT);
-                        //jump to activity
-                        return  true;
-                    case R.id.search:
-                        Log.d("click","click search");
-                        //  Toast.makeText(UsersActivity.this,"SEARCH",Toast.LENGTH_SHORT);
-                        //jump to activity
-                        return  true;
-                    case R.id.alert:
-                        Log.d("click","click alert");
-                        //   Toast.makeText(UsersActivity.this,"ALERT",Toast.LENGTH_SHORT);
-                        //jump to activity
-                        return  true;
 
-                    case R.id.profile:
-                        Log.d("click","click profile");
-                        //  Toast.makeText(UsersActivity.this,"PROFLIE",Toast.LENGTH_SHORT);
-                        //jump to activity
-                        return  true;
-
-                    default:
-                        Log.d("click","click .........");
-                        return  false;
-
-                }
-            }
-
-
-        });
 
          //bn_nav
         mProgressDialog= new ProgressDialog(this);
@@ -215,6 +177,46 @@ public class UsersActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+        });
+
+        //bn_nav
+        bottomNavigationView = findViewById(R.id.bottom_nav);
+        //bottomNavigationView.setOnNavigationItemReselectedListener((BottomNavigationView.OnNavigationItemReselectedListener) mOnNavigationItemSelectedListener);
+        Log.d("cancreateNavigation","can create navigation");
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.home:
+                        Log.d("click","click home");
+                        //  Toast.makeText(UsersActivity.this,"HOME",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+                    case R.id.search:
+                        Log.d("click","click search");
+                        //  Toast.makeText(UsersActivity.this,"SEARCH",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+                    case R.id.alert:
+                        Log.d("click","click alert");
+                        //   Toast.makeText(UsersActivity.this,"ALERT",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+
+                    case R.id.profile:
+                        Log.d("click","click profile");
+                        //  Toast.makeText(UsersActivity.this,"PROFLIE",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+
+                    default:
+                        Log.d("click","click .........");
+                        return  false;
+
+                }
+            }
+
+
         });
     }
 
