@@ -1,4 +1,4 @@
 package com.example.krisorn.tangwong;
 
-public class user_roomAdapter {
+public class item_detail {
 }

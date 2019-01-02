@@ -230,15 +230,15 @@ public class UsersActivity extends AppCompatActivity {
 
     public void click(View view) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        nameCard = database.getReference();
-
+    //    nameCard = database.getReference();
+/*
             mDatabase.child("room").child("0").child("name").setValue("qwe");
             mDatabase.child("room").child("0").child("name").setValue("eiei");
             mDatabase.child("room").child("0").child("data").setValue("qwe");
             mDatabase.child("room").child("0").child("data").setValue("eiei");
             mDatabase.child("room").child("0").child("type").setValue("qwe");
-            mDatabase.child("room").child("0").child("type").setValue("eiei");
-        nameCard.addValueEventListener(new ValueEventListener() {
+            mDatabase.child("room").child("0").child("type").setValue("eiei");*/
+       /* nameCard.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange (@NonNull DataSnapshot dataSnapshot){
                 roomid = dataSnapshot.child("room").getChildrenCount() + 1;
@@ -288,7 +288,7 @@ public class UsersActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
 
         if(view.getId()==R.id.button){
@@ -355,6 +355,10 @@ public class UsersActivity extends AppCompatActivity {
             FirebaseUser user = mAuth.getCurrentUser();
             mDatabase.child("user").child(user.getUid()).child("owner").child(Long.toString(roomid)).setValue(nameField.getText().toString());
             setContentView(R.layout.activity_users);
+        }
+        else if(view.getId()==R.id.btn_show_room_user){
+            Intent i = new Intent(this,user_roomActivity.class);
+            startActivity(i);
         }
     }
     public void signOut(View view) {
