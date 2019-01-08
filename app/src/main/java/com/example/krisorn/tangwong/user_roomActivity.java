@@ -1,5 +1,7 @@
 package com.example.krisorn.tangwong;
 
+import android.graphics.Bitmap;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,20 +22,49 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
+import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Calendar;
+
+
 import java.util.ArrayList;
 
 public class user_roomActivity extends AppCompatActivity {
+
 
     private RecyclerView rcv;
     private RecyclerView.Adapter<MyViewHolder> adapter;
     private ArrayList<Mydata> dataset;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user_room);
+
         rcv = new RecyclerView(this);
-        ImageView temImage = null;
+        final ImageView temImage = null;
         dataset =new ArrayList<>();
         for(int i = 0; i<20 ;i++){
             int pictureNum =genPictureNum();
@@ -41,6 +74,7 @@ public class user_roomActivity extends AppCompatActivity {
 
             dataset.add(new Mydata(str,pictureNum,temImage));
         }
+
         //bn_nav
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
         BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -101,6 +135,9 @@ public class user_roomActivity extends AppCompatActivity {
         rcv.setAdapter(adapter);
         setContentView(rcv);
     }
+
+
+
 
     private int genPictureNum() {
         int i =(int)(Math.random()*8);

@@ -34,6 +34,7 @@
             app:menu="@menu/bn_navigation"
             />
 
+
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
@@ -42,19 +43,75 @@
                 app:srcCompat="@drawable/back_groud2" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/btnProfile"
-                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/btnlike"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewmodel.name}"
-                    android:textColor="@color/com_facebook_button_border_color_focused"
-                    android:textSize="30sp" />
+                    android:orientation="horizontal">
+
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/btnProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toEndOf="@+id/profile"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/next"
+                            style="@style/Widget.AppCompat.Button.Colored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_below="@+id/profile"
+                            android:layout_toEndOf="@+id/btn_addImage"
+                            android:onClick="signOut"
+                            android:text="signOut" />
+
+                        <Button
+                            android:id="@+id/btn_addImage"
+                            style="@style/Widget.AppCompat.Button.Colored"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@+id/profile"
+                            android:layout_centerHorizontal="true"
+                            android:layout_toEndOf="@+id/profile"
+                            android:onClick="click"
+                            android:text="add imge" />
+
+                        <Button
+                            android:id="@+id/button"
+                            style="@style/Widget.AppCompat.Button.Colored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/profile"
+                            android:onClick="click"
+                            android:text="Like" />
+
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:id="@+id/profile"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:layout_below="@+id/btnlike"
+                        android:layout_alignRight="@+id/btnlike"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/profille_kri" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewmodel.string}"
+                        android:textColor="@color/com_smart_login_code"
+                        android:textSize="18dp" />
+                </LinearLayout>
 
 
                 <Button
@@ -99,76 +156,20 @@
                     android:layout_height="wrap_content"
                     android:onClick="click"
                     android:text="enterroom" />
-
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/profile"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_below="@+id/btnlike"
-                android:layout_centerInParent="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/profille_kri" />
-
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/btnProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/profile"
-                android:layout_centerHorizontal="true"
-                android:layout_toEndOf="@+id/profile"
-                android:orientation="horizontal">
-
                 <Button
-                    android:id="@+id/next"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/profile"
-                    android:layout_toEndOf="@+id/btn_addImage"
-                    android:onClick="signOut"
-                    android:text="signOut" />
-
-                <Button
-                    android:id="@+id/btn_addImage"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/profile"
-                    android:layout_centerHorizontal="true"
-                    android:layout_toEndOf="@+id/profile"
-                    android:onClick="click"
-                    android:text="add imge" />
-
-
-            </LinearLayout>
-
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/btnlike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/button"
+                    android:id="@+id/enter_QR"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/profile"
                     android:onClick="click"
-                    android:text="Like" />
+                    android:text="create qrcode" />
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewmodel.string}"
-                    android:textColor="@color/com_smart_login_code"
-                    android:textSize="18dp" />
+
             </LinearLayout>
+
+
+
+
 
         </RelativeLayout>
         <!--

@@ -80,17 +80,17 @@ public class UsersActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
+        //firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         viewModel = new UsersViewModel(this);
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
-        //bn_nav
+        //firebase
 
+
+        //bn_nav
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
         BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
                 = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -119,7 +119,10 @@ public class UsersActivity extends AppCompatActivity {
 
                 }
             }
-        };//bn_nav
+        };
+        //bn_nav
+
+
         mProgressDialog= new ProgressDialog(this);
         mStorage=FirebaseStorage.getInstance().getReference();
        // mselectImage=(Button) findViewById(R.id.btn_addImage);
@@ -157,7 +160,7 @@ public class UsersActivity extends AppCompatActivity {
               viewModel.setPathPhoto(pathPhoto);
 
 
-              binding.name.setText(viewModel.getName());
+              //binding.name.setText(viewModel.getName());
 
               try {
                   new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute(pathPhoto);
@@ -192,7 +195,7 @@ public class UsersActivity extends AppCompatActivity {
             mDatabase.child("room").child("0").child("data").setValue("eiei");
             mDatabase.child("room").child("0").child("type").setValue("qwe");
             mDatabase.child("room").child("0").child("type").setValue("eiei");
-        nameCard.addValueEventListener(new ValueEventListener() {
+            nameCard.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange (@NonNull DataSnapshot dataSnapshot){
                 roomid = dataSnapshot.child("room").getChildrenCount() + 1;
@@ -205,7 +208,6 @@ public class UsersActivity extends AppCompatActivity {
                           break;
                       }
                         roomid++;
-
 
 
                   }
@@ -295,11 +297,7 @@ public class UsersActivity extends AppCompatActivity {
 
         }
         else if(view.getId()==R.id.createroom){
-
-
-
-
-                    mtypeField = findViewById(R.id.type);
+            mtypeField = findViewById(R.id.type);
             mdataField = findViewById(R.id.data);
             nameField=findViewById(R.id.name);
 
@@ -309,6 +307,10 @@ public class UsersActivity extends AppCompatActivity {
             FirebaseUser user = mAuth.getCurrentUser();
             mDatabase.child("user").child(user.getUid()).child("owner").child(Long.toString(roomid)).setValue(nameField.getText().toString());
             setContentView(R.layout.activity_users);
+        }
+        else if(view.getId() == R.id.enter_QR){
+            Intent A =new Intent(this,user_qrcode.class);
+            startActivity(A);
         }
     }
     public void signOut(View view) {
