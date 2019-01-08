@@ -104,6 +104,7 @@
     <string name="facutyGod">faculty of engineering</string>
     <string name="universityGod">chiangmai university</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="total">Total:</string>
 
     <color name="colorPrimary">#004d40</color>
     <color name="colorPrimaryDark">#00251a</color>

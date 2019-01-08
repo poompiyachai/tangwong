@@ -194,6 +194,9 @@ public class UsersActivity extends AppCompatActivity {
                         return  true;
                     case R.id.search:
                         Log.d("click","click search");
+                        Intent i = new Intent(UsersActivity.this,Cart.class);
+                        startActivity(i);
+
                         //  Toast.makeText(UsersActivity.this,"SEARCH",Toast.LENGTH_SHORT);
                         //jump to activity
                         return  true;
@@ -203,7 +206,7 @@ public class UsersActivity extends AppCompatActivity {
                         //jump to activity
                         return  true;
 
-                    case R.id.profile:
+                    case R.id.me_profile:
                         Log.d("click","click profile");
                         //  Toast.makeText(UsersActivity.this,"PROFLIE",Toast.LENGTH_SHORT);
                         //jump to activity
@@ -324,7 +327,7 @@ public class UsersActivity extends AppCompatActivity {
             jroomid = findViewById(R.id.roomid);
             FirebaseUser user = mAuth.getCurrentUser();
 
-            mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
+         //   mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
 
 
             Intent i =new Intent(this,addqActivity.class);

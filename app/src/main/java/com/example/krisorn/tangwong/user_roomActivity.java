@@ -37,7 +37,7 @@ public class user_roomActivity extends AppCompatActivity {
     private RecyclerView rcv;
     private RecyclerView.Adapter<MyViewHolder> adapter;
     private ArrayList<Mydata> dataset;
-    private  BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+  /*private  BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -69,7 +69,7 @@ public class user_roomActivity extends AppCompatActivity {
 
             }
         }
-    };
+    };*/
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
@@ -78,6 +78,8 @@ public class user_roomActivity extends AppCompatActivity {
     String noRoom=null;
     String detail=null;
     String imgUrl=null;
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,10 +108,7 @@ public class user_roomActivity extends AppCompatActivity {
 
             dataset.add(new Mydata(str,pictureNum,temImage));
         }
-        //bn_nav
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
-        bottomNavigationView.setOnNavigationItemReselectedListener((BottomNavigationView.OnNavigationItemReselectedListener) mOnNavigationItemSelectedListener);
-        //bn_nav
+
         rcv.setLayoutManager(new LinearLayoutManager(this));
         adapter =new RecyclerView.Adapter<MyViewHolder>(){
 
@@ -218,6 +217,9 @@ public class user_roomActivity extends AppCompatActivity {
         });
 
         setContentView(rcv);
+
+
+
     }
 
     private int genPictureNum() {
