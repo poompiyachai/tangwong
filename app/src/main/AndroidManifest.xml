@@ -28,7 +28,11 @@
         <activity android:name=".addqActivity" />
         <activity android:name=".list_itemActivity" />
         <activity android:name=".item_detail" />
-        <activity android:name=".Cart"></activity>
+        <activity android:name=".Cart" />
+        <activity
+            android:name=".home"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
