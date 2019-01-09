@@ -3,7 +3,6 @@ package com.example.krisorn.tangwong;
 public class user_roomViewModel {
     private String uid;
     private String user_room_id;
-
     public user_roomViewModel(){
         this.uid=uid;
         this.user_room_id=user_room_id;

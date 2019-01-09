@@ -323,30 +323,12 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-/*
-        tempData =data;
-        tempRequestCode=requestCode;
-        tempResultCode=resultCode;
-        */
-
         if(requestCode==GALLERY_INTENT && resultCode==RESULT_OK){
 
             Uri uri=data.getData();
             final StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
-           // mProgressDialog.setMessage("Uploading....");
-            mProgressDialog.setMessage("uploading....");
+            mProgressDialog.setMessage("Uploading....");
             mProgressDialog.show();
-
-           /* filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(UsersActivity.this,"upload Done",Toast.LENGTH_LONG).show();
-                    mProgressDialog.dismiss();
-
-                    }
-            });
-
-            */
            Log.d("11111111","11111111");
 
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
