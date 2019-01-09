@@ -114,6 +114,42 @@
                     android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"
+                    android:text="@{viewmodel.name}"
+                    android:textColor="@color/com_facebook_button_border_color_focused"
+                    android:textSize="30sp" />
+
+
+                <Button
+                    android:id="@+id/addroom"
+
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:onClick="click"
+                    android:text="addroom" />
+
+
+                <EditText
+                    android:id="@+id/roomid"
+                    android:layout_width="308dp"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:ems="10"
+                    android:hint="room"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/type" />
+
+                <Button
+                    android:id="@+id/q"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
                     android:onClick="click"
                     android:text="joinroom" />
 
