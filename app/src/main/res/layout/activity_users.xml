@@ -13,26 +13,25 @@
 
 
 
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout_user"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:openDrawer="start">
-        <android.support.design.widget.NavigationView
-            android:id="@+id/nav_view_user"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            app:headerLayout="@layout/nav_header_home"
-            app:menu="@menu/activity_home_drawer" />
-
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".UsersActivity">
 
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawer_layout_user"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            tools:openDrawer="start">
+            <android.support.design.widget.NavigationView
+                android:id="@+id/nav_view_user"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true"
+                app:headerLayout="@layout/nav_header_home"
+                app:menu="@menu/activity_home_drawer" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -147,37 +146,6 @@
                     android:id="@+id/btnProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="click"
-                    android:text="enterroom" />
-                <Button
-                    android:id="@+id/enter_QR"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="click"
-                    android:text="create qrcode" />
-
-
-            </LinearLayout>
-
-
-
-
-
-        </RelativeLayout>
-        <!--
-        <TextView
-        android:id="@+id/tv_display"
-        android:text="@{viewmodel.string}"
-        android:textSize="48sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:onClick="click"/>
-        -->
                     android:layout_below="@+id/profile"
                     android:layout_centerHorizontal="true"
                     android:layout_toEndOf="@+id/profile"
@@ -230,6 +198,14 @@
                         android:text="@{viewmodel.string}"
                         android:textColor="@color/com_smart_login_code"
                         android:textSize="18dp" />
+
+                    <Button
+                        android:id="@+id/enter_QR"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="click"
+                        android:text="create qrcode" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -247,7 +223,7 @@
             android:onClick="click"/>
             -->
 
+        </android.support.v4.widget.DrawerLayout>
     </android.support.constraint.ConstraintLayout>
 
-    </android.support.v4.widget.DrawerLayout>
 </layout>
