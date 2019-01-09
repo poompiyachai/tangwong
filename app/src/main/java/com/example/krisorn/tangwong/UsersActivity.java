@@ -248,7 +248,7 @@ public class UsersActivity extends AppCompatActivity implements NavigationView.O
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_user);
         navigationView.setNavigationItemSelectedListener(this);
 
         //end side bar
