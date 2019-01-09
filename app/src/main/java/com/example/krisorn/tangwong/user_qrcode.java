@@ -1,6 +1,7 @@
 package com.example.krisorn.tangwong;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
@@ -12,12 +13,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -25,18 +28,31 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class user_qrcode extends AppCompatActivity {
     public final static int QRcodeWidth = 500 ;
     private static final String IMAGE_DIRECTORY = "/QRcodeDemonuts";
     Bitmap bitmap;
     private EditText String_QR;
     private ImageView Image_QR;
+    private TextView textScanner;
     private Button Gen_QR;
+    private IntentIntegrator qrscan;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
+        textScanner = (TextView)findViewById(R.id.textScanner);
+        qrscan = new IntentIntegrator(this);
+
+
 
         //QR_code
         Image_QR =(ImageView)findViewById(R.id.imageQR);
@@ -60,6 +76,13 @@ public class user_qrcode extends AppCompatActivity {
                 }
             }
         });
+        /*Scan_QR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onActivityResult();
+            }
+        });*/
+
         //QR_code
     }
 
@@ -130,4 +153,35 @@ public class user_qrcode extends AppCompatActivity {
 
     }
     // decare function bitmap
+
+    public void scanQRCode(View v){
+         qrscan.initiateScan();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+        if(result != null){
+            if(result.getContents()== null){
+                Toast.makeText(this,"Not Found",Toast.LENGTH_SHORT);
+            }else{
+                try{
+                    JSONObject obj = new JSONObject(result.getContents());
+                    Toast.makeText(this,"Scan Failed !!!",Toast.LENGTH_SHORT).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    textScanner.setText(result.getContents()); //ค่า id ที่เราscanได้ เอาไปใช้ต่อ
+
+                    Toast.makeText(this,"Scan Success!!!",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        }else {
+            super.onActivityResult(requestCode,resultCode,data);
+            Toast.makeText(this,"Failed!!!",Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
 }
