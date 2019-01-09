@@ -115,7 +115,7 @@ public class user_roomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_room);
+
 
         rcv = new RecyclerView(this);
         final ImageView temImage = null;
