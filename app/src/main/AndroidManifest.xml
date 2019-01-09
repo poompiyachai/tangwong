@@ -32,8 +32,7 @@
         <activity
             android:name=".home"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".create_roomActiviity"></activity>
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
