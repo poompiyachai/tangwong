@@ -79,8 +79,9 @@ public class addqActivity extends AppCompatActivity {
 
              Log.d("click addq","livenow "+livenow);
              Log.d("click addq","turnq "+turnq);
-         //   livenow=mDatabase.child("user").child(user.getUid()).child("nowli;
-            mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).setValue(user.getUid());
+             //livenow=mDatabase.child("user").child(user.getUid()).child("nowli;
+             mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).setValue(user.getUid());
+
 
         }
     }

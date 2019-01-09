@@ -13,4 +13,10 @@
 
     </style>
 
+    <style name="ExpendedAppbar" parent="@android:style/TextAppearance.Material.Title">
+
+        <item name="android:textColor">@android:color/primary_text_dark</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
 </resources>
