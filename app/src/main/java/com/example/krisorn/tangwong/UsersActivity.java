@@ -6,9 +6,19 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,7 +49,8 @@ import java.util.Map;
 import static java.lang.Integer.parseInt;
 import static java.lang.Integer.toUnsignedString;
 
-public class UsersActivity extends AppCompatActivity {
+public class UsersActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
     public DatabaseReference nameCard;
     private UsersViewModel viewModel;
     private FirebaseAuth mAuth;
@@ -69,9 +80,13 @@ public class UsersActivity extends AppCompatActivity {
     // [END declare_auth]
     private static final int GALLERY_INTENT =2;
 
+    private BottomNavigationView bottomNavigationView;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
 
 
         super.onCreate(savedInstanceState);
@@ -80,19 +95,15 @@ public class UsersActivity extends AppCompatActivity {
         viewModel = new UsersViewModel(this);
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
+
+
+         //bn_nav
         mProgressDialog= new ProgressDialog(this);
         mStorage=FirebaseStorage.getInstance().getReference();
        // mselectImage=(Button) findViewById(R.id.btn_addImage);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-       /* mselectImage.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent,GALLERY_INTENT);
-            }
-        });*/
+
          try {
              new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a");
          }
@@ -132,6 +143,65 @@ public class UsersActivity extends AppCompatActivity {
 
             }
         });
+
+        //bn_nav
+        bottomNavigationView = findViewById(R.id.bottom_nav);
+        //bottomNavigationView.setOnNavigationItemReselectedListener((BottomNavigationView.OnNavigationItemReselectedListener) mOnNavigationItemSelectedListener);
+        Log.d("cancreateNavigation","can create navigation");
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.home:
+                        Log.d("click","click home");
+                        //  Toast.makeText(UsersActivity.this,"HOME",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+                    case R.id.search:
+                        Log.d("click","click search");
+                        Intent i = new Intent(UsersActivity.this,Cart.class);
+                        startActivity(i);
+
+                        //  Toast.makeText(UsersActivity.this,"SEARCH",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+                    case R.id.alert:
+                        Log.d("click","click alert");
+                        //   Toast.makeText(UsersActivity.this,"ALERT",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+
+                    case R.id.me_profile:
+                        Log.d("click","click profile");
+                        //  Toast.makeText(UsersActivity.this,"PROFLIE",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+
+                    default:
+                        Log.d("click","click .........");
+                        return  false;
+
+                }
+            }
+
+
+        });
+
+        //side bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_user);
+        setSupportActionBar(toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_user);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                UsersActivity.this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_user);
+        navigationView.setNavigationItemSelectedListener(UsersActivity.this);
+        navigationView.bringToFront();
+        //end side bar
+
+
+
     }
 
     private void initView(){
@@ -144,67 +214,6 @@ public class UsersActivity extends AppCompatActivity {
 
     public void click(View view) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-    //    nameCard = database.getReference();
-/*
-            mDatabase.child("room").child("0").child("name").setValue("qwe");
-            mDatabase.child("room").child("0").child("name").setValue("eiei");
-            mDatabase.child("room").child("0").child("data").setValue("qwe");
-            mDatabase.child("room").child("0").child("data").setValue("eiei");
-            mDatabase.child("room").child("0").child("type").setValue("qwe");
-            mDatabase.child("room").child("0").child("type").setValue("eiei");*/
-       /* nameCard.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange (@NonNull DataSnapshot dataSnapshot){
-                roomid = dataSnapshot.child("room").getChildrenCount() + 1;
-                 while (true)
-                  {
-
-
-                      if(!dataSnapshot.child("room").hasChild(Long.toString(roomid)))
-                      {
-                          break;
-                      }
-                        roomid++;
-
-
-
-                  }
-                FirebaseUser user = mAuth.getCurrentUser();
-                      try {
-                      livenow =dataSnapshot.child("user").child(user.getUid()).child("nowlive").getValue(String.class);}
-                      catch (Exception e){
-
-                }
-
-                try {
-
-                    while (true) {
-
-                        if (!dataSnapshot.child("room").child(livenow).child("q").hasChild(Long.toString(turnq))) {
-                            break;
-                        }
-                        turnq++;
-
-
-                    }
-                }catch (Exception e){
-
-                }
-
-
-
-
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-
-
         if(view.getId()==R.id.button){
         int current=parseInt(viewModel.getString(),10);
         current++;
@@ -238,7 +247,7 @@ public class UsersActivity extends AppCompatActivity {
             jroomid = findViewById(R.id.roomid);
             FirebaseUser user = mAuth.getCurrentUser();
 
-            mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
+         //   mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
 
 
             Intent i =new Intent(this,addqActivity.class);
@@ -299,16 +308,6 @@ public class UsersActivity extends AppCompatActivity {
             mProgressDialog.setMessage("uploading....");
             mProgressDialog.show();
 
-           /* filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(UsersActivity.this,"upload Done",Toast.LENGTH_LONG).show();
-                    mProgressDialog.dismiss();
-
-                    }
-            });
-
-            */
            Log.d("11111111","11111111");
 
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -328,18 +327,70 @@ public class UsersActivity extends AppCompatActivity {
                 }
             });
 
-            // Create a reference to the file we want to download
-
-
-         //   mDatabase.child(mAuth.getCurrentUser().getUid()).child("pathPhoto1").setValue(ref);
-//            mDatabase.child(mAuth.getCurrentUser().getUid()).child("pathPhoto2").setValue(filepath.getDownloadUrl().getResult().toString());
-           // mDatabase.child(mAuth.getCurrentUser().getUid()).child("pathPhoto3").setValue(filepath.getDownloadUrl().getResult().toString());
-       //     mDatabase.child(mAuth.getCurrentUser().getUid()).child("pathPhoto4").setValue(filepath.getPath());
-         //   mDatabase.child(mAuth.getCurrentUser().getUid()).child("pathPhoto5").setValue(filepath.getName());
-
         }
 
     }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_user);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.home, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        Log.d("can select nav","can select nav");
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_room) {
+            Intent i = new Intent(this,user_roomActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_add_room) {
+            Intent i = new Intent(this,create_roomActiviity.class);
+            startActivity(i);
+
+        } else if (id == R.id.nav_profile) {
+            Intent i = new Intent(this,UsersActivity.class);
+            startActivity(i);
+
+        } else if (id == R.id.nav_cart) {
+            Intent i = new Intent(this,Cart.class);
+            startActivity(i);
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_user);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }

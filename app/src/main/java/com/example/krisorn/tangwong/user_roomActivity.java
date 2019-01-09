@@ -2,6 +2,7 @@ package com.example.krisorn.tangwong;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,11 +10,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,6 +37,40 @@ public class user_roomActivity extends AppCompatActivity {
     private RecyclerView rcv;
     private RecyclerView.Adapter<MyViewHolder> adapter;
     private ArrayList<Mydata> dataset;
+  /*private  BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            switch (menuItem.getItemId()){
+                case R.id.home:
+                    Log.d("click","click home");
+                    //  Toast.makeText(UsersActivity.this,"HOME",Toast.LENGTH_SHORT);
+                    //jump to activity
+                    return  true;
+                case R.id.search:
+                    Log.d("click","click search");
+                    //  Toast.makeText(UsersActivity.this,"SEARCH",Toast.LENGTH_SHORT);
+                    //jump to activity
+                    return  true;
+                case R.id.alert:
+                    Log.d("click","click alert");
+                    //   Toast.makeText(UsersActivity.this,"ALERT",Toast.LENGTH_SHORT);
+                    //jump to activity
+                    return  true;
+
+                case R.id.profile:
+                    Log.d("click","click profile");
+                    //  Toast.makeText(UsersActivity.this,"PROFLIE",Toast.LENGTH_SHORT);
+                    //jump to activity
+                    return  true;
+
+                default:
+                    return  false;
+
+            }
+        }
+    };*/
+
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     public long countRoom = 0;
@@ -41,6 +78,8 @@ public class user_roomActivity extends AppCompatActivity {
     String noRoom=null;
     String detail=null;
     String imgUrl=null;
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,6 +217,9 @@ public class user_roomActivity extends AppCompatActivity {
         });
 
         setContentView(rcv);
+
+
+
     }
 
     private int genPictureNum() {

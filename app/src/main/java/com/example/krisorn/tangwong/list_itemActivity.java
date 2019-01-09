@@ -1,5 +1,6 @@
 package com.example.krisorn.tangwong;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -89,19 +90,21 @@ public class list_itemActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Log.d("onClick","onClick"+i);
-/*
+
                         mDatabase.child("user").child(uid).child("live").child(String.valueOf(i)).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                mDatabase.child("user").child(uid).child("livenow").setValue(dataSnapshot.getValue());
+                                mDatabase.child("user").child(uid).child("liveItemNow").setValue(String.valueOf(i));
+
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
                             }
-                        });*/
-
+                        });
+                        Intent i = new Intent(list_itemActivity.this,item_detail.class);
+                        startActivity(i);
                     }
                 });
 
