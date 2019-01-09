@@ -39,6 +39,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true"/>
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
