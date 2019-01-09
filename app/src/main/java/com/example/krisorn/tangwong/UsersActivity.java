@@ -247,14 +247,10 @@ public class UsersActivity extends AppCompatActivity
             setContentView(R.layout.activity_addq);
 
         }
-        else if(view.getId()==R.id.enter){
-            jroomid = findViewById(R.id.roomid);
-            FirebaseUser user = mAuth.getCurrentUser();
-
-         //   mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
+        else if(view.getId()==R.id.enter_QR){
 
 
-            Intent i =new Intent(this,addqActivity.class);
+            Intent i =new Intent(this,user_qrcode.class);
             startActivity(i);
          //   setContentView(R.layout.activity_addq);
 
