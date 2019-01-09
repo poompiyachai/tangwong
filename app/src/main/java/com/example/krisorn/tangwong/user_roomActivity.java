@@ -1,5 +1,7 @@
 package com.example.krisorn.tangwong;
 
+import android.graphics.Bitmap;
+import android.os.Parcelable;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,13 +34,41 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
+import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Calendar;
+
+
 import java.util.ArrayList;
 
 public class user_roomActivity extends AppCompatActivity {
 
+
     private RecyclerView rcv;
     private RecyclerView.Adapter<MyViewHolder> adapter;
     private ArrayList<Mydata> dataset;
+
+
+
   /*private  BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -83,8 +115,10 @@ public class user_roomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         rcv = new RecyclerView(this);
-        ImageView temImage = null;
+        final ImageView temImage = null;
         dataset =new ArrayList<>();
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -109,6 +143,36 @@ public class user_roomActivity extends AppCompatActivity {
             dataset.add(new Mydata(str,pictureNum,temImage));
         }
 
+        //bn_nav
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
+        BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+                = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.home:
+                        Toast.makeText(user_roomActivity.this,"HOME",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+                    case R.id.search:
+                        Toast.makeText(user_roomActivity.this,"SEARCH",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+                    case R.id.alert:
+                        Toast.makeText(user_roomActivity.this,"ALERT",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+
+                    case R.id.profile:
+                        Toast.makeText(user_roomActivity.this,"PROFLIE",Toast.LENGTH_SHORT);
+                        //jump to activity
+                        return  true;
+                    default:
+                        return  false;
+
+                }
+            }
+        };//bn_nav
         rcv.setLayoutManager(new LinearLayoutManager(this));
         adapter =new RecyclerView.Adapter<MyViewHolder>(){
 
@@ -221,6 +285,9 @@ public class user_roomActivity extends AppCompatActivity {
 
 
     }
+
+
+
 
     private int genPictureNum() {
         int i =(int)(Math.random()*8);

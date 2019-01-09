@@ -79,6 +79,9 @@ public class UsersActivity extends AppCompatActivity implements NavigationView.O
     // [END declare_auth]
     private static final int GALLERY_INTENT =2;
 
+
+
+
     private BottomNavigationView bottomNavigationView;
 
   /*  private  BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -127,6 +130,7 @@ public class UsersActivity extends AppCompatActivity implements NavigationView.O
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
+        //firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         viewModel = new UsersViewModel(this);
         mAuth = FirebaseAuth.getInstance();
@@ -171,7 +175,7 @@ public class UsersActivity extends AppCompatActivity implements NavigationView.O
               viewModel.setPathPhoto(pathPhoto);
 
 
-              binding.name.setText(viewModel.getName());
+              //binding.name.setText(viewModel.getName());
 
               try {
                   new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute(pathPhoto);
@@ -350,14 +354,10 @@ public class UsersActivity extends AppCompatActivity implements NavigationView.O
             setContentView(R.layout.activity_addq);
 
         }
-        else if(view.getId()==R.id.enter){
-            jroomid = findViewById(R.id.roomid);
-            FirebaseUser user = mAuth.getCurrentUser();
-
-         //   mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
+        else if(view.getId()==R.id.enter_QR){
 
 
-            Intent i =new Intent(this,addqActivity.class);
+            Intent i =new Intent(this,user_qrcode.class);
             startActivity(i);
          //   setContentView(R.layout.activity_addq);
 
@@ -371,11 +371,7 @@ public class UsersActivity extends AppCompatActivity implements NavigationView.O
 
         }
         else if(view.getId()==R.id.createroom){
-
-
-
-
-                    mtypeField = findViewById(R.id.type);
+            mtypeField = findViewById(R.id.type);
             mdataField = findViewById(R.id.data);
             nameField=findViewById(R.id.name);
 
