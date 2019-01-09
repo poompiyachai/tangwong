@@ -23,7 +23,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".registerActivity" />
         <activity android:name=".user_roomActivity"></activity>
-        <activity android:name=".addqActivity"></activity>
+        <activity android:name=".user_qrcode"></activity>
     </application>
 
 </manifest>
