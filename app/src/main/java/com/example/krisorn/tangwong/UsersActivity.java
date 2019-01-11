@@ -1,11 +1,27 @@
 package com.example.krisorn.tangwong;
-
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import com.example.krisorn.tangwong.Model.Notification2;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +30,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.app.Notification;
+
+import android.app.NotificationManager;
+
+import android.app.PendingIntent;
 //import android.widget.TextView;
 
+import com.example.krisorn.tangwong.Model.MyResponse;
+import com.example.krisorn.tangwong.Model.Sender;
+import com.example.krisorn.tangwong.Remote.APIService;
+import com.example.krisorn.tangwong.Service.Common;
 import com.example.krisorn.tangwong.databinding.ActivityUsersBindingImpl;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +56,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -35,7 +64,12 @@ import com.google.firebase.storage.UploadTask;
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
 import java.util.Map;
+import com.example.krisorn.tangwong.Model.*;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import static android.app.Notification.*;
 import static java.lang.Integer.parseInt;
 import static java.lang.Integer.toUnsignedString;
 
@@ -59,6 +93,7 @@ public class UsersActivity extends AppCompatActivity {
     private long turnq=1;
     private String livenow;
 
+    private boolean owner=false;
 
 
     private ProgressDialog mProgressDialog;
@@ -68,14 +103,27 @@ public class UsersActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     // [END declare_auth]
     private static final int GALLERY_INTENT =2;
+    final int id =11;
+    Builder test;
+
+    Button btnShowNotification;
+    Button btnSendData;
+    EditText edtTitle,edtContent;
+
+    APIService mService;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
+        Log.d ("aaaa","can create");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
+
+
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         viewModel = new UsersViewModel(this);
         mAuth = FirebaseAuth.getInstance();
@@ -83,6 +131,37 @@ public class UsersActivity extends AppCompatActivity {
         mProgressDialog= new ProgressDialog(this);
         mStorage=FirebaseStorage.getInstance().getReference();
         mselectImage=(Button) findViewById(R.id.btn_addImage);
+
+        Common.currentToken= FirebaseInstanceId.getInstance ().getToken ();
+        mService = Common.getFCMClient ();
+        btnSendData = (Button)findViewById(R.id.btnSendData) ;
+        //edtContent = (EditText)findViewById (R.id.edtContent);
+        //edtTitle = (EditText)findViewById (R.id.edtTitle);
+
+        btnSendData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d ("aaaa","can click");
+
+                Notification2 notification = new Notification2("asd","asd");
+                Sender sender = new Sender (Common.currentToken,notification);
+                mService.sendNotification (sender)
+                        .enqueue (new Callback <MyResponse> () {
+                            @Override
+                            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                if(response.body().success == 1)
+                                    Toast.makeText (UsersActivity.this, "true", Toast.LENGTH_SHORT).show ();
+                                else
+                                    Toast.makeText (UsersActivity.this, "false", Toast.LENGTH_SHORT).show ();
+                            }
+
+                            @Override
+                            public void onFailure(Call <MyResponse> call, Throwable t) {
+                                Log.e("ERROR",t.getMessage());
+                            }
+                        });
+            }
+        });
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
        /* mselectImage.setOnClickListener(new View.OnClickListener(){
@@ -105,6 +184,11 @@ public class UsersActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String uid = user.getUid();
+                if(dataSnapshot.child("user").child(uid).child("notification").getValue(String.class)=="1")
+                {
+                    showNotification();
+                    Log.d ("asd","zsdf");
+                }
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
               String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
@@ -157,6 +241,13 @@ public class UsersActivity extends AppCompatActivity {
             @Override
             public void onDataChange (@NonNull DataSnapshot dataSnapshot){
                 roomid = dataSnapshot.child("room").getChildrenCount() + 1;
+                FirebaseUser user = mAuth.getCurrentUser();
+                String uid = user.getUid();
+                if(dataSnapshot.child("user").child(uid).child("notification").getValue(String.class)=="1")
+                {
+                    showNotification();
+                    Log.d ("asd","zsdf");
+                }
                   while (true)
                   {
 
@@ -170,9 +261,15 @@ public class UsersActivity extends AppCompatActivity {
 
 
                   }
-                FirebaseUser user = mAuth.getCurrentUser();
+
 
                       livenow =dataSnapshot.child("user").child(user.getUid()).child("nowlive").getValue(String.class);
+
+                if(dataSnapshot.child("user").child(user.getUid()).child("owner").hasChild(livenow))
+                {
+                        owner = true;
+                }
+                else owner = false;
 
                 while (true)
                 {
@@ -217,7 +314,25 @@ public class UsersActivity extends AppCompatActivity {
         }
         else if(view.getId()==R.id.addroom){
 
-            setContentView(R.layout.activity_addroom);
+            showNotification();
+            Log.d ("aaaa","can click");
+            Notification2 notification = new Notification2("asd","asd");
+            Sender sender = new Sender (Common.currentToken,notification);
+            mService.sendNotification (sender)
+                    .enqueue (new Callback <MyResponse> () {
+                        @Override
+                        public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                            if(response.body().success == 1)
+                                Toast.makeText (UsersActivity.this, "true", Toast.LENGTH_SHORT).show ();
+                            else
+                                Toast.makeText (UsersActivity.this, "false", Toast.LENGTH_SHORT).show ();
+                        }
+
+                        @Override
+                        public void onFailure(Call <MyResponse> call, Throwable t) {
+                            Log.e("ERROR",t.getMessage());
+                        }
+                    });
 
         }
 
@@ -231,20 +346,12 @@ public class UsersActivity extends AppCompatActivity {
 
             mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
 
-            setContentView(R.layout.activity_addq);
+
 
         }
         else if(view.getId()==R.id.enter){
 
-            FirebaseUser user = mAuth.getCurrentUser();
-            jroomid = findViewById(R.id.roomid);
-                mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
 
-
-
-
-
-            setContentView(R.layout.activity_addq);
 
         }
 
@@ -274,17 +381,141 @@ public class UsersActivity extends AppCompatActivity {
             mDatabase.child("room").child(Long.toString(roomid)).child("type").setValue(mtypeField.getText().toString());
             mDatabase.child("room").child(Long.toString(roomid)).child("data").setValue(mdataField.getText().toString());
             FirebaseUser user = mAuth.getCurrentUser();
-            mDatabase.child("user").child(user.getUid()).child("owner").child(Long.toString(roomid)).setValue(nameField.getText().toString());
+            mDatabase.child("user").child(user.getUid()).child("owner").child(Long.toString(roomid)).setValue("1");
 
             setContentView(R.layout.activity_users);
         }
     }
+
+    private void showNotification() {
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("http://devahoy.com/posts/android-notification/"));
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        Notification notification =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("DevAhoy News")
+                        .setContentText("สวัสดีครับ ยินดีต้อนรับเข้าสู่บทความ Android Notification :)")
+                        .setAutoCancel(true)
+                        .setContentIntent(pendingIntent)
+                        .setDefaults(Notification.DEFAULT_SOUND)
+                        .setVibrate(new long[] {800,100,500})
+                        .build();
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(1000, notification);
+
+        Log.d("aasd","asdasda");
+    }
+
     public void signOut(View view) {
         viewModel.setLogoutSatus();
         mAuth.signOut();
         Intent i = new Intent(this,EmailPasswordActivity.class);
         startActivity(i);
     }
+
+    public void click2(View view) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        nameCard = database.getReference();
+        FirebaseUser user = mAuth.getCurrentUser();
+        jroomid = findViewById(R.id.roomid);
+        mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
+        mDatabase.child("room").child("0").child("type").setValue("qwe");
+
+        mDatabase.child("room").child("0").child("type").setValue("eiei");
+        mDatabase.child("room").child("0").child("data").setValue("qwe");
+
+        mDatabase.child("room").child("0").child("data").setValue("eiei");
+        nameCard.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange (@NonNull DataSnapshot dataSnapshot){
+                roomid = dataSnapshot.child("room").getChildrenCount() + 1;
+                while (true)
+                {
+
+
+                    if(!dataSnapshot.child("room").hasChild(Long.toString(roomid)))
+                    {
+                        break;
+                    }
+                    roomid++;
+
+
+
+                }
+                FirebaseUser user = mAuth.getCurrentUser();
+
+                livenow =dataSnapshot.child("user").child(user.getUid()).child("nowlive").getValue(String.class);
+
+                if(dataSnapshot.child("user").child(user.getUid()).child("owner").child(livenow).hasChild("1"))
+                {
+                    owner = true;
+                    mDatabase.child("room").child("0").child("data").setValue("asdasd");
+                }
+                else owner = false;
+
+                while (true)
+                {
+
+
+                    if(!dataSnapshot.child("room").child(livenow).child("q").hasChild(Long.toString(turnq)))
+                    {
+                        break;
+                    }
+                    turnq++;
+
+
+
+                }
+
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+            setContentView(R.layout.activity_addqaddmin);
+
+
+    }
+
+    public void click3(View v) {
+
+       /* Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("http://devahoy.com/posts/android-notification/"));
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        Notification notification =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("DevAhoy News")
+                        .setContentText("สวัสดีครับ ยินดีต้อนรับเข้าสู่บทความ Android Notification :)")
+                        .setAutoCancel(true)
+                        .setContentIntent(pendingIntent)
+                        .setDefaults(Notification.DEFAULT_SOUND)
+                        .setVibrate(new long[] {800,100,500})
+                        .build();
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(1000, notification);
+
+        Log.d("aasd","asdasda");
+        setContentView(R.layout.activity_test);*/
+
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
