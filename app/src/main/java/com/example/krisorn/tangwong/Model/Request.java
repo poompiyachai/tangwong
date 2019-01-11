@@ -9,8 +9,16 @@ public class Request {
     private String name;
     private String moreDetail;
     private String total;
+    private String uid;
     private List<Order> items;
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public String getPhone() {
         return phone;
@@ -56,8 +64,8 @@ public class Request {
 
     }
 
-    public Request(String phone, String name, String moreDetail, String total, List<Order> items) {
-
+    public Request(String uid,String phone, String name, String moreDetail, String total, List<Order> items) {
+        this.uid=uid;
         this.phone = phone;
         this.name = name;
         this.moreDetail = moreDetail;
