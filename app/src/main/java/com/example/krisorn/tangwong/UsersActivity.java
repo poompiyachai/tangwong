@@ -1,5 +1,8 @@
 package com.example.krisorn.tangwong;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -10,6 +13,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -129,6 +133,14 @@ public class UsersActivity extends AppCompatActivity
 
 
               binding.name.setText(viewModel.getName());
+
+                String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
+                Log.d("aasd",a);
+                if(a.equals ("1"))
+                {
+                    showNotification ("test");
+                    mDatabase.child("user").child(uid).child("notification").setValue("1");
+                }
 
               try {
                   new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute(pathPhoto);
@@ -289,6 +301,29 @@ public class UsersActivity extends AppCompatActivity
         mAuth.signOut();
         Intent i = new Intent(this,EmailPasswordActivity.class);
         startActivity(i);
+    }
+
+    private void showNotification(String text) {
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("http://devahoy.com/posts/android-notification/"));
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        Notification notification =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("การเเจ้งเตือน")
+                        .setContentText(text)
+                        .setAutoCancel(true)
+                        .setContentIntent(pendingIntent)
+                        .setDefaults(Notification.DEFAULT_SOUND)
+
+                        .build();
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(1000, notification);
+
+        Log.d("aasd","asdasda");
     }
 
     @Override
