@@ -1,7 +1,6 @@
 package com.example.krisorn.tangwong;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,74 +11,40 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 public class create_roomActiviity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    public TextView txt_data;
-    public TextView txt_name_room;
-    public TextView txt_type_room;
-    public Long roomid;
-    public Long count_own_room_count;
-    public Button btn_create_room;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_room_activiity);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
 
-        txt_data = findViewById(R.id.txt_create_room_detail);
-        txt_name_room = findViewById(R.id.txt_create_room_name);
-        txt_type_room=findViewById(R.id.txt_create_room_type);
-        btn_create_room=(Button)findViewById(R.id.btn_create_room);
-
-        mDatabase.child("room").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                roomid = dataSnapshot.getChildrenCount()+1;
-                count_own_room_count=dataSnapshot.child("user").child(user.getUid()).child("owner").getChildrenCount()+1;
-            }
 
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+/*
+        mtypeField = findViewById(R.id.type);
+        mdataField = findViewById(R.id.data);
+        nameField=findViewById(R.id.name);
 
-        btn_create_room.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mDatabase.child("room").child(Long.toString(roomid)).child("name").setValue(nameField.getText().toString());
+        mDatabase.child("room").child(Long.toString(roomid)).child("type").setValue(mtypeField.getText().toString());
+        mDatabase.child("room").child(Long.toString(roomid)).child("data").setValue(mdataField.getText().toString());
 
-
-                Log.d("roomid",Long.toString(roomid));
-                mDatabase.child("room").child(Long.toString(roomid)).child("name").setValue(txt_name_room.getText().toString());
-                mDatabase.child("room").child(Long.toString(roomid)).child("type").setValue(txt_type_room.getText().toString());
-                mDatabase.child("room").child(Long.toString(roomid)).child("data").setValue(txt_data.getText().toString());
-                mDatabase.child("user").child(user.getUid()).child("owner").child(String.valueOf(count_own_room_count)).child((Long.toString(roomid)));
-
-            }
-        });
-
-
+        mDatabase.child("user").child(user.getUid()).child("owner").child(Long.toString(roomid)).setValue(nameField.getText().toString());
+*/
         //side bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_user);
         setSupportActionBar(toolbar);

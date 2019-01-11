@@ -14,6 +14,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
+//import android.support.v4.media.app.NotificationCompat;
+
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+
+
+//import android.support.v4.media.app.NotificationCompat;
+import android.util.Log;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -122,8 +131,18 @@ public class UsersActivity extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String uid = user.getUid();
+
+
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
+               String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
+                Log.d("aasd",a);
+               if(a.equals ("1"))
+               {
+                   showNotification ("test");
+                   mDatabase.child("user").child(uid).child("notification").setValue("1");
+               }
+
               String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
 
              String pathPhoto=dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
@@ -133,14 +152,6 @@ public class UsersActivity extends AppCompatActivity
 
 
               binding.name.setText(viewModel.getName());
-
-                String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
-                Log.d("aasd",a);
-                if(a.equals ("1"))
-                {
-                    showNotification ("test");
-                    mDatabase.child("user").child(uid).child("notification").setValue("1");
-                }
 
               try {
                   new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute(pathPhoto);
@@ -303,29 +314,6 @@ public class UsersActivity extends AppCompatActivity
         startActivity(i);
     }
 
-    private void showNotification(String text) {
-        Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("http://devahoy.com/posts/android-notification/"));
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        Notification notification =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("การเเจ้งเตือน")
-                        .setContentText(text)
-                        .setAutoCancel(true)
-                        .setContentIntent(pendingIntent)
-                        .setDefaults(Notification.DEFAULT_SOUND)
-
-                        .build();
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(1000, notification);
-
-        Log.d("aasd","asdasda");
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -375,6 +363,28 @@ public class UsersActivity extends AppCompatActivity
         }
     }
 
+    private void showNotification(String text) {
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("http://devahoy.com/posts/android-notification/"));
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        Notification notification =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("การเเจ้งเตือน")
+                        .setContentText(text)
+                        .setAutoCancel(true)
+                        .setContentIntent(pendingIntent)
+                        .setDefaults(Notification.DEFAULT_SOUND)
+
+                        .build();
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(1000, notification);
+
+        Log.d("aasd","asdasda");
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

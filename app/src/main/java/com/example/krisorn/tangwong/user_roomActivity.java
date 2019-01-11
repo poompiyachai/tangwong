@@ -142,8 +142,8 @@ public class user_roomActivity extends AppCompatActivity {
 
                             }
                         });
-                        Intent intent = new Intent(user_roomActivity.this,list_itemActivity.class);
-                        startActivity(intent);
+                        Intent i = new Intent(user_roomActivity.this,list_itemActivity.class);
+                        startActivity(i);
                     }
                 });
 
