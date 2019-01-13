@@ -82,6 +82,12 @@ public class UsersActivity extends AppCompatActivity
     private int change=0;
     private long turnq=1;
     private String livenow;
+    private String id="2";
+    private String roomq="1";
+    private String tempuid="asd";
+    private boolean check=false;
+
+
 
 
 
@@ -100,6 +106,7 @@ public class UsersActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
 
 
         super.onCreate(savedInstanceState);
@@ -133,14 +140,22 @@ public class UsersActivity extends AppCompatActivity
                 String uid = user.getUid();
 
 
+
+
+
+
+
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
                String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
-                Log.d("aasd",a);
+
                if(a.equals ("1"))
                {
+                   String b =dataSnapshot.child ("room").child (id).child ("q").child (roomq).child ("text").getValue((String.class));
+
                    showNotification ("test");
-                   mDatabase.child("user").child(uid).child("notification").setValue("1");
+                   mDatabase.child("user").child(uid).child("notification").setValue("0");
+                   check=false;
                }
 
               String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
@@ -236,7 +251,10 @@ public class UsersActivity extends AppCompatActivity
     }
 
     public void click(View view) {
+
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+
         if(view.getId()==R.id.button){
         int current=parseInt(viewModel.getString(),10);
         current++;
@@ -252,6 +270,44 @@ public class UsersActivity extends AppCompatActivity
         }
         else if(view.getId()==R.id.addroom){
             setContentView(R.layout.activity_addroom);
+
+        }
+        else if(view.getId()==R.id.notification){
+            jroomid = findViewById(R.id.roomid);
+            FirebaseDatabase database2 = FirebaseDatabase.getInstance();
+            Log.d("aasd",jroomid.getText ().toString ());
+
+            //nameCard =database.getReference();
+            mDatabase.child("eiei").setValue("asdasd");
+            mDatabase.child("eiei").setValue("dsacfvf");
+            check = true;
+
+            nameCard.addValueEventListener (new ValueEventListener () {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    final FirebaseUser user = mAuth.getCurrentUser();
+                    String uid = user.getUid();
+
+
+
+
+                    if(check==true)
+                    {
+                        //roomq = findViewById(R.id.roomid).toString ();
+                        tempuid = dataSnapshot.child ("room").child (id).child ("q").child (roomq).child ("uid").getValue((String.class));
+
+                        Log.d("aasd",tempuid);
+                        mDatabase.child ("room").child (id).child ("q").child (roomq).child ("text").setValue(jroomid.getText ().toString ());
+                        mDatabase.child("user").child(tempuid).child("notification").setValue("1");
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
         }
 
@@ -312,6 +368,10 @@ public class UsersActivity extends AppCompatActivity
         mAuth.signOut();
         Intent i = new Intent(this,EmailPasswordActivity.class);
         startActivity(i);
+    }
+    public void test(View view) {
+
+
     }
 
     @Override
@@ -383,8 +443,9 @@ public class UsersActivity extends AppCompatActivity
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(1000, notification);
 
-        Log.d("aasd","asdasda");
+
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
