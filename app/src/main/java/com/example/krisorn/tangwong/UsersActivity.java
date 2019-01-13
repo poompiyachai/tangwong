@@ -134,6 +134,7 @@ public class UsersActivity extends AppCompatActivity
 
         nameCard = database.getReference();
 
+
         nameCard.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -160,27 +161,56 @@ public class UsersActivity extends AppCompatActivity
 
               String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
 
-             String pathPhoto=dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
-              viewModel.setName(name);
 
-              viewModel.setPathPhoto(pathPhoto);
+                    String pathPhoto = dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
+                    viewModel.setName(name);
+
+                    viewModel.setPathPhoto(pathPhoto);
 
 
-              binding.name.setText(viewModel.getName());
+                    binding.name.setText(viewModel.getName());
+
+                    String a = dataSnapshot.child("user").child(uid).child("notification").getValue((String.class));
+//                Log.d("aasd",a);
+
+                    try {
+                        if (a.equals("1")) {
+                            showNotification("test");
+                            mDatabase.child("user").child(uid).child("notification").setValue("1");
+                        }
+                    }catch (Exception e){
+
+                        viewModel.setLogoutSatus();
+                        mAuth.signOut();
+                        Intent i = new Intent(UsersActivity.this,EmailPasswordActivity.class);
+                        startActivity(i);
+                    }
+                    try {
+                        new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute(pathPhoto);
+                    } catch (Exception e) {
+                    }
+
 
               try {
                   new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute(pathPhoto);
               }
               catch (Exception e) {
               }
+                }
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
 
-            }
-        });
+        }catch (Exception e){
+
+            viewModel.setLogoutSatus();
+            mAuth.signOut();
+            Intent i = new Intent(this,EmailPasswordActivity.class);
+            startActivity(i);
+        }
 
         //bn_nav
         bottomNavigationView = findViewById(R.id.bottom_nav);
@@ -493,9 +523,14 @@ public class UsersActivity extends AppCompatActivity
             Intent i = new Intent(this,user_qrcode.class);
             startActivity(i);
 
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_share) {
+            Intent i = new Intent(this,Status.class);
+            startActivity(i);
+        }else if (id == R.id.nav_send){
+            Intent i = new Intent(this,home.class);
+            startActivity(i);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_user);
         drawer.closeDrawer(GravityCompat.START);
