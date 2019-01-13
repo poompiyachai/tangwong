@@ -104,10 +104,18 @@
     <string name="facutyGod">faculty of engineering</string>
     <string name="universityGod">chiangmai university</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="total">Total:</string>
 
     <color name="colorPrimary">#004d40</color>
     <color name="colorPrimaryDark">#00251a</color>
     <color name="colorAccent">#39796b</color>
     <color name="overlayoutBackground">#7f333639</color>
     <color name="overlayActionBar">#0e0d0e</color>
+    <string name="title_activity_home">home</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 </resources>

@@ -25,7 +25,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:text="add poll"/>
     </LinearLayout>
     <LinearLayout
@@ -47,14 +46,12 @@
                 android:id="@+id/save_question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:style="@style/Widget.AppCompat.Button.Colored"
                 android:text="save" />
 
             <Button
                 android:id="@+id/start_question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:style="@style/Widget.AppCompat.Button.Colored"
                 android:text="start question" />
         </LinearLayout>
     </LinearLayout>

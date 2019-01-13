@@ -155,7 +155,7 @@ public class user_qrcode extends AppCompatActivity {
     // decare function bitmap
 
     public void scanQRCode(View v){
-         qrscan.initiateScan();
+        qrscan.initiateScan();
     }
 
     @Override
