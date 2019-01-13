@@ -50,6 +50,7 @@ public class Cart extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String livenow;
     private long turnq=0;
+    private long noOfOder =0;
     String name = null;
     String phoneNumber= null;
 
@@ -71,7 +72,7 @@ public class Cart extends AppCompatActivity {
 
         txtTotalPrice = (TextView)findViewById(R.id.total);
         btnPlace = (Button)findViewById(R.id.btnPlaceOrder);
-        
+
         btnPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +83,7 @@ public class Cart extends AppCompatActivity {
 
         loadListItem();
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
+        final FirebaseUser user = mAuth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
@@ -97,11 +98,12 @@ public class Cart extends AppCompatActivity {
 
 
                 try {
-                    mDatabase.child("room").child(livenow).child("q").addValueEventListener(new ValueEventListener() {
+                    mDatabase.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            turnq = dataSnapshot.getChildrenCount()+1;
+                            turnq = dataSnapshot.child("room").child(livenow).child("q").getChildrenCount()+1;
+                            noOfOder= dataSnapshot.child("user").child(user.getUid()).child("orderNow").getChildrenCount();
                             Log.d("trunq","trunq !!!!!"+turnq);
 
 
@@ -160,6 +162,10 @@ public class Cart extends AppCompatActivity {
                 FirebaseUser user = mAuth.getCurrentUser();
 
                 Request request = new Request(
+
+                        "wait",
+                        user.getUid(),
+
                         phoneNumber,
                         name,
                         edtAddress.getText().toString(),
@@ -170,8 +176,9 @@ public class Cart extends AppCompatActivity {
                 // user = mAuth.getCurrentUser();
                 Log.d("show live now ","livenow"+livenow);
                 Log.d("show turnq","turnq"+turnq);
-                mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).setValue(user.getUid());
-                mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).child(user.getUid()).setValue(request);
+        // mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).child("uid").setValue(user.getUid());
+                mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).setValue(request);
+                mDatabase.child("user").child(user.getUid()).child("orderNow").child(String.valueOf(noOfOder)).setValue(livenow);
 
                 new Database(getBaseContext()).cleanCart();
                 Toast.makeText(Cart.this,"Thank you, Order Place",Toast.LENGTH_SHORT).show();
