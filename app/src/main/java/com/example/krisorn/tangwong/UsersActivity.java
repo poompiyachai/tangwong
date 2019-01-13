@@ -57,6 +57,9 @@ import com.google.firebase.storage.UploadTask;
 
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Map;
 
 import static java.lang.Integer.parseInt;
@@ -273,9 +276,14 @@ public class UsersActivity extends AppCompatActivity
 
         }
         else if(view.getId()==R.id.notification){
+            Calendar c = Calendar.getInstance();
+
+            SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+
+            String formattedDate = df.format(c.getTime());
             jroomid = findViewById(R.id.roomid);
             FirebaseDatabase database2 = FirebaseDatabase.getInstance();
-            Log.d("aasd",jroomid.getText ().toString ());
+            Log.d("aasd",formattedDate);
 
             //nameCard =database.getReference();
             mDatabase.child("eiei").setValue("asdasd");
@@ -287,6 +295,9 @@ public class UsersActivity extends AppCompatActivity
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     final FirebaseUser user = mAuth.getCurrentUser();
                     String uid = user.getUid();
+
+
+
 
 
 
