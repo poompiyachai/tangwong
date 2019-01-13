@@ -1,4 +1,4 @@
-package com.example.krisorn.tangwong.status;
+package com.example.krisorn.tangwong.feature;
 
 
 import android.content.Context;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-class StatusViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+class FeatureViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
 
     public TextView txtNameRoom, txtSumPrice,txtStatus,txtNumberOfItem;
@@ -68,7 +68,7 @@ class StatusViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         this.txtNumberOfItem = txtNumberOfItem;
     }
 
-    public StatusViewHolder(@NonNull View itemView) {
+    public FeatureViewHolder(@NonNull View itemView) {
         super(itemView);
 
 
@@ -80,11 +80,11 @@ class StatusViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-       // Log.d("statusPage","can click");
+        // Log.d("statusPage","can click");
     }
 }
 
-public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
+public class FeatureAdapter extends RecyclerView.Adapter<FeatureViewHolder> {
 
     private Context context;
     public DatabaseReference mDatabase;
@@ -92,25 +92,25 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
     public int countOrderNow;
 
 
-    public StatusAdapter(int countOrderNow,Context context){
+    public FeatureAdapter(int countOrderNow,Context context){
         this.countOrderNow=countOrderNow;
         this.context = context;
     }
     @NonNull
     @Override
-    public StatusViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FeatureViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View itemView = inflater.inflate(R.layout.status_layout,parent,false);
 
 
-        return new StatusViewHolder(itemView);
+        return new FeatureViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final StatusViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final FeatureViewHolder holder, final int position) {
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
-      //  TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuanlity(),Color.RED);
+        //  TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuanlity(),Color.RED);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
