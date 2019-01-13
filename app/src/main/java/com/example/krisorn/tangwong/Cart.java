@@ -162,10 +162,8 @@ public class Cart extends AppCompatActivity {
                 FirebaseUser user = mAuth.getCurrentUser();
 
                 Request request = new Request(
-
                         "wait",
                         user.getUid(),
-
                         phoneNumber,
                         name,
                         edtAddress.getText().toString(),

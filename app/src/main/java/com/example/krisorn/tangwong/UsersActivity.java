@@ -120,23 +120,22 @@ public class UsersActivity extends AppCompatActivity
         final FirebaseUser user = mAuth.getCurrentUser();
 
 
-         //bn_nav
+        //bn_nav
         mProgressDialog= new ProgressDialog(this);
         mStorage=FirebaseStorage.getInstance().getReference();
-       // mselectImage=(Button) findViewById(R.id.btn_addImage);
+        // mselectImage=(Button) findViewById(R.id.btn_addImage);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-         try {
-             new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a");
-         }
-         catch (Exception e){}
+        try {
+            new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a");
+        }
+        catch (Exception e){}
         initView();
         //get firebase
 
 
         nameCard = database.getReference();
-
 
         nameCard.addValueEventListener(new ValueEventListener() {
             @Override
@@ -151,69 +150,40 @@ public class UsersActivity extends AppCompatActivity
 
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
-               String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
+                String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
 
-               if(a.equals ("1"))
-               {
-                   String b =dataSnapshot.child ("room").child (id).child ("q").child (roomq).child ("text").getValue((String.class));
+                if(a.equals ("1"))
+                {
+                    String b =dataSnapshot.child ("room").child (id).child ("q").child (roomq).child ("text").getValue((String.class));
 
-                   showNotification ("test");
-                   mDatabase.child("user").child(uid).child("notification").setValue("0");
-                   check=false;
-               }
-
-              String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
-
-
-                    String pathPhoto = dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
-                    viewModel.setName(name);
-
-                    viewModel.setPathPhoto(pathPhoto);
-
-
-                    binding.name.setText(viewModel.getName());
-
-                    String a = dataSnapshot.child("user").child(uid).child("notification").getValue((String.class));
-//                Log.d("aasd",a);
-
-                    try {
-                        if (a.equals("1")) {
-                            showNotification("test");
-                            mDatabase.child("user").child(uid).child("notification").setValue("1");
-                        }
-                    }catch (Exception e){
-
-                        viewModel.setLogoutSatus();
-                        mAuth.signOut();
-                        Intent i = new Intent(UsersActivity.this,EmailPasswordActivity.class);
-                        startActivity(i);
-                    }
-                    try {
-                        new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute(pathPhoto);
-                    } catch (Exception e) {
-                    }
-
-
-              try {
-                  new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute(pathPhoto);
-              }
-              catch (Exception e) {
-              }
+                    showNotification ("test");
+                    mDatabase.child("user").child(uid).child("notification").setValue("0");
+                    check=false;
                 }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
 
+                String pathPhoto=dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
+                viewModel.setName(name);
+
+                viewModel.setPathPhoto(pathPhoto);
+
+
+                binding.name.setText(viewModel.getName());
+
+                try {
+                    new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute(pathPhoto);
                 }
-            });
+                catch (Exception e) {
+                }
 
-        }catch (Exception e){
+            }
 
-            viewModel.setLogoutSatus();
-            mAuth.signOut();
-            Intent i = new Intent(this,EmailPasswordActivity.class);
-            startActivity(i);
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         //bn_nav
         bottomNavigationView = findViewById(R.id.bottom_nav);
@@ -277,7 +247,7 @@ public class UsersActivity extends AppCompatActivity
 
     private void initView(){
 
-       // FirebaseUser currentUser = mAuth.getCurrentUser();
+        // FirebaseUser currentUser = mAuth.getCurrentUser();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_users);
         binding.setViewmodel(viewModel);
 
@@ -289,12 +259,12 @@ public class UsersActivity extends AppCompatActivity
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         if(view.getId()==R.id.button){
-        int current=parseInt(viewModel.getString(),10);
-        current++;
-        String strCurrent= String.valueOf(current);
+            int current=parseInt(viewModel.getString(),10);
+            current++;
+            String strCurrent= String.valueOf(current);
 
-        viewModel.setString(strCurrent);
-        binding.textView2.setText(viewModel.getString());
+            viewModel.setString(strCurrent);
+            binding.textView2.setText(viewModel.getString());
         }
         else if(view.getId()==R.id.btn_addImage){
             Intent intent =new Intent(Intent.ACTION_PICK);
@@ -356,7 +326,7 @@ public class UsersActivity extends AppCompatActivity
             jroomid = findViewById(R.id.roomid);
             FirebaseUser user = mAuth.getCurrentUser();
 
-                mDatabase.child("user").child(user.getUid()).child("live").child(jroomid.getText().toString()).setValue("1");
+            mDatabase.child("user").child(user.getUid()).child("live").child(jroomid.getText().toString()).setValue("1");
 
 
 
@@ -367,12 +337,12 @@ public class UsersActivity extends AppCompatActivity
             jroomid = findViewById(R.id.roomid);
             FirebaseUser user = mAuth.getCurrentUser();
 
-         //   mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
+            //   mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
 
 
             Intent i =new Intent(this,addqActivity.class);
             startActivity(i);
-         //   setContentView(R.layout.activity_addq);
+            //   setContentView(R.layout.activity_addq);
 
 
         }
@@ -388,7 +358,7 @@ public class UsersActivity extends AppCompatActivity
 
 
 
-                    mtypeField = findViewById(R.id.type);
+            mtypeField = findViewById(R.id.type);
             mdataField = findViewById(R.id.data);
             nameField=findViewById(R.id.name);
 
@@ -428,11 +398,11 @@ public class UsersActivity extends AppCompatActivity
 
             Uri uri=data.getData();
             final StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
-           // mProgressDialog.setMessage("Uploading....");
+            // mProgressDialog.setMessage("Uploading....");
             mProgressDialog.setMessage("uploading....");
             mProgressDialog.show();
 
-           Log.d("11111111","11111111");
+            Log.d("11111111","11111111");
 
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -537,11 +507,8 @@ public class UsersActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
             Intent i = new Intent(this,Status.class);
             startActivity(i);
-        }else if (id == R.id.nav_send){
-            Intent i = new Intent(this,home.class);
-            startActivity(i);
-        }
 
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_user);
         drawer.closeDrawer(GravityCompat.START);
