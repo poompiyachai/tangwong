@@ -35,6 +35,7 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".create_roomActiviity"></activity>
         <activity android:name=".user_qrcode"></activity>
+        <activity android:name=".Status"></activity>
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true"/>

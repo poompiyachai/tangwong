@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Request {
     private String phone;
+    private String status;
     private String name;
     private String moreDetail;
     private String total;
@@ -64,7 +65,21 @@ public class Request {
 
     }
 
-    public Request(String uid,String phone, String name, String moreDetail, String total, List<Order> items) {
+    public Request(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Request(String status,String uid, String phone, String name, String moreDetail, String total, List<Order> items) {
+        this.status=status;
         this.uid=uid;
         this.phone = phone;
         this.name = name;
