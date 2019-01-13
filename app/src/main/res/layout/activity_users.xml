@@ -28,10 +28,10 @@
             app:headerLayout="@layout/nav_header_home"
             app:menu="@menu/activity_home_drawer" />
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".UsersActivity">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".UsersActivity">
 
 
             <RelativeLayout
@@ -225,7 +225,7 @@
             android:onClick="click"/>
             -->
 
-    </android.support.constraint.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.v4.widget.DrawerLayout>
 </layout>
