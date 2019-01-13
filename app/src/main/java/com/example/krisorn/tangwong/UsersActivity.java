@@ -14,6 +14,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
+//import android.support.v4.media.app.NotificationCompat;
+
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+
+
+//import android.support.v4.media.app.NotificationCompat;
+import android.util.Log;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -73,6 +82,12 @@ public class UsersActivity extends AppCompatActivity
     private int change=0;
     private long turnq=1;
     private String livenow;
+    private String id="2";
+    private String roomq="1";
+    private String tempuid="asd";
+    private boolean check=false;
+
+
 
 
 
@@ -91,6 +106,7 @@ public class UsersActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
 
 
         super.onCreate(savedInstanceState);
@@ -118,15 +134,33 @@ public class UsersActivity extends AppCompatActivity
 
         nameCard = database.getReference();
 
-        try {
 
-            nameCard.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String uid = user.getUid();
+        nameCard.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String uid = user.getUid();
+
+
+
+
+
+
+
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
-                    String name = dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
+               String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
+
+               if(a.equals ("1"))
+               {
+                   String b =dataSnapshot.child ("room").child (id).child ("q").child (roomq).child ("text").getValue((String.class));
+
+                   showNotification ("test");
+                   mDatabase.child("user").child(uid).child("notification").setValue("0");
+                   check=false;
+               }
+
+              String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
+
 
                     String pathPhoto = dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
                     viewModel.setName(name);
@@ -156,6 +190,12 @@ public class UsersActivity extends AppCompatActivity
                     } catch (Exception e) {
                     }
 
+
+              try {
+                  new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute(pathPhoto);
+              }
+              catch (Exception e) {
+              }
                 }
 
                 @Override
@@ -241,7 +281,10 @@ public class UsersActivity extends AppCompatActivity
     }
 
     public void click(View view) {
+
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+
         if(view.getId()==R.id.button){
         int current=parseInt(viewModel.getString(),10);
         current++;
@@ -257,6 +300,44 @@ public class UsersActivity extends AppCompatActivity
         }
         else if(view.getId()==R.id.addroom){
             setContentView(R.layout.activity_addroom);
+
+        }
+        else if(view.getId()==R.id.notification){
+            jroomid = findViewById(R.id.roomid);
+            FirebaseDatabase database2 = FirebaseDatabase.getInstance();
+            Log.d("aasd",jroomid.getText ().toString ());
+
+            //nameCard =database.getReference();
+            mDatabase.child("eiei").setValue("asdasd");
+            mDatabase.child("eiei").setValue("dsacfvf");
+            check = true;
+
+            nameCard.addValueEventListener (new ValueEventListener () {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    final FirebaseUser user = mAuth.getCurrentUser();
+                    String uid = user.getUid();
+
+
+
+
+                    if(check==true)
+                    {
+                        //roomq = findViewById(R.id.roomid).toString ();
+                        tempuid = dataSnapshot.child ("room").child (id).child ("q").child (roomq).child ("uid").getValue((String.class));
+
+                        Log.d("aasd",tempuid);
+                        mDatabase.child ("room").child (id).child ("q").child (roomq).child ("text").setValue(jroomid.getText ().toString ());
+                        mDatabase.child("user").child(tempuid).child("notification").setValue("1");
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
         }
 
@@ -318,28 +399,9 @@ public class UsersActivity extends AppCompatActivity
         Intent i = new Intent(this,EmailPasswordActivity.class);
         startActivity(i);
     }
+    public void test(View view) {
 
-    private void showNotification(String text) {
-        Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("http://devahoy.com/posts/android-notification/"));
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-        Notification notification =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("การเเจ้งเตือน")
-                        .setContentText(text)
-                        .setAutoCancel(true)
-                        .setContentIntent(pendingIntent)
-                        .setDefaults(Notification.DEFAULT_SOUND)
-
-                        .build();
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(1000, notification);
-
-        Log.d("aasd","asdasda");
     }
 
     @Override
@@ -389,6 +451,29 @@ public class UsersActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void showNotification(String text) {
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("http://devahoy.com/posts/android-notification/"));
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        Notification notification =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("การเเจ้งเตือน")
+                        .setContentText(text)
+                        .setAutoCancel(true)
+                        .setContentIntent(pendingIntent)
+                        .setDefaults(Notification.DEFAULT_SOUND)
+
+                        .build();
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(1000, notification);
+
+
     }
 
     @Override

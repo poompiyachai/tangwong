@@ -162,8 +162,10 @@ public class Cart extends AppCompatActivity {
                 FirebaseUser user = mAuth.getCurrentUser();
 
                 Request request = new Request(
+
                         "wait",
                         user.getUid(),
+
                         phoneNumber,
                         name,
                         edtAddress.getText().toString(),
@@ -174,9 +176,10 @@ public class Cart extends AppCompatActivity {
                 // user = mAuth.getCurrentUser();
                 Log.d("show live now ","livenow"+livenow);
                 Log.d("show turnq","turnq"+turnq);
-               // mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).child("uid").setValue(user.getUid());
+        // mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).child("uid").setValue(user.getUid());
                 mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).setValue(request);
                 mDatabase.child("user").child(user.getUid()).child("orderNow").child(String.valueOf(noOfOder)).setValue(livenow);
+
                 new Database(getBaseContext()).cleanCart();
                 Toast.makeText(Cart.this,"Thank you, Order Place",Toast.LENGTH_SHORT).show();
                 finish();
