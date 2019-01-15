@@ -89,6 +89,7 @@ public class UsersActivity extends AppCompatActivity
     private String roomq="1";
     private String tempuid="asd";
     private boolean check=false;
+    private long num=0;
 
 
 
@@ -142,7 +143,22 @@ public class UsersActivity extends AppCompatActivity
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String uid = user.getUid();
 
-
+                if(findViewById(R.id.roomid)!=null)
+                {
+                    EditText check = findViewById(R.id.roomid);
+                    while (true)
+                    {
+                        if((!dataSnapshot.child("room").child(check.getText().toString()).child("people_live").child(Long.toString(num)).hasChildren ()))
+                        {
+                            break;
+                        }
+                        else if(!dataSnapshot.child("room").child(check.getText().toString()).child("people_live").child(Long.toString(num)).getValue ().equals (uid))
+                        {
+                            break;
+                        }
+                        else num++;
+                    }
+                }
 
 
 
@@ -151,14 +167,30 @@ public class UsersActivity extends AppCompatActivity
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
                 String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
+                String timestatus =dataSnapshot.child ("user").child (uid).child ("time").child ("status").getValue((String.class));
 
                 if(a.equals ("1"))
                 {
                     String b =dataSnapshot.child ("room").child (id).child ("q").child (roomq).child ("text").getValue((String.class));
 
-                    showNotification ("test");
+                    showNotification (b);
                     mDatabase.child("user").child(uid).child("notification").setValue("0");
+                    mDatabase.child ("room").child (id).child ("q").child (roomq).child ("noti_status").setValue ("0");
                     check=false;
+                }
+
+                if(timestatus.equals ("1"))
+                {
+                    Calendar c = Calendar.getInstance();
+
+                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+
+                    String formattedDate = df.format(c.getTime());
+                    String time =dataSnapshot.child ("user").child (uid).child ("time").child ("time").getValue((String.class));
+                    if(time.equals (formattedDate))
+                    {
+                        showNotification ("glory glory man United");
+                    }
                 }
 
                 String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
@@ -276,14 +308,13 @@ public class UsersActivity extends AppCompatActivity
 
         }
         else if(view.getId()==R.id.notification){
-            Calendar c = Calendar.getInstance();
+            Intent i = new Intent (this,time.class);
+            startActivity (i);
 
-            SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-
-            String formattedDate = df.format(c.getTime());
+      /*
             jroomid = findViewById(R.id.roomid);
             FirebaseDatabase database2 = FirebaseDatabase.getInstance();
-            Log.d("aasd",formattedDate);
+            Log.d("aasd","dvsdvsd");
 
             //nameCard =database.getReference();
             mDatabase.child("eiei").setValue("asdasd");
@@ -319,7 +350,7 @@ public class UsersActivity extends AppCompatActivity
 
                 }
             });
-
+*/
         }
 
         else if(view.getId()==R.id.q){
@@ -327,10 +358,10 @@ public class UsersActivity extends AppCompatActivity
             FirebaseUser user = mAuth.getCurrentUser();
 
             mDatabase.child("user").child(user.getUid()).child("live").child(jroomid.getText().toString()).setValue("1");
+            mDatabase.child("room").child(jroomid.getText().toString()).child("people_live").child(Long.toString(num)).child("uid").setValue (user.getUid ());
 
 
-
-            setContentView(R.layout.activity_addq);
+           // setContentView(R.layout.activity_addq);
 
         }
         else if(view.getId()==R.id.enter){

@@ -29,6 +29,7 @@
         <activity android:name=".list_itemActivity" />
         <activity android:name=".item_detail" />
         <activity android:name=".Cart" />
+        <activity android:name=".Status" />
         <activity
             android:name=".home"
             android:label="@string/title_activity_home"
@@ -40,7 +41,8 @@
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true" />
 
-        <activity android:name=".time"></activity>
+        <activity android:name=".time" />
+        <activity android:name=".notification"></activity>
     </application>
 
 </manifest>

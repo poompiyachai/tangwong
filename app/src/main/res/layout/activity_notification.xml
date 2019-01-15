@@ -8,50 +8,55 @@
     android:background="@drawable/logo_design_png_transparent_7">
 
     <EditText
-        android:id="@+id/hr"
+        android:id="@+id/q"
         android:layout_width="308dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
-        android:hint="hour"
+        android:hint="q"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.204" />
 
 
     <EditText
-        android:id="@+id/min"
+        android:id="@+id/text"
         android:layout_width="308dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="80dp"
         android:ems="10"
-        android:hint="min"
+        android:hint="text"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/roomid"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sec" />
 
     <EditText
-        android:id="@+id/sec"
+        android:id="@+id/roomid"
         android:layout_width="308dp"
         android:layout_height="52dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="180dp"
         android:ems="10"
-        android:hint="sec"
+        android:hint="roomid"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/setnoti"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hr" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/set"
+        android:id="@+id/setnoti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
