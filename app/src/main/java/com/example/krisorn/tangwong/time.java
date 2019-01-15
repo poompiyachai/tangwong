@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -53,12 +54,13 @@ public class time extends AppCompatActivity {
                     if(dataSnapshot.child ("room").child (id).child("people_live").child (Long.toString (i)).child ("uid").getValue (String.class)!=null)
                     {
                         String tempUid =  dataSnapshot.child ("room").child (id).child("people_live").child (Long.toString (i)).child ("uid").getValue (String.class);
-                        String time = dataSnapshot.child ("room").child (id).child ("time_noti").child ("time").getValue  (String.class);
-                        mDatabase.child ("user").child (tempUid).child ("time").child ("time") .setValue (time);
+                        String text = dataSnapshot.child ("room").child (id).child ("time_noti").child ("text") .getValue (String.class);
                         mDatabase.child ("user").child (tempUid).child ("time").child ("status") .setValue ("1");
+                        mDatabase.child ("user").child (tempUid).child ("time").child ("text") .setValue (text);
                     }
 
                 }
+                mDatabase.child ("room").child (id).child ("time_noti").child ("status") .setValue ("0");
             }
 
 
@@ -81,17 +83,38 @@ public class time extends AppCompatActivity {
             EditText hr = findViewById(R.id.hr);
             EditText mi = findViewById(R.id.min);
             EditText se = findViewById(R.id.sec);
-            Calendar c = Calendar.getInstance();
 
-            SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
 
-            String formattedDate = df.format(c.getTime());
+            long a = Integer.parseInt (hr.getText ().toString ());
+             a=a*3600;
 
-            String settime = hr.getText().toString()+":"+mi.getText().toString()+":"+se.getText().toString();
-            mDatabase.child ("room").child (id).child ("time_noti").child ("time") .setValue (settime);
-            mDatabase.child ("room").child (id).child ("time_noti").child ("status") .setValue ("1");
-            Log.d("aasd",settime);
-            Log.d("aasd",formattedDate);
+            long b = Integer.parseInt (mi.getText ().toString ());
+            b=b*60;
+
+            long c = Integer.parseInt (se.getText ().toString ());
+
+            int asd = Integer.parseInt(String.valueOf (a+b+c))*1000;
+            new CountDownTimer (asd, 1000) {
+                EditText text = findViewById(R.id.text);
+
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                public void onFinish() {
+
+                    mDatabase.child ("room").child (id).child ("time_noti").child ("status") .setValue ("1");
+                    mDatabase.child ("room").child (id).child ("time_noti").child ("text") .setValue (text.getText ().toString ());
+
+                }
+            }.start();
+
+            Intent i = new Intent(this,UsersActivity.class);
+            startActivity(i);
+
+
+
+
         }
     }
 
