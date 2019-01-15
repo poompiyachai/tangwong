@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -179,18 +180,15 @@ public class UsersActivity extends AppCompatActivity
                     check=false;
                 }
 
+
+
                 if(timestatus.equals ("1"))
                 {
-                    Calendar c = Calendar.getInstance();
 
-                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
 
-                    String formattedDate = df.format(c.getTime());
-                    String time =dataSnapshot.child ("user").child (uid).child ("time").child ("time").getValue((String.class));
-                    if(time.equals (formattedDate))
-                    {
-                        showNotification ("glory glory man United");
-                    }
+                    mDatabase.child ("user").child (uid).child ("time").child ("status").setValue ("0");
+                    String timetext = dataSnapshot.child ("user").child (uid).child ("time").child ("text").getValue (String.class);
+                    showNotification (timetext);
                 }
 
                 String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
