@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
+        <activity android:name=".add_feature"></activity>
         <activity android:name=".EmailPasswordActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".UsersActivity" />
-        <activity android:name=".own_room"></activity>
+        <activity android:name=".own_room" />
         <activity android:name=".MainActivity" />
         <activity android:name=".registerActivity" />
         <activity android:name=".user_roomActivity" />
@@ -30,7 +31,6 @@
         <activity android:name=".list_itemActivity" />
         <activity android:name=".item_detail" />
         <activity android:name=".Cart" />
-
         <activity android:name=".Status" />
         <activity
             android:name=".home"
@@ -38,22 +38,16 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".create_roomActiviity" />
         <activity android:name=".user_qrcode" />
-
-    
         <activity android:name=".Status" />
-        <activity android:name=".AdminDashBoradView"></activity>
-
+        <activity android:name=".AdminDashBoradView" />
 
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true" />
 
-
         <activity android:name=".time" />
-        <activity android:name=".notification"></activity>
-
-        <activity android:name=".own_room"></activity>
-
+        <activity android:name=".notification" />
+        <activity android:name=".own_room" />
     </application>
 
 </manifest>

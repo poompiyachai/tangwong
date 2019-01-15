@@ -74,7 +74,7 @@ public class AdminDashBoradView extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Log.d("canClickFab","--------");
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "create feature", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
