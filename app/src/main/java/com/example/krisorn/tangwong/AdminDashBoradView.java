@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.krisorn.tangwong.AdminDashBorad.AdminDashBoradAdapter;
 import com.example.krisorn.tangwong.Database.Database;
 import com.example.krisorn.tangwong.Model.Order;
 import com.example.krisorn.tangwong.Model.Request;
@@ -51,7 +52,7 @@ public class AdminDashBoradView extends AppCompatActivity
 
     public DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
-    OwnRoomAdapter adapter;
+    AdminDashBoradAdapter adapter;
     public int countOrderNow=0;
 
 
@@ -107,13 +108,31 @@ public class AdminDashBoradView extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         Log.d("list1", String.valueOf(countOrderNow));
         try {
-            mDatabase.child("user").child(user.getUid()).child("owner").addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+            Log.d("listtttttttttttttttt", String.valueOf(countOrderNow));
+            mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    countOrderNow= (int) dataSnapshot.getChildrenCount();
-                    Log.d("list2", String.valueOf(countOrderNow));
-                    adapter = new OwnRoomAdapter(countOrderNow,AdminDashBoradView.this);
-                    recyclerView.setAdapter(adapter);
+                    final String roomLiveNow= dataSnapshot.getValue(String.class);
+                    Log.d("canRetrive","livenow");
+
+                    mDatabase.child("room").child(roomLiveNow).child("feature").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            countOrderNow= (int) dataSnapshot.getChildrenCount();
+                            Log.d("list2", String.valueOf(countOrderNow));
+                            adapter = new AdminDashBoradAdapter(countOrderNow,AdminDashBoradView.this);
+                            recyclerView.setAdapter(adapter);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
 
                 @Override
@@ -121,6 +140,9 @@ public class AdminDashBoradView extends AppCompatActivity
 
                 }
             });
+
+
+
 
         }
         catch (Exception e ){

@@ -14,9 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.example.krisorn.tangwong.AdminDashBoradView;
 import com.example.krisorn.tangwong.Model.Order;
 import com.example.krisorn.tangwong.R;
 import com.example.krisorn.tangwong.UsersViewModel;
+import com.example.krisorn.tangwong.list_itemActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,6 +41,7 @@ class AdminDashBoradViewHolder extends RecyclerView.ViewHolder implements View.O
     public TextView txtDetail;
     public TextView txtNameRoom;
     public ImageView imageView;
+
 
     public TextView getTxtNameRoom() {
         return txtNameRoom;
@@ -73,6 +76,7 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
     public DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     public int countOrderNow;
+    public int countFeature =0 ;
 
 
     public AdminDashBoradAdapter(int countOrderNow,Context context){
@@ -101,7 +105,24 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
             @Override
             public void onClick(View v) {
                 //  Intent i = new Intent(this,)
+
+                Intent i = new Intent(v.getContext(), list_itemActivity.class);
+                context.startActivity(i);
+
                 Log.d("statusPage","can click");
+                    /*mDatabase.child("user").child(user.getUid()).child("owner").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String room = dataSnapshot.child(String.valueOf(position)).getValue(String.class);
+                        mDatabase.child("user").child(user.getUid()).child("livenow").setValue(room);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                Log.d("statusPage","can click");*/
             }
         });
         Log.d("list data","can not get firebase");
@@ -109,16 +130,18 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
           mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
               @Override
               public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                  String roomLiveNow= dataSnapshot.getValue(String.class);
+                  final String roomLiveNow= dataSnapshot.getValue(String.class);
+                  Log.d("canRetrive","livenow");
+
                   mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf(position)).addListenerForSingleValueEvent(new ValueEventListener() {
                       @Override
                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                          mDatabase.child("room").child(dataSnapshot.getValue(String.class)).addListenerForSingleValueEvent(new ValueEventListener() {
+                          mDatabase.child("room").child(roomLiveNow).child(dataSnapshot.getValue(String.class)).addListenerForSingleValueEvent(new ValueEventListener() {
                               @Override
                               public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                   holder.txtNameRoom.setText(dataSnapshot.child("nameOfFeture").getValue(String.class));
-                                  holder.txtNameRoom.setText(dataSnapshot.child("detailOfFeture").getValue(String.class));
-                                  Log.d("canRetriveFeature","-----");
+                                  holder.txtDetail.setText(dataSnapshot.child("detailOfFeture").getValue(String.class));
+                                  Log.d("canRetriveFeature",dataSnapshot.getRef().toString());
                               }
 
                               @Override
@@ -160,7 +183,7 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
 
     @Override
     public int getItemCount() {
-        Log.d("listtttttttttttttttt", String.valueOf(countOrderNow));
+
         return countOrderNow;
     }
 }
