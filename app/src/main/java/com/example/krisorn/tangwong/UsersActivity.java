@@ -539,6 +539,10 @@ public class UsersActivity extends AppCompatActivity
             Intent i = new Intent(this,Status.class);
             startActivity(i);
 
+        }else if(id==R.id.nav_myroom){
+            Intent i = new Intent(this,own_room.class);
+            startActivity(i);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_user);
