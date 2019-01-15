@@ -1,4 +1,4 @@
-package com.example.krisorn.tangwong.ownRoom;
+package com.example.krisorn.tangwong.AdminDashBorad;
 
 
 import android.content.Context;
@@ -14,11 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-
 import com.example.krisorn.tangwong.AdminDashBoradView;
 import com.example.krisorn.tangwong.Model.Order;
 import com.example.krisorn.tangwong.R;
 import com.example.krisorn.tangwong.UsersViewModel;
+import com.example.krisorn.tangwong.list_itemActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,12 +35,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-class OwnRoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+class AdminDashBoradViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
 
     public TextView txtDetail;
-    public TextView txtNameRoom, txtSumPrice,txtStatus,txtNumberOfItem;
+    public TextView txtNameRoom;
     public ImageView imageView;
+
 
     public TextView getTxtNameRoom() {
         return txtNameRoom;
@@ -50,89 +51,66 @@ class OwnRoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         this.txtNameRoom = txtNameRoom;
     }
 
-    public TextView getTxtSumPrice() {
-        return txtSumPrice;
-    }
 
-    public void setTxtSumPrice(TextView txtSumPrice) {
-        this.txtSumPrice = txtSumPrice;
-    }
 
-    public TextView getTxtStatus() {
-        return txtStatus;
-    }
 
-    public void setTxtStatus(TextView txtStatus) {
-        this.txtStatus = txtStatus;
-    }
-
-    public TextView getTxtNumberOfItem() {
-        return txtNumberOfItem;
-    }
-
-    public void setTxtNumberOfItem(TextView txtNumberOfItem) {
-        this.txtNumberOfItem = txtNumberOfItem;
-    }
-
-    public OwnRoomViewHolder(@NonNull View itemView) {
+    public AdminDashBoradViewHolder(@NonNull View itemView) {
         super(itemView);
 
         imageView=(ImageView) itemView.findViewById(R.id.img_card_user_room);
         txtNameRoom= (TextView)itemView.findViewById(R.id.text_card_user_room);
-       // txtNumberOfItem=(TextView)itemView.findViewById(R.id.NumberOfItem);
+        // txtNumberOfItem=(TextView)itemView.findViewById(R.id.NumberOfItem);
         txtDetail= (TextView)itemView.findViewById(R.id.text_card_detail);
-      //  txtSumPrice= (TextView)itemView.findViewById(R.id.sumPice);
+        //  txtSumPrice= (TextView)itemView.findViewById(R.id.sumPice);
     }
 
     @Override
     public void onClick(View v) {
         // Log.d("statusPage","can click");
-
-
     }
 }
 
-public class OwnRoomAdapter extends RecyclerView.Adapter<OwnRoomViewHolder> {
+public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradViewHolder> {
 
     private Context context;
     public DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     public int countOrderNow;
+    public int countFeature =0 ;
 
 
-    public OwnRoomAdapter(int countOrderNow,Context context){
+    public AdminDashBoradAdapter(int countOrderNow,Context context){
         this.countOrderNow=countOrderNow;
         this.context = context;
     }
     @NonNull
     @Override
-    public OwnRoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdminDashBoradViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View itemView = inflater.inflate(R.layout.card_user_room,parent,false);
 
 
-        return new OwnRoomViewHolder(itemView);
+        return new AdminDashBoradViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final OwnRoomViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final AdminDashBoradViewHolder holder, final int position) {
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
         //  TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuanlity(),Color.RED);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //  Intent i = new Intent(this,)
 
-                Intent i = new Intent(v.getContext(),AdminDashBoradView.class);
+                Intent i = new Intent(v.getContext(), list_itemActivity.class);
                 context.startActivity(i);
 
                 Log.d("statusPage","can click");
-
-                mDatabase.child("user").child(user.getUid()).child("owner").addListenerForSingleValueEvent(new ValueEventListener() {
+                    /*mDatabase.child("user").child(user.getUid()).child("owner").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String room = dataSnapshot.child(String.valueOf(position)).getValue(String.class);
@@ -144,39 +122,47 @@ public class OwnRoomAdapter extends RecyclerView.Adapter<OwnRoomViewHolder> {
 
                     }
                 });
+                Log.d("statusPage","can click");*/
             }
         });
         Log.d("list data","can not get firebase");
         try {
-            mDatabase.child("user").child(user.getUid()).child("owner").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String room = dataSnapshot.child(String.valueOf(position)).getValue(String.class);
-                    Log.d("list data", "can get fribase1" + room + " " + position );
-                    try {
+          mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
+              @Override
+              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                  final String roomLiveNow= dataSnapshot.getValue(String.class);
+                  Log.d("canRetrive","livenow");
 
+                  mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf(position)).addListenerForSingleValueEvent(new ValueEventListener() {
+                      @Override
+                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                          mDatabase.child("room").child(roomLiveNow).child(dataSnapshot.getValue(String.class)).addListenerForSingleValueEvent(new ValueEventListener() {
+                              @Override
+                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                  holder.txtNameRoom.setText(dataSnapshot.child("nameOfFeture").getValue(String.class));
+                                  holder.txtDetail.setText(dataSnapshot.child("detailOfFeture").getValue(String.class));
+                                  Log.d("canRetriveFeature",dataSnapshot.getRef().toString());
+                              }
 
-                        mDatabase.child("room").child(room).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                holder.txtNameRoom.setText(dataSnapshot.child("name").getValue(String.class));
-                                holder.txtDetail.setText(dataSnapshot.child("data").getValue(String.class));
-                                Picasso.get().load(dataSnapshot.child("photoPath").getValue(String.class)).into(holder.imageView);
-                            }
+                              @Override
+                              public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                              }
+                          });
+                      }
 
-                            }
-                        });
-                    }catch (Exception e){}
-                }
+                      @Override
+                      public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                      }
+                  });
+              }
 
-                }
-            });
+              @Override
+              public void onCancelled(@NonNull DatabaseError databaseError) {
+
+              }
+          });
 
         }catch (Exception e ){
 
@@ -197,9 +183,7 @@ public class OwnRoomAdapter extends RecyclerView.Adapter<OwnRoomViewHolder> {
 
     @Override
     public int getItemCount() {
-        Log.d("listtttttttttttttttt", String.valueOf(countOrderNow));
+
         return countOrderNow;
     }
-
-
 }
