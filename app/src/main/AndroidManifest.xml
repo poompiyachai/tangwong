@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:label">
+        tools:replace="android:label"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".EmailPasswordActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +33,9 @@
         <activity android:name=".create_roomActiviity"></activity>
         <activity android:name=".user_qrcode"></activity>
         <activity android:name=".Status"></activity>
+        <activity android:name=".user_poll"></activity>
+        <activity android:name=".user_idSearch"/>
+        <activity android:name=".user_search"/>
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true"/>

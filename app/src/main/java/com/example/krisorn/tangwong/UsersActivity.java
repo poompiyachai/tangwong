@@ -187,7 +187,7 @@ public class UsersActivity extends AppCompatActivity
                         return  true;
                     case R.id.search:
                         Log.d("click","click search");
-                        Intent i = new Intent(UsersActivity.this,Cart.class);
+                        Intent i = new Intent(UsersActivity.this,user_search.class);
                         startActivity(i);
 
                         //  Toast.makeText(UsersActivity.this,"SEARCH",Toast.LENGTH_SHORT);
@@ -444,8 +444,10 @@ public class UsersActivity extends AppCompatActivity
         }else if (id == R.id.nav_send){
             Intent i = new Intent(this,home.class);
             startActivity(i);
+        }else if (id == R.id.nav_poll){
+            Intent i = new Intent(this,user_poll.class);
+            startActivity(i);
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_user);
         drawer.closeDrawer(GravityCompat.START);
