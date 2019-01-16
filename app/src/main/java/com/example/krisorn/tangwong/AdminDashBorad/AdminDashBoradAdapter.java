@@ -95,12 +95,12 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
 
     @Override
     public void onBindViewHolder(@NonNull final AdminDashBoradViewHolder holder, final int position) {
-        mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = mAuth.getCurrentUser();
+
+
         //  TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuanlity(),Color.RED);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-
+        final FirebaseUser user = mAuth.getCurrentUser();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,19 +110,7 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
                 context.startActivity(i);
 
                 Log.d("statusPage","can click");
-                    /*mDatabase.child("user").child(user.getUid()).child("owner").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String room = dataSnapshot.child(String.valueOf(position)).getValue(String.class);
-                        mDatabase.child("user").child(user.getUid()).child("livenow").setValue(room);
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-                Log.d("statusPage","can click");*/
             }
         });
         Log.d("list data","can not get firebase");

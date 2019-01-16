@@ -57,7 +57,6 @@ class OwnRoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     public void setTxtSumPrice(TextView txtSumPrice) {
         this.txtSumPrice = txtSumPrice;
     }
-
     public TextView getTxtStatus() {
         return txtStatus;
     }
@@ -137,6 +136,7 @@ public class OwnRoomAdapter extends RecyclerView.Adapter<OwnRoomViewHolder> {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         String room = dataSnapshot.child(String.valueOf(position)).getValue(String.class);
                         mDatabase.child("user").child(user.getUid()).child("livenow").setValue(room);
+                      //  Log.d("ttttttttttttt",mDatabase.getPath().getParent().toString());
                     }
 
                     @Override

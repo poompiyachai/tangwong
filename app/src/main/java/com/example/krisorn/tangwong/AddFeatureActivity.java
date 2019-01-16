@@ -25,7 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.krisorn.tangwong.AdminDashBorad.AdminDashBoradAdapter;
+import com.example.krisorn.tangwong.AddFeature.AddFeatureAdapter;
+
 import com.example.krisorn.tangwong.Database.Database;
 import com.example.krisorn.tangwong.Model.Order;
 import com.example.krisorn.tangwong.Model.Request;
@@ -45,15 +46,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class AdminDashBoradView extends AppCompatActivity
+public class AddFeatureActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
 
     public DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
-    AdminDashBoradAdapter adapter;
+    AddFeatureAdapter adapter;
     public int countOrderNow=0;
+
+
 
 
     @Override
@@ -61,38 +64,27 @@ public class AdminDashBoradView extends AppCompatActivity
         Log.d("createAdmin","------");
         super.onCreate(savedInstanceState);
 
-        loadListItem();
-        setContentView(R.layout.admin_dash_borad);
-        recyclerView = (RecyclerView)findViewById(R.id.list_admin_dashborad);
+
+        setContentView(R.layout.activity_add_feature);
+        recyclerView = (RecyclerView)findViewById(R.id.list_add_feature);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         Log.d("list data","can create");
+        loadListItem();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("canClickFab","--------");
-                Snackbar.make(view, "create feature", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                Intent i = new Intent(view.getContext(),AddFeatureActivity.class);
-                startActivity(i);
-            }
-        });
 
         //side bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_user);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_dash_board);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_add_feature);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                AdminDashBoradView.this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                AddFeatureActivity.this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_dash_board);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_add_feature);
         Log.d("testSideNav","---------------");
-        navigationView.setNavigationItemSelectedListener(AdminDashBoradView.this);
+        navigationView.setNavigationItemSelectedListener(AddFeatureActivity.this);
         navigationView.bringToFront();
         //end side bar
 
@@ -104,72 +96,15 @@ public class AdminDashBoradView extends AppCompatActivity
     private void loadListItem(){
         Log.d("list data","can load list");
 
+            countOrderNow= 1;
 
-        mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = mAuth.getCurrentUser();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mAuth = FirebaseAuth.getInstance();
-        Log.d("list1", String.valueOf(countOrderNow));
-        try {
-
-
-            Log.d("listtttttttttttttttt", String.valueOf(countOrderNow));
-            mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    final String roomLiveNow= dataSnapshot.getValue(String.class);
-                    Log.d("canRetrive","livenow");
-
-                    mDatabase.child("room").child(roomLiveNow).child("feature").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            countOrderNow= (int) dataSnapshot.getChildrenCount();
-                            Log.d("list2", String.valueOf(countOrderNow));
-                            adapter = new AdminDashBoradAdapter(countOrderNow,AdminDashBoradView.this);
-                            recyclerView.setAdapter(adapter);
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-
-
-
-        }
-        catch (Exception e ){
-
-
-        }
-        Log.d("list", String.valueOf(countOrderNow));
-
-
+            adapter = new AddFeatureAdapter(countOrderNow,AddFeatureActivity.this);
+            recyclerView.setAdapter(adapter);
 
 
 
     }
 
-   /* @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_user);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }*/
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
@@ -226,7 +161,7 @@ public class AdminDashBoradView extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_own_room);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_add_feature);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

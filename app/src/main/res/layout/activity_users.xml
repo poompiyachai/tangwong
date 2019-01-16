@@ -71,7 +71,12 @@
                     android:layout_below="@+id/btnProfile"
                     android:layout_centerInParent="true"
                     android:orientation="vertical">
-
+                    <Button
+                        android:id="@+id/notification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="click"
+                        android:text="notification" />
                     <Button
                         android:id="@+id/btn_show_room_user"
                         android:layout_width="match_parent"
@@ -131,14 +136,7 @@
                         android:onClick="click"
                         android:text="enterroom" />
 
-                    <Button
-                        android:id="@+id/notification"
 
-                        android:layout_width="wrap_content"
-
-                        android:layout_height="wrap_content"
-                        android:onClick="click"
-                        android:text="notification" />
 
 
                 </LinearLayout>

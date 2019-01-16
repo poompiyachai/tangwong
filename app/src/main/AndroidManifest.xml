@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".add_feature"></activity>
+        <activity android:name=".AddFeatureActivity"></activity>
+        <activity android:name=".add_feature" />
         <activity android:name=".EmailPasswordActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
