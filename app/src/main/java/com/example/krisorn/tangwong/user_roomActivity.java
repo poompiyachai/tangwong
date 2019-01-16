@@ -1,36 +1,37 @@
-package com.example.krisorn.tangwong;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+        package com.example.krisorn.tangwong;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
+        import android.content.Intent;
+        import android.support.annotation.NonNull;
+        import android.support.design.widget.BottomNavigationView;
+        import android.support.annotation.Nullable;
+        import android.support.v7.app.AppCompatActivity;
+        import android.os.Bundle;
+        import android.support.v7.widget.LinearLayoutManager;
+        import android.support.v7.widget.RecyclerView;
+        import android.util.Log;
+        import android.view.LayoutInflater;
+        import android.view.MenuItem;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.AdapterView;
+        import android.widget.ImageView;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
-import org.w3c.dom.Text;
+        import com.google.firebase.auth.FirebaseAuth;
+        import com.google.firebase.auth.FirebaseUser;
+        import com.google.firebase.database.ChildEventListener;
+        import com.google.firebase.database.DataSnapshot;
+        import com.google.firebase.database.DatabaseError;
+        import com.google.firebase.database.DatabaseReference;
+        import com.google.firebase.database.FirebaseDatabase;
+        import com.google.firebase.database.ValueEventListener;
+        import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+        import org.w3c.dom.Text;
+
+        import java.util.ArrayList;
 
 public class user_roomActivity extends AppCompatActivity {
 
@@ -57,16 +58,13 @@ public class user_roomActivity extends AppCompatActivity {
                     //   Toast.makeText(UsersActivity.this,"ALERT",Toast.LENGTH_SHORT);
                     //jump to activity
                     return  true;
-
                 case R.id.profile:
                     Log.d("click","click profile");
                     //  Toast.makeText(UsersActivity.this,"PROFLIE",Toast.LENGTH_SHORT);
                     //jump to activity
                     return  true;
-
                 default:
                     return  false;
-
             }
         }
     };*/
@@ -102,9 +100,9 @@ public class user_roomActivity extends AppCompatActivity {
 
         for(int i = 0; i<5 ;i++){
             int pictureNum =genPictureNum();
-          //  int num =500 + (int)(Math.random()*100);
+            //  int num =500 + (int)(Math.random()*100);
             String str = genTitle();
-           // new DownloadImageTask(temImage).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2F1934229398?alt=media&token=ec82532d-8a0b-4ab4-bb12-a9a6be8189fd");
+            // new DownloadImageTask(temImage).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2F1934229398?alt=media&token=ec82532d-8a0b-4ab4-bb12-a9a6be8189fd");
 
             dataset.add(new Mydata(str,pictureNum,temImage));
         }
@@ -115,7 +113,7 @@ public class user_roomActivity extends AppCompatActivity {
             @NonNull
             @Override
             public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                 View card = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_user_room,viewGroup,false);
+                View card = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_user_room,viewGroup,false);
 
                 return new MyViewHolder(card);
             }
@@ -147,13 +145,13 @@ public class user_roomActivity extends AppCompatActivity {
                     }
                 });
 
-              //  mDatabase.child("user").child(uid).orderByChild("live").equalTo(i).limitToFirst(1).addValueEventListener(new ValueEventListener() {
+                //  mDatabase.child("user").child(uid).orderByChild("live").equalTo(i).limitToFirst(1).addValueEventListener(new ValueEventListener() {
                 mDatabase.child("user").child(uid).child("live").child(String.valueOf(i)).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         //eventsRef.orderByChild("Name").equalTo("Fb Meetup").limitToFirst(1)
-                         noRoom =dataSnapshot.getValue(String.class);
+                        noRoom =dataSnapshot.getValue(String.class);
                         Log.d("live","live "+ title + " " + i);
                         mDatabase.child("room").child(noRoom).addValueEventListener(new ValueEventListener() {
                             @Override
@@ -173,7 +171,7 @@ public class user_roomActivity extends AppCompatActivity {
                             }
                         });
 
-                       // String pathPhoto=dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
+                        // String pathPhoto=dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
 
 
                     }
@@ -188,7 +186,7 @@ public class user_roomActivity extends AppCompatActivity {
 
                 // imgUrl = "https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2F1934229398?alt=media&token=ec82532d-8a0b-4ab4-bb12-a9a6be8189fd";
 
-             //   new PicassoImageGetter()
+                //   new PicassoImageGetter()
 
             }
 
@@ -240,10 +238,10 @@ public class user_roomActivity extends AppCompatActivity {
 
 
     private class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-          TextView tvTitle;
-          ImageView imageView;
-          TextView tvCarddetail;
-          String pathPhoto;
+        TextView tvTitle;
+        ImageView imageView;
+        TextView tvCarddetail;
+        String pathPhoto;
 
 
 
@@ -251,9 +249,9 @@ public class user_roomActivity extends AppCompatActivity {
             super(itemView);
             tvTitle=itemView.findViewById(R.id.text_card_user_room);
             imageView=itemView.findViewById(R.id.img_card_user_room);
-            
-           // new DownloadImageTask((ImageView)findViewById(R.id.img_card_user_room)).execute(pathPhoto);
-           // tvCarddetail=itemView,findViewById(R.id.text_card_detail);
+
+            // new DownloadImageTask((ImageView)findViewById(R.id.img_card_user_room)).execute(pathPhoto);
+            // tvCarddetail=itemView,findViewById(R.id.text_card_detail);
             tvCarddetail=itemView.findViewById(R.id.text_card_detail);
 
         }
