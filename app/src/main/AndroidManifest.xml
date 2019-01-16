@@ -39,7 +39,7 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".create_roomActiviity" />
         <activity android:name=".user_qrcode" />
-        <activity android:name=".Status" />
+       
         <activity android:name=".AdminDashBoradView" />
 
         <meta-data
@@ -48,7 +48,7 @@
 
         <activity android:name=".time" />
         <activity android:name=".notification" />
-        <activity android:name=".own_room" />
+
     </application>
 
 </manifest>
