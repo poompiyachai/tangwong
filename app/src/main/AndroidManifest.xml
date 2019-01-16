@@ -15,13 +15,16 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".add_feature"></activity>
         <activity android:name=".EmailPasswordActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".UsersActivity" />
+        <activity android:name=".own_room" />
         <activity android:name=".MainActivity" />
         <activity android:name=".registerActivity" />
         <activity android:name=".user_roomActivity" />
@@ -29,16 +32,23 @@
         <activity android:name=".list_itemActivity" />
         <activity android:name=".item_detail" />
         <activity android:name=".Cart" />
-        <activity android:name=".home" />
         <activity android:name=".create_roomActiviity"></activity>
         <activity android:name=".user_qrcode"></activity>
         <activity android:name=".Status"></activity>
         <activity android:name=".user_poll"></activity>
         <activity android:name=".user_idSearch"/>
         <activity android:name=".user_search"/>
+        <activity
+            android:name=".home"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".AdminDashBoradView" />
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
-            android:value="true"/>
+            android:value="true" />
+
+        <activity android:name=".time" />
+        <activity android:name=".notification" />
     </application>
 
 </manifest>

@@ -51,13 +51,15 @@ public class create_roomActiviity extends AppCompatActivity
         txt_type_room=findViewById(R.id.txt_create_room_type);
         btn_create_room=(Button)findViewById(R.id.btn_create_room);
 
-        mDatabase.child("room").addValueEventListener(new ValueEventListener() {
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                roomid = dataSnapshot.getChildrenCount()+1;
-                count_own_room_count=dataSnapshot.child("user").child(user.getUid()).child("owner").getChildrenCount()+1;
-            }
+                roomid = dataSnapshot.child("room").getChildrenCount()+1;
+                Log.d("crateRoomid", String.valueOf(roomid));
+                count_own_room_count=dataSnapshot.child("user").child(user.getUid()).child("owner").getChildrenCount();
 
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -71,10 +73,12 @@ public class create_roomActiviity extends AppCompatActivity
 
 
                 Log.d("roomid",Long.toString(roomid));
+                mDatabase.child("room").child(Long.toString(roomid)).child("photoPath").setValue("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fwww.maxpixel.net-Taxes-Control-Smart-Home-Icon-Technology-Home-3317459.png?alt=media&token=329741c8-000f-4c85-bd9f-ca5b4e99442d");
                 mDatabase.child("room").child(Long.toString(roomid)).child("name").setValue(txt_name_room.getText().toString());
                 mDatabase.child("room").child(Long.toString(roomid)).child("type").setValue(txt_type_room.getText().toString());
                 mDatabase.child("room").child(Long.toString(roomid)).child("data").setValue(txt_data.getText().toString());
-                mDatabase.child("user").child(user.getUid()).child("owner").child(String.valueOf(count_own_room_count)).child((Long.toString(roomid)));
+
+                mDatabase.child("user").child(user.getUid()).child("owner").child(String.valueOf(count_own_room_count)).setValue((Long.toString(roomid)));
 
             }
         });
@@ -88,7 +92,7 @@ public class create_roomActiviity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-  //      NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_user);
+        //      NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_user);
 //        navigationView.setNavigationItemSelectedListener(this);
 //        navigationView.bringToFront();
         //end side bar
@@ -151,7 +155,7 @@ public class create_roomActiviity extends AppCompatActivity
             startActivity(i);
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_myroom) {
 
         }
 

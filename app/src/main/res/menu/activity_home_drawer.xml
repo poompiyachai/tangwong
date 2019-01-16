@@ -38,9 +38,9 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="status" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_myroom"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="myroom" />
         </menu>
     </item>
 

@@ -2,6 +2,7 @@ package com.example.krisorn.tangwong;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +26,7 @@ import org.w3c.dom.Text;
 public class user_idSearch extends AppCompatActivity {
     private EditText text_search ;
     private DatabaseReference searchRoom;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +43,7 @@ public class user_idSearch extends AppCompatActivity {
         if(v.getId() == R.id.bt_searchId){
             searchRoom.child("room").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                     Log.d("haaaaaaaaaa","haa");
                     if (dataSnapshot.hasChild(text_search.getText().toString())){
                         Log.d("passs",dataSnapshot.getKey());
@@ -52,6 +56,16 @@ public class user_idSearch extends AppCompatActivity {
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
+                                        mAuth=FirebaseAuth.getInstance();
+                                        final FirebaseUser user = mAuth.getCurrentUser();
+                                        long numberOfpeople_live = dataSnapshot.child("room").child(text_search.getText().toString()).child("people_live").getChildrenCount();
+
+                                        searchRoom.child("user").child(user.getUid()).child("live").child(text_search.getText().toString()).setValue("1");
+                                        searchRoom.child("user").child(user.getUid()).child("livenow").setValue(text_search.getText().toString());
+                                        searchRoom.child("room").child(text_search.getText().toString()).child("people_live").child(Long.toString(numberOfpeople_live += 1)).child("uid").setValue (user.getUid ());
+
+                                        Intent i = new Intent(user_idSearch.this,user_roomActivity.class);
+                                        startActivity(i);
                                     }
                                 });
 

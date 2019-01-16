@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,9 +55,13 @@ public class user_qrcode extends AppCompatActivity {
     private Button Gen_QR;
     private IntentIntegrator qrscan;
     private DatabaseReference searchRoom ;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth=FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
         setContentView(R.layout.activity_qrcode);
         searchRoom = FirebaseDatabase.getInstance().getReference();
         textScanner = (TextView)findViewById(R.id.textScanner);
@@ -185,17 +191,29 @@ public class user_qrcode extends AppCompatActivity {
                     Log.d(result.getContents(),"GGTOZO");
                     searchRoom.child("room").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                            mAuth=FirebaseAuth.getInstance();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                             user = mAuth.getCurrentUser();
                             if (dataSnapshot.hasChild(result.getContents())) {
                                 AlertDialog.Builder builder1 = new AlertDialog.Builder(user_qrcode.this);
                                 builder1.setMessage("You want Tungwong this");
                                 builder1.setCancelable(true);
 
                                 builder1.setPositiveButton(
+
                                         "Yes",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int id) {
                                                 dialog.cancel();
+                                                mAuth=FirebaseAuth.getInstance();
+                                                final FirebaseUser user = mAuth.getCurrentUser();
+                                                long numberOfpeople_live = dataSnapshot.child("room").child(result.getContents()).child("people_live").getChildrenCount();
+
+                                                searchRoom.child("user").child(user.getUid()).child("live").child(result.getContents()).setValue("1");
+                                                searchRoom.child("user").child(user.getUid()).child("livenow").setValue(result.getContents());
+                                                searchRoom.child("room").child(result.getContents()).child("people_live").child(Long.toString(numberOfpeople_live += 1)).child("uid").setValue (user.getUid ());
+
                                                 Intent i = new Intent(user_qrcode.this,user_roomActivity.class);
                                                 startActivity(i);
 
