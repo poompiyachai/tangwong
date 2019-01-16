@@ -41,6 +41,7 @@ import android.widget.Toast;
 //import android.widget.TextView;
 
 import com.example.krisorn.tangwong.databinding.ActivityUsersBindingImpl;
+import com.example.krisorn.tangwong.ownRoom.carlender;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -302,11 +303,12 @@ public class UsersActivity extends AppCompatActivity
             startActivityForResult(intent,GALLERY_INTENT);
         }
         else if(view.getId()==R.id.addroom){
-            setContentView(R.layout.activity_addroom);
+            Intent i = new Intent (this,create_event.class);
+            startActivity (i);
 
         }
         else if(view.getId()==R.id.notification){
-            Intent i = new Intent (this,time.class);
+            Intent i = new Intent (this,carlender.class);
             startActivity (i);
 
       /*
