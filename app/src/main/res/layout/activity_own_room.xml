@@ -4,7 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Cart">
+
+    >    <android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout_own_room"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view_own_room"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_home"
+        app:menu="@menu/activity_home_drawer" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -13,5 +28,5 @@
         android:background="@android:color/transparent"/>
 
 
-
+</android.support.v4.widget.DrawerLayout>
 </RelativeLayout>
