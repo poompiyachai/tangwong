@@ -1,7 +1,8 @@
-package com.example.krisorn.tangwong.status;
+package com.example.krisorn.tangwong.ownRoom;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+
+import com.example.krisorn.tangwong.AdminDashBoradView;
 import com.example.krisorn.tangwong.Model.Order;
 import com.example.krisorn.tangwong.R;
 import com.example.krisorn.tangwong.UsersViewModel;
@@ -23,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -31,10 +35,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-class StatusViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+class OwnRoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
 
+    public TextView txtDetail;
     public TextView txtNameRoom, txtSumPrice,txtStatus,txtNumberOfItem;
+    public ImageView imageView;
 
     public TextView getTxtNameRoom() {
         return txtNameRoom;
@@ -68,23 +74,25 @@ class StatusViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         this.txtNumberOfItem = txtNumberOfItem;
     }
 
-    public StatusViewHolder(@NonNull View itemView) {
+    public OwnRoomViewHolder(@NonNull View itemView) {
         super(itemView);
 
-
-        txtNameRoom= (TextView)itemView.findViewById(R.id.name_room);
-        txtNumberOfItem=(TextView)itemView.findViewById(R.id.NumberOfItem);
-        txtStatus= (TextView)itemView.findViewById(R.id.status_q);
-        txtSumPrice= (TextView)itemView.findViewById(R.id.sumPice);
+        imageView=(ImageView) itemView.findViewById(R.id.img_card_user_room);
+        txtNameRoom= (TextView)itemView.findViewById(R.id.text_card_user_room);
+       // txtNumberOfItem=(TextView)itemView.findViewById(R.id.NumberOfItem);
+        txtDetail= (TextView)itemView.findViewById(R.id.text_card_detail);
+      //  txtSumPrice= (TextView)itemView.findViewById(R.id.sumPice);
     }
 
     @Override
     public void onClick(View v) {
-       // Log.d("statusPage","can click");
+        // Log.d("statusPage","can click");
+
+
     }
 }
 
-public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
+public class OwnRoomAdapter extends RecyclerView.Adapter<OwnRoomViewHolder> {
 
     private Context context;
     public DatabaseReference mDatabase;
@@ -92,37 +100,55 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
     public int countOrderNow;
 
 
-    public StatusAdapter(int countOrderNow,Context context){
+    public OwnRoomAdapter(int countOrderNow,Context context){
         this.countOrderNow=countOrderNow;
         this.context = context;
     }
     @NonNull
     @Override
-    public StatusViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OwnRoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View itemView = inflater.inflate(R.layout.status_layout,parent,false);
+        View itemView = inflater.inflate(R.layout.card_user_room,parent,false);
 
 
-        return new StatusViewHolder(itemView);
+        return new OwnRoomViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final StatusViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final OwnRoomViewHolder holder, final int position) {
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
-      //  TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuanlity(),Color.RED);
+        //  TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuanlity(),Color.RED);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent i = new Intent(v.getContext(),AdminDashBoradView.class);
+                context.startActivity(i);
+
                 Log.d("statusPage","can click");
+
+                mDatabase.child("user").child(user.getUid()).child("owner").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String room = dataSnapshot.child(String.valueOf(position)).getValue(String.class);
+                        mDatabase.child("user").child(user.getUid()).child("livenow").setValue(room);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
         Log.d("list data","can not get firebase");
         try {
-            mDatabase.child("user").child(user.getUid()).child("orderNow").addListenerForSingleValueEvent(new ValueEventListener() {
+            mDatabase.child("user").child(user.getUid()).child("owner").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String room = dataSnapshot.child(String.valueOf(position)).getValue(String.class);
@@ -133,22 +159,9 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
                         mDatabase.child("room").child(room).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                int i = 0;
-                                Log.d("list data", "can get fribase2");
-                                while (i < dataSnapshot.child("q").getChildrenCount()) {
-                                    Log.d("list data", String.valueOf(i));
-                                    i++;
-                                    if (dataSnapshot.child("q").child(String.valueOf(i)).child("uid").getValue(String.class).equals(user.getUid())) {
-                                        Log.d("listEqal",dataSnapshot.child("q").child(String.valueOf(i)).child("total").getValue(String.class));
-                                        holder.txtNameRoom.setText(dataSnapshot.child("q").child(String.valueOf(i)).child("name").getValue(String.class));
-                                        holder.txtNumberOfItem.setText(String.valueOf(dataSnapshot.child("q").child(String.valueOf(i)).child("items").getChildrenCount()));
-                                        holder.txtStatus.setText(dataSnapshot.child("q").child(String.valueOf(i)).child("status").getValue(String.class));
-                                        holder.txtSumPrice.setText(dataSnapshot.child("q").child(String.valueOf(i)).child("total").getValue(String.class));
-
-                                        Log.d("listStatus",dataSnapshot.child("q").child(String.valueOf(i)).child("status").getValue(String.class));
-                                    }
-
-                                }
+                                holder.txtNameRoom.setText(dataSnapshot.child("name").getValue(String.class));
+                                holder.txtDetail.setText(dataSnapshot.child("data").getValue(String.class));
+                                Picasso.get().load(dataSnapshot.child("photoPath").getValue(String.class)).into(holder.imageView);
                             }
 
                             @Override
@@ -187,4 +200,6 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
         Log.d("listtttttttttttttttt", String.valueOf(countOrderNow));
         return countOrderNow;
     }
+
+
 }

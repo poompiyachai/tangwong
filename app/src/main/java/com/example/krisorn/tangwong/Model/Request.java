@@ -5,21 +5,15 @@ package com.example.krisorn.tangwong.Model;
 import java.util.List;
 
 public class Request {
-    private String phone;
     private String status;
+    private String uid;
+    private String phone;
+
     private String name;
     private String moreDetail;
     private String total;
-    private String uid;
     private List<Order> items;
 
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
 
     public String getPhone() {
         return phone;
@@ -65,12 +59,7 @@ public class Request {
 
     }
 
-    public Request(String status) {
-        this.status = status;
-    }
-
     public String getStatus() {
-
         return status;
     }
 
@@ -78,9 +67,9 @@ public class Request {
         this.status = status;
     }
 
-    public Request(String status,String uid, String phone, String name, String moreDetail, String total, List<Order> items) {
-        this.status=status;
-        this.uid=uid;
+    public Request(String status, String uid, String phone, String name, String moreDetail, String total, List<Order> items) {
+        this.status = status;
+        this.uid = uid;
         this.phone = phone;
         this.name = name;
         this.moreDetail = moreDetail;
