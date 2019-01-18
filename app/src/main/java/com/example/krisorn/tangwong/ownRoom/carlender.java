@@ -61,11 +61,12 @@ public class carlender extends AppCompatActivity {
                                 if(date2.equals (date))
                                 {
                                     myDate.setText (message);
+                                    mDatabase.child ("eiei").setValue (null);
                                     break;
                                 }
                                 else
                                 {
-                                    myDate.setText ("No have");
+                                    myDate.setText (" ");
                                 }
 
                             }
