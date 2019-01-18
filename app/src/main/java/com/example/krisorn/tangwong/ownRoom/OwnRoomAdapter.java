@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+
+import com.example.krisorn.tangwong.AdminDashBoradView;
 import com.example.krisorn.tangwong.Model.Order;
 import com.example.krisorn.tangwong.R;
 import com.example.krisorn.tangwong.UsersViewModel;
@@ -55,7 +57,6 @@ class OwnRoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     public void setTxtSumPrice(TextView txtSumPrice) {
         this.txtSumPrice = txtSumPrice;
     }
-
     public TextView getTxtStatus() {
         return txtStatus;
     }
@@ -85,6 +86,8 @@ class OwnRoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     @Override
     public void onClick(View v) {
         // Log.d("statusPage","can click");
+
+
     }
 }
 
@@ -118,11 +121,29 @@ public class OwnRoomAdapter extends RecyclerView.Adapter<OwnRoomViewHolder> {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  Intent i = new Intent(this,)
+
+                Intent i = new Intent(v.getContext(),AdminDashBoradView.class);
+                context.startActivity(i);
+
                 Log.d("statusPage","can click");
+
+                mDatabase.child("user").child(user.getUid()).child("owner").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String room = dataSnapshot.child(String.valueOf(position)).getValue(String.class);
+                        mDatabase.child("user").child(user.getUid()).child("livenow").setValue(room);
+                      //  Log.d("ttttttttttttt",mDatabase.getPath().getParent().toString());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
         Log.d("list data","can not get firebase");
@@ -179,4 +200,6 @@ public class OwnRoomAdapter extends RecyclerView.Adapter<OwnRoomViewHolder> {
         Log.d("listtttttttttttttttt", String.valueOf(countOrderNow));
         return countOrderNow;
     }
+
+
 }
