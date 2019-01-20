@@ -539,7 +539,7 @@ public class UsersActivity extends AppCompatActivity
             startActivity(i);
 
         }else if (id == R.id.nav_poll){
-            Intent i = new Intent(this,user_poll.class);
+            Intent i = new Intent(this,user_Question.class);
             startActivity(i);
         }
 

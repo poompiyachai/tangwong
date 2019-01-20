@@ -15,8 +15,9 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity android:name=".add_feature"></activity>
-        tools:replace="android:label">
+
         <activity android:name=".AddFeatureActivity"></activity>
         <activity android:name=".EmailPasswordActivity">
             <intent-filter>
@@ -25,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".user_Question"/>
         <activity android:name=".UsersActivity" />
         <activity android:name=".own_room" />
         <activity android:name=".MainActivity" />
@@ -44,8 +46,10 @@
             android:name=".home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
-        <activity android:name=".create_roomActiviity" />
-        <activity android:name=".user_qrcode" />
+        <activity android:name=".create_roomActiviity"
+            tools:ignore="DuplicateActivity" />
+        <activity android:name=".user_qrcode"
+            tools:ignore="DuplicateActivity" />
 
        
         <activity android:name=".AdminDashBoradView" />
@@ -58,7 +62,8 @@
         <activity android:name=".time" />
         <activity android:name=".notification" />
 
-        <activity android:name=".own_room" />
+        <activity android:name=".own_room"
+            tools:ignore="DuplicateActivity" />
         <activity android:name=".ownRoom.carlender" />
         <activity android:name=".create_event"></activity>
 

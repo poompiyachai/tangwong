@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
-        android:id="@+id/content_poll"
+        android:id="@+id/content_question"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,23 +23,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="bottom">
-        <Button
-            android:id="@+id/increase_Quize"
+
+
+        <LinearLayout
+            android:id="@+id/bn_savequestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:text="Add Poll"
-            android:onClick="click"
-            style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"/>
+            android:gravity="bottom">
 
             <Button
-                android:id="@+id/start_question"
+                android:id="@+id/save_question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="start question"
-                android:layout_gravity="center"
+                android:text="save"
                 android:onClick="click"
                 style="@style/Widget.AppCompat.Button.Colored" />
 
+
+        </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
