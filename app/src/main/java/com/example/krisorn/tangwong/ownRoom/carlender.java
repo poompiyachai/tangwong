@@ -50,7 +50,7 @@ public class carlender extends AppCompatActivity {
                         Log.d("aasd", String.valueOf (dataSnapshot.child ("room").child (roomid).child ("event").child ("text").hasChildren ()));
 
                         int count = (int) dataSnapshot.child ("room").child (roomid).child ("event").getChildrenCount ();
-
+                        Log.d("qweำำ", String.valueOf (count));
                         for(int j=0;j<count;j++)
                         {
                             if(dataSnapshot.child ("room").child (roomid).child ("event").child (String.valueOf (j)).hasChild ("status"))
