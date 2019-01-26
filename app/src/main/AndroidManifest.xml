@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".AddFeatureActivity"></activity>
+        <activity android:name=".AddFeatureActivity" />
         <activity android:name=".add_feature" />
         <activity android:name=".EmailPasswordActivity">
             <intent-filter>
@@ -39,10 +39,7 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".create_roomActiviity" />
         <activity android:name=".user_qrcode" />
-
-       
         <activity android:name=".AdminDashBoradView" />
-
 
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
@@ -50,13 +47,10 @@
 
         <activity android:name=".time" />
         <activity android:name=".notification" />
-
         <activity android:name=".own_room" />
         <activity android:name=".ownRoom.carlender" />
-        <activity android:name=".create_event"></activity>
-
-
-
+        <activity android:name=".create_event" />
+        <activity android:name=".dayevent"></activity>
     </application>
 
 </manifest>

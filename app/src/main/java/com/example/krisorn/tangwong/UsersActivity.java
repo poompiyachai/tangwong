@@ -312,7 +312,7 @@ public class UsersActivity extends AppCompatActivity
 
         }
         else if(view.getId()==R.id.notification){
-            Intent i = new Intent (this,carlender.class);
+            Intent i = new Intent (this,time.class);
             startActivity (i);
 
       /*

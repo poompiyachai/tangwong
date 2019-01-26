@@ -83,17 +83,43 @@ public class time extends AppCompatActivity {
             EditText hr = findViewById(R.id.hr);
             EditText mi = findViewById(R.id.min);
             EditText se = findViewById(R.id.sec);
+            Calendar c = Calendar.getInstance();
 
+            SimpleDateFormat df = new SimpleDateFormat("HH");
+
+            String H = df.format(c.getTime());
+
+
+            SimpleDateFormat mm = new SimpleDateFormat("mm");
+
+            String m = mm.format(c.getTime());
+            SimpleDateFormat ss = new SimpleDateFormat("ss");
+
+            String s = ss.format(c.getTime());
 
             long a = Integer.parseInt (hr.getText ().toString ());
-             a=a*3600;
+            long aa = Integer.parseInt (H);
+            aa=aa*3600;
+            a=a*3600;
 
             long b = Integer.parseInt (mi.getText ().toString ());
+            long bb = Integer.parseInt (m);
             b=b*60;
+            bb=bb*60;
 
-            long c = Integer.parseInt (se.getText ().toString ());
+            long d = Integer.parseInt (se.getText ().toString ());
+            long cc = Integer.parseInt (s);
 
-            int asd = Integer.parseInt(String.valueOf (a+b+c))*1000;
+            int asdd = Integer.parseInt(String.valueOf (a+b+d));
+            int asdasd = Integer.parseInt(String.valueOf (aa+bb+cc));
+
+            int asd = Integer.parseInt(String.valueOf (asdd-asdasd))*1000;
+            if(asdd-asdasd<=0)
+            {
+                asd = (24*60*60)+Integer.parseInt(String.valueOf (asdd-asdasd));
+                asd = asd*1000;
+            }
+            Log.d("aasdaa", String.valueOf (asd));
             new CountDownTimer (asd, 1000) {
                 EditText text = findViewById(R.id.text);
 
