@@ -13,16 +13,16 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Tang Wong"
-        android:roundIcon="@mipmap/ic_logo"
+
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:label"
-        tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".add_feature"></activity>
-
-        <activity android:name=".AddFeatureActivity"></activity>
-
+        tools:replace="android:label">
+        <activity android:name=".user_Question"></activity>
+        <activity android:name=".user_InterfaceIntoRoom"></activity>
+        <activity android:name=".user_idSearch"></activity>
+        <activity android:name=".user_poll"></activity>
+        <activity android:name=".user_qrcode"></activity>
+        <activity android:name=".user_search"></activity>
         <activity android:name=".profile_ex"></activity>
         <activity android:name=".AddFeatureActivity" />
         <activity android:name=".add_feature" />
@@ -33,7 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".user_Question"/>
         <activity android:name=".UsersActivity" />
         <activity android:name=".own_room" />
         <activity android:name=".MainActivity" />
@@ -43,22 +42,14 @@
         <activity android:name=".list_itemActivity" />
         <activity android:name=".item_detail" />
         <activity android:name=".Cart" />
-        <activity android:name=".create_roomActiviity"></activity>
-        <activity android:name=".user_qrcode"></activity>
-        <activity android:name=".Status"></activity>
-        <activity android:name=".user_poll"></activity>
-        <activity android:name=".user_idSearch"/>
-        <activity android:name=".user_search"/>
+        <activity android:name=".Status" />
+        <activity android:name=".AddminListItemView" />
         <activity
             android:name=".home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
-        <activity android:name=".create_roomActiviity"
-            tools:ignore="DuplicateActivity" />
-        <activity android:name=".user_qrcode"
-            tools:ignore="DuplicateActivity" />
+        <activity android:name=".create_roomActiviity" />
 
-       
         <activity android:name=".AdminDashBoradView" />
 
         <meta-data
@@ -67,9 +58,6 @@
 
         <activity android:name=".time" />
         <activity android:name=".notification" />
-
-        <activity android:name=".own_room"
-            tools:ignore="DuplicateActivity" />
         <activity android:name=".ownRoom.carlender" />
         <activity android:name=".create_event" />
     </application>
