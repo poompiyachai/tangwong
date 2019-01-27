@@ -52,8 +52,6 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".create_roomActiviity" />
 
-        <activity android:name=".user_qrcode" />
-
 
 
         <activity android:name=".AdminDashBoradView" />
@@ -65,7 +63,7 @@
         <activity android:name=".time" />
         <activity android:name=".notification" />
 
-        <activity android:name=".own_room" />
+
         <activity android:name=".ownRoom.carlender" />
         <activity android:name=".create_event" />
         <activity android:name=".dayevent"></activity>
