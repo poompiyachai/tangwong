@@ -65,7 +65,7 @@ public class carlender extends AppCompatActivity {
                                 }
                                 else
                                 {
-                                    myDate.setText ("No have");
+                                    myDate.setText (" ");
                                 }
 
                             }

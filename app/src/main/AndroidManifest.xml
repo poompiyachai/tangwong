@@ -2,19 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.krisorn.tangwong">
-
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application xmlns:tools="http://schemas.android.com/tools"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Final Project"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="Tang Wong"
+        android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".AddFeatureActivity"></activity>
+        <activity android:name=".profile_ex"></activity>
+        <activity android:name=".AddFeatureActivity" />
         <activity android:name=".add_feature" />
         <activity android:name=".EmailPasswordActivity">
             <intent-filter>
@@ -33,16 +37,14 @@
         <activity android:name=".item_detail" />
         <activity android:name=".Cart" />
         <activity android:name=".Status" />
+        <activity android:name=".AddminListItemView" />
         <activity
             android:name=".home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
         <activity android:name=".create_roomActiviity" />
         <activity android:name=".user_qrcode" />
-
-       
         <activity android:name=".AdminDashBoradView" />
-
 
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
@@ -50,13 +52,8 @@
 
         <activity android:name=".time" />
         <activity android:name=".notification" />
-
-        <activity android:name=".own_room" />
         <activity android:name=".ownRoom.carlender" />
-        <activity android:name=".create_event"></activity>
-
-
-
+        <activity android:name=".create_event" />
     </application>
 
 </manifest>
