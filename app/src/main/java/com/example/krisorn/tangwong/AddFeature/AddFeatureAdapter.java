@@ -110,11 +110,14 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                             final String roomLiveNow= dataSnapshot.getValue(String.class);
                             Log.d("canRetrive","livenow");
 
-                            mDatabase.child("room").child(roomLiveNow).child("feature").addListenerForSingleValueEvent(new ValueEventListener() {
+                            mDatabase.child("room").child(roomLiveNow).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.getChildrenCount())+1))
-                                        .setValue("q");
+                                    mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
+                                            .setValue("q");
+                                    mDatabase.child("room").child(roomLiveNow).child("q").child("nameOfFeture").setValue("รายการสินค้า");
+                                    mDatabase.child("room").child(roomLiveNow).child("q").child("detailOfFeture").setValue(dataSnapshot.child("data")
+                                            .getValue(String.class));
 
                                 }
 
@@ -141,10 +144,33 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
 
             holder.txtNameRoom.setText("เพิ่มร้านค้าแพงลอย");
             holder.txtDetail.setText("เพิ่มร้านค้า สำหรับการขายของ");
+            String imgUrl = "http://www.scphtrang.ac.th/main/sites/default/files/10961970_805523669502906_1747785628_n.jpg";
+            Picasso.get().load(imgUrl).into(holder.imageView);
+
         }
         if (position==1){
             holder.txtNameRoom.setText("เพิ่มร้านค้า");
             holder.txtDetail.setText("เพิ่มร้านค้า แบบdelivery");
+            String imgUrl = "http://fr-asia.com/wp-content/uploads/tmp/delivery2-400x400.jpg";
+            Picasso.get().load(imgUrl).into(holder.imageView);
+        }
+        if (position==2){
+            holder.txtNameRoom.setText("เพิ่มร้าน(แบบมีโต๊ะ)");
+            holder.txtDetail.setText("เพิ่มร้านค้าหรือร้านอาหารเแบบมีโต๊ะ");
+            String imgUrl = "http://เซ้งร้าน.com/img/dorm/img_1437667740.jpeg";
+            Picasso.get().load(imgUrl).into(holder.imageView);
+        }
+        if (position==3){
+            holder.txtNameRoom.setText("เพิ่มตัวจัดการคิว");
+            holder.txtDetail.setText("ทุกคนสามารถเข้าคิวผ่านแอพได้");
+            String imgUrl = "https://i.ytimg.com/vi/FOrGijZK5m0/maxresdefault.jpg";
+            Picasso.get().load(imgUrl).into(holder.imageView);
+        }
+        if (position==4){
+            holder.txtNameRoom.setText("แจ้งเตือนกิจกรรม");
+            holder.txtDetail.setText("แจ้งเตือนทุกคนในกลุ่ม");
+            String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
+            Picasso.get().load(imgUrl).into(holder.imageView);
         }
 
     }
@@ -152,6 +178,6 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
     @Override
     public int getItemCount() {
 
-        return 2;
+        return 5;
     }
 }
