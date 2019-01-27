@@ -1,12 +1,15 @@
 package com.example.krisorn.tangwong;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -44,11 +54,16 @@ public class user_qrcode extends AppCompatActivity {
     private TextView textScanner;
     private Button Gen_QR;
     private IntentIntegrator qrscan;
+    private DatabaseReference searchRoom ;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth=FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
         setContentView(R.layout.activity_qrcode);
+        searchRoom = FirebaseDatabase.getInstance().getReference();
         textScanner = (TextView)findViewById(R.id.textScanner);
         qrscan = new IntentIntegrator(this);
 
@@ -159,8 +174,8 @@ public class user_qrcode extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable final Intent data) {
+        final IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
         if(result != null){
             if(result.getContents()== null){
                 Toast.makeText(this,"Not Found",Toast.LENGTH_SHORT);
@@ -169,11 +184,62 @@ public class user_qrcode extends AppCompatActivity {
                     JSONObject obj = new JSONObject(result.getContents());
                     Toast.makeText(this,"Scan Failed !!!",Toast.LENGTH_SHORT).show();
 
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     textScanner.setText(result.getContents()); //ค่า id ที่เราscanได้ เอาไปใช้ต่อ
+                    Log.d(result.getContents(),"GGTOZO");
+                    searchRoom.child("room").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                            mAuth=FirebaseAuth.getInstance();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                             user = mAuth.getCurrentUser();
+                            if (dataSnapshot.hasChild(result.getContents())) {
+                                AlertDialog.Builder builder1 = new AlertDialog.Builder(user_qrcode.this);
+                                builder1.setMessage("You want Tungwong this");
+                                builder1.setCancelable(true);
 
-                    Toast.makeText(this,"Scan Success!!!",Toast.LENGTH_SHORT).show();
+                                builder1.setPositiveButton(
+
+                                        "Yes",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                                mAuth=FirebaseAuth.getInstance();
+                                                final FirebaseUser user = mAuth.getCurrentUser();
+                                                long numberOfpeople_live = dataSnapshot.child("room").child(result.getContents()).child("people_live").getChildrenCount();
+
+                                                searchRoom.child("user").child(user.getUid()).child("live").child(result.getContents()).setValue("1");
+                                                searchRoom.child("user").child(user.getUid()).child("livenow").setValue(result.getContents());
+                                                searchRoom.child("room").child(result.getContents()).child("people_live").child(Long.toString(numberOfpeople_live += 1)).child("uid").setValue (user.getUid ());
+
+                                                Intent i = new Intent(user_qrcode.this,user_roomActivity.class);
+                                                startActivity(i);
+
+                                            }
+                                        });
+
+                                builder1.setNegativeButton(
+                                        "No",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+
+                                            }
+                                        });
+
+                                AlertDialog alert11 = builder1.create();
+                                alert11.show();
+                            }
+                        }
+
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
 
                 }
             }

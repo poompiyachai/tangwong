@@ -171,7 +171,9 @@ public class UsersActivity extends AppCompatActivity
 
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
-                String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
+
+
+               /* String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
                 String timestatus =dataSnapshot.child ("user").child (uid).child ("time").child ("status").getValue((String.class));
 
                 if(a.equals ("1"))
@@ -194,7 +196,7 @@ public class UsersActivity extends AppCompatActivity
                     String timetext = dataSnapshot.child ("user").child (uid).child ("time").child ("text").getValue (String.class);
                     showNotification (timetext);
                 }
-
+                */
                 String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
 
                 String pathPhoto=dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
@@ -234,7 +236,7 @@ public class UsersActivity extends AppCompatActivity
                         return  true;
                     case R.id.search:
                         Log.d("click","click search");
-                        Intent i = new Intent(UsersActivity.this,Cart.class);
+                        Intent i = new Intent(UsersActivity.this,user_search.class);
                         startActivity(i);
 
                         //  Toast.makeText(UsersActivity.this,"SEARCH",Toast.LENGTH_SHORT);
@@ -540,6 +542,9 @@ public class UsersActivity extends AppCompatActivity
             Intent i = new Intent(this,own_room.class);
             startActivity(i);
 
+        }else if (id == R.id.nav_poll){
+            Intent i = new Intent(this,user_Question.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_user);

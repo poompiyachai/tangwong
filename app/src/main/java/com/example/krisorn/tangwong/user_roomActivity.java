@@ -192,9 +192,7 @@ public class user_roomActivity extends AppCompatActivity {
 
             @Override
             public int getItemCount() {
-
                 Log.d("count Room","count room = "+ countRoom);
-
                 return (int) countRoom;
             }
         };
@@ -202,12 +200,10 @@ public class user_roomActivity extends AppCompatActivity {
         mDatabase.child("user").child(uid).child("live").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 countRoom= dataSnapshot.getChildrenCount();
                 Log.d("countroom dataSNSH","count room = "+countRoom);
                 rcv.setAdapter(adapter);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
