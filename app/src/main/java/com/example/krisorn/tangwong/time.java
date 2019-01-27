@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,13 +29,25 @@ import static java.lang.Integer.parseInt;
 public class time extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private String id="1";
+    private TimePicker time;
     public DatabaseReference nameCard;
+    private String hr,mi;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_time);
+        time = (TimePicker)findViewById (R.id.timepicker);
+
+        time.setOnTimeChangedListener (new TimePicker.OnTimeChangedListener () {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                hr = String.valueOf (hourOfDay);
+                mi = String.valueOf (minute);
+            }
+        });
 
     }
 
@@ -80,9 +93,9 @@ public class time extends AppCompatActivity {
 
 
         if(view.getId()==R.id.set){
-            EditText hr = findViewById(R.id.hr);
+           /* EditText hr = findViewById(R.id.hr);
             EditText mi = findViewById(R.id.min);
-            EditText se = findViewById(R.id.sec);
+            EditText se = findViewById(R.id.sec);*/
             Calendar c = Calendar.getInstance();
 
             SimpleDateFormat df = new SimpleDateFormat("HH");
@@ -97,21 +110,19 @@ public class time extends AppCompatActivity {
 
             String s = ss.format(c.getTime());
 
-            long a = Integer.parseInt (hr.getText ().toString ());
+            long a = Integer.parseInt (hr);
             long aa = Integer.parseInt (H);
             aa=aa*3600;
             a=a*3600;
 
-            long b = Integer.parseInt (mi.getText ().toString ());
+            long b = Integer.parseInt (mi);
             long bb = Integer.parseInt (m);
             b=b*60;
             bb=bb*60;
 
-            long d = Integer.parseInt (se.getText ().toString ());
-            long cc = Integer.parseInt (s);
 
-            int asdd = Integer.parseInt(String.valueOf (a+b+d));
-            int asdasd = Integer.parseInt(String.valueOf (aa+bb+cc));
+            int asdd = Integer.parseInt(String.valueOf (a+b));
+            int asdasd = Integer.parseInt(String.valueOf (aa+bb));
 
             int asd = Integer.parseInt(String.valueOf (asdd-asdasd))*1000;
             if(asdd-asdasd<=0)
@@ -119,8 +130,8 @@ public class time extends AppCompatActivity {
                 asd = (24*60*60)+Integer.parseInt(String.valueOf (asdd-asdasd));
                 asd = asd*1000;
             }
-            Log.d("aasdaa", String.valueOf (asd));
-            new CountDownTimer (asd, 1000) {
+            Log.d("aasdaa", hr+":"+mi);
+           /* new CountDownTimer (asd, 1000) {
                 EditText text = findViewById(R.id.text);
 
                 public void onTick(long millisUntilFinished) {
@@ -136,7 +147,7 @@ public class time extends AppCompatActivity {
             }.start();
 
             Intent i = new Intent(this,UsersActivity.class);
-            startActivity(i);
+            startActivity(i);*/
 
 
 
