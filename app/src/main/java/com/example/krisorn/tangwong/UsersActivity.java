@@ -92,6 +92,7 @@ public class UsersActivity extends AppCompatActivity
     private String tempuid="asd";
     private boolean check=false;
     private long num=0;
+    private long newroom=0;
 
 
 
@@ -161,6 +162,8 @@ public class UsersActivity extends AppCompatActivity
                         else num++;
                     }
                 }
+
+                newroom = dataSnapshot.child ("room").getChildrenCount ();
 
 
 
@@ -307,6 +310,7 @@ public class UsersActivity extends AppCompatActivity
         else if(view.getId()==R.id.addroom){
             Intent i = new Intent (this,create_event.class);
             startActivity (i);
+            //setContentView(R.layout.activity_addroom);
 
         }
         else if(view.getId()==R.id.notification){
@@ -395,9 +399,9 @@ public class UsersActivity extends AppCompatActivity
             mdataField = findViewById(R.id.data);
             nameField=findViewById(R.id.name);
 
-            mDatabase.child("room").child(Long.toString(roomid)).child("name").setValue(nameField.getText().toString());
-            mDatabase.child("room").child(Long.toString(roomid)).child("type").setValue(mtypeField.getText().toString());
-            mDatabase.child("room").child(Long.toString(roomid)).child("data").setValue(mdataField.getText().toString());
+            mDatabase.child("room").child(Long.toString(newroom)).child("name").setValue(nameField.getText().toString());
+            mDatabase.child("room").child(Long.toString(newroom)).child("type").setValue(mtypeField.getText().toString());
+            mDatabase.child("room").child(Long.toString(newroom)).child("data").setValue(mdataField.getText().toString());
             FirebaseUser user = mAuth.getCurrentUser();
             mDatabase.child("user").child(user.getUid()).child("owner").child(Long.toString(roomid)).setValue(nameField.getText().toString());
             setContentView(R.layout.activity_users);
