@@ -54,7 +54,9 @@ public class own_room extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         Log.d("list data","can create");
+
         loadListItem();
+
     }
 
 

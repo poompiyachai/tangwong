@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
@@ -40,6 +41,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 //import android.widget.TextView;
 
+import com.example.krisorn.tangwong.databinding.ActivityProfileExBindingImpl;
 import com.example.krisorn.tangwong.databinding.ActivityUsersBindingImpl;
 import com.example.krisorn.tangwong.ownRoom.carlender;
 import com.google.android.gms.tasks.Continuation;
@@ -74,7 +76,7 @@ public class UsersActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     // TODO Step 1: Declare binding instance instead view's (binding class is auto-generated)
     //private TextView textView;
-    ActivityUsersBindingImpl binding;
+    ActivityProfileExBindingImpl binding;
 
     private EditText mtypeField;
     private EditText mdataField;
@@ -117,7 +119,7 @@ public class UsersActivity extends AppCompatActivity
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_users);
+        setContentView(R.layout.activity_profile_ex);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         viewModel = new UsersViewModel(this);
         mAuth = FirebaseAuth.getInstance();
@@ -132,7 +134,7 @@ public class UsersActivity extends AppCompatActivity
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         try {
-            new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a");
+            new DownloadImageTask((ImageView) findViewById(R.id.profile_ex)).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a");
         }
         catch (Exception e){}
         initView();
@@ -173,7 +175,7 @@ public class UsersActivity extends AppCompatActivity
                 String name = String.valueOf(map.get("name"));*/
 
 
-               /* String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
+                String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
                 String timestatus =dataSnapshot.child ("user").child (uid).child ("time").child ("status").getValue((String.class));
 
                 if(a.equals ("1"))
@@ -196,7 +198,7 @@ public class UsersActivity extends AppCompatActivity
                     String timetext = dataSnapshot.child ("user").child (uid).child ("time").child ("text").getValue (String.class);
                     showNotification (timetext);
                 }
-                */
+                
                 String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
 
                 String pathPhoto=dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
@@ -204,11 +206,10 @@ public class UsersActivity extends AppCompatActivity
 
                 viewModel.setPathPhoto(pathPhoto);
 
-
-                binding.name.setText(viewModel.getName());
+                binding.nameEx.setText(viewModel.getName());
 
                 try {
-                    new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute(pathPhoto);
+                    new DownloadImageTask((ImageView) findViewById(R.id.profile_ex)).execute(pathPhoto);
                 }
                 catch (Exception e) {
                 }
@@ -284,16 +285,15 @@ public class UsersActivity extends AppCompatActivity
     private void initView(){
 
         // FirebaseUser currentUser = mAuth.getCurrentUser();
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_users);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_ex);
         binding.setViewmodel(viewModel);
 
     }
 
     public void click(View view) {
 
-
+/*
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-
         if(view.getId()==R.id.button){
             int current=parseInt(viewModel.getString(),10);
             current++;
@@ -317,46 +317,6 @@ public class UsersActivity extends AppCompatActivity
             Intent i = new Intent (this,time.class);
             startActivity (i);
 
-      /*
-            jroomid = findViewById(R.id.roomid);
-            FirebaseDatabase database2 = FirebaseDatabase.getInstance();
-            Log.d("aasd","dvsdvsd");
-
-            //nameCard =database.getReference();
-            mDatabase.child("eiei").setValue("asdasd");
-            mDatabase.child("eiei").setValue("dsacfvf");
-            check = true;
-
-            nameCard.addValueEventListener (new ValueEventListener () {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    final FirebaseUser user = mAuth.getCurrentUser();
-                    String uid = user.getUid();
-
-
-
-
-
-
-
-                    if(check==true)
-                    {
-                        //roomq = findViewById(R.id.roomid).toString ();
-                        tempuid = dataSnapshot.child ("room").child (id).child ("q").child (roomq).child ("uid").getValue((String.class));
-
-                        Log.d("aasd",tempuid);
-                        mDatabase.child ("room").child (id).child ("q").child (roomq).child ("text").setValue(jroomid.getText ().toString ());
-                        mDatabase.child("user").child(tempuid).child("notification").setValue("1");
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-*/
         }
 
         else if(view.getId()==R.id.q){
@@ -366,21 +326,13 @@ public class UsersActivity extends AppCompatActivity
             mDatabase.child("user").child(user.getUid()).child("live").child(jroomid.getText().toString()).setValue("1");
             mDatabase.child("room").child(jroomid.getText().toString()).child("people_live").child(Long.toString(num)).child("uid").setValue (user.getUid ());
 
-
-           // setContentView(R.layout.activity_addq);
-
         }
         else if(view.getId()==R.id.enter){
             jroomid = findViewById(R.id.roomid);
             FirebaseUser user = mAuth.getCurrentUser();
 
-            //   mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
-
-
             Intent i =new Intent(this,addqActivity.class);
             startActivity(i);
-            //   setContentView(R.layout.activity_addq);
-
 
         }
 
@@ -410,7 +362,12 @@ public class UsersActivity extends AppCompatActivity
             Intent i = new Intent(this,user_roomActivity.class);
             startActivity(i);
         }
+
+       */
+
     }
+
+
     public void signOut(View view) {
         viewModel.setLogoutSatus();
         mAuth.signOut();
@@ -464,10 +421,13 @@ public class UsersActivity extends AppCompatActivity
         }
     }
 
-    private void showNotification(String text) {
-        Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("http://devahoy.com/posts/android-notification/"));
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+    private void showNotification(String text) {Intent intent = new Intent(this, UsersActivity.class);
+        intent.putExtra("message", text);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(UsersActivity.class);
+        stackBuilder.addNextIntent(intent);
+        PendingIntent pendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification =
                 new NotificationCompat.Builder(this)
@@ -483,8 +443,6 @@ public class UsersActivity extends AppCompatActivity
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(1000, notification);
-
-
     }
 
     @Override

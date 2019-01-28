@@ -19,6 +19,35 @@ import java.io.InputStream;
 public class UsersViewModel extends ViewModel {
 
     private String string;
+
+    public boolean isLogout() {
+        return logout;
+    }
+
+    public void setLogout(boolean logout) {
+        this.logout = logout;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Context getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Context current) {
+        this.current = current;
+    }
+
+    public UsersViewModel(String name) {
+        this.name = name;
+    }
+
     private String name;
     private String faculty;
     private String sername;

@@ -131,7 +131,7 @@ public class time extends AppCompatActivity {
                 asd = asd*1000;
             }
             Log.d("aasdaa", hr+":"+mi);
-           /* new CountDownTimer (asd, 1000) {
+           new CountDownTimer (asd, 1000) {
                 EditText text = findViewById(R.id.text);
 
                 public void onTick(long millisUntilFinished) {
@@ -147,7 +147,7 @@ public class time extends AppCompatActivity {
             }.start();
 
             Intent i = new Intent(this,UsersActivity.class);
-            startActivity(i);*/
+            startActivity(i);
 
 
 

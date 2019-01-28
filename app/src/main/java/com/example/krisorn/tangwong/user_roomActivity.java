@@ -38,7 +38,7 @@ public class user_roomActivity extends AppCompatActivity {
     private RecyclerView rcv;
     private RecyclerView.Adapter<MyViewHolder> adapter;
     private ArrayList<Mydata> dataset;
-  /*private  BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+  private  BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -67,7 +67,7 @@ public class user_roomActivity extends AppCompatActivity {
                     return  false;
             }
         }
-    };*/
+    };
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
@@ -90,23 +90,6 @@ public class user_roomActivity extends AppCompatActivity {
         final FirebaseUser user = mAuth.getCurrentUser();
         mDatabase=FirebaseDatabase.getInstance().getReference();
         final String uid = user.getUid();
-
-
-
-
-
-
-
-
-        for(int i = 0; i<5 ;i++){
-            int pictureNum =genPictureNum();
-            //  int num =500 + (int)(Math.random()*100);
-            String str = genTitle();
-            // new DownloadImageTask(temImage).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2F1934229398?alt=media&token=ec82532d-8a0b-4ab4-bb12-a9a6be8189fd");
-
-            dataset.add(new Mydata(str,pictureNum,temImage));
-        }
-
         rcv.setLayoutManager(new LinearLayoutManager(this));
         adapter =new RecyclerView.Adapter<MyViewHolder>(){
 
@@ -226,15 +209,7 @@ public class user_roomActivity extends AppCompatActivity {
         }
     }
 
-    private String genTitle() {
-        String[] str ={"boob","big","puk","kit"};
-        int n =1+ (int)(Math.random()*3);
-        StringBuilder sb= new StringBuilder();
-        for(int i=0;i<n;i++){
-            sb.append(str[(int)(Math.random()*4)]);
-        }
-        return sb.toString();
-    }
+
 
 
     private class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
