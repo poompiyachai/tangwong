@@ -122,6 +122,9 @@ public class registerActivity extends AppCompatActivity implements
                             FirebaseUser user = mAuth.getCurrentUser();
                           //  updateUI(user);
                             mDatabase.child("user").child(user.getUid()).child("name").setValue(nameField.getText().toString());
+                            mDatabase.child("user").child(user.getUid()).child("notification").setValue("0");
+                            mDatabase.child ("user").child (user.getUid()).child ("time").child ("status").setValue("0");
+                            mDatabase.child("user").child(user.getUid()).child("pathPhoto").setValue("https://www.isupportcause.com/r/images/previewImage.png");
 
                             /*
 

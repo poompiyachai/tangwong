@@ -41,6 +41,10 @@
                 android:id="@+id/nav_myroom"
                 android:icon="@drawable/ic_menu_send"
                 android:title="myroom" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_lock_out"
+                android:title="logout" />
         </menu>
     </item>
 

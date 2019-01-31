@@ -65,6 +65,7 @@ import com.bumptech.glide.module.AppGlideModule;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.UUID;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Integer.toUnsignedString;
@@ -198,7 +199,7 @@ public class UsersActivity extends AppCompatActivity
                     String timetext = dataSnapshot.child ("user").child (uid).child ("time").child ("text").getValue (String.class);
                     showNotification (timetext);
                 }
-                
+
                 String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
 
                 String pathPhoto=dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
@@ -385,7 +386,7 @@ public class UsersActivity extends AppCompatActivity
         if(requestCode==GALLERY_INTENT && resultCode==RESULT_OK){
 
             Uri uri=data.getData();
-            final StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
+            final StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment()+ UUID.randomUUID().toString());
 
             mProgressDialog.setMessage("Uploading....");
             mProgressDialog.show();
@@ -502,6 +503,10 @@ public class UsersActivity extends AppCompatActivity
 
         }else if (id == R.id.nav_poll){
             Intent i = new Intent(this,user_Question.class);
+            startActivity(i);
+        }else if(id == R.id.nav_logout){
+            mAuth.signOut();
+            Intent i = new Intent(this,EmailPasswordActivity.class);
             startActivity(i);
         }
 

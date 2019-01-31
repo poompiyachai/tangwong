@@ -115,8 +115,39 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
                                             .setValue("q");
-                                    mDatabase.child("room").child(roomLiveNow).child("q").child("nameOfFeture").setValue("รายการสินค้า");
+                                    mDatabase.child("room").child(roomLiveNow).child("q").child("nameOfFeture").setValue("รายการสินค้า(แผงลอย)");
                                     mDatabase.child("room").child(roomLiveNow).child("q").child("detailOfFeture").setValue(dataSnapshot.child("data")
+                                            .getValue(String.class));
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }else   if (position==1){
+
+                    mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final String roomLiveNow= dataSnapshot.getValue(String.class);
+                            Log.d("canRetrive","livenow");
+
+                            mDatabase.child("room").child(roomLiveNow).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
+                                            .setValue("store");
+                                    mDatabase.child("room").child(roomLiveNow).child("store").child("nameOfFeture").setValue("รายการสินค้า(แบบderivery)");
+                                    mDatabase.child("room").child(roomLiveNow).child("store").child("detailOfFeture").setValue(dataSnapshot.child("data")
                                             .getValue(String.class));
 
                                 }

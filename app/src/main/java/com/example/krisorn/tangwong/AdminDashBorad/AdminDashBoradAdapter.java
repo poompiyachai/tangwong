@@ -102,18 +102,7 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //  Intent i = new Intent(this,)
 
-                Intent i = new Intent(v.getContext(), AddminListItemView.class);
-                context.startActivity(i);
-
-                Log.d("statusPage","can click");
-
-            }
-        });
         Log.d("list data","can not get firebase");
         try {
             mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -127,10 +116,26 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             mDatabase.child("room").child(roomLiveNow).child(dataSnapshot.getValue(String.class)).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                                     holder.txtNameRoom.setText(dataSnapshot.child("nameOfFeture").getValue(String.class));
                                     holder.txtDetail.setText(dataSnapshot.child("detailOfFeture").getValue(String.class));
                                     Log.d("canRetriveFeature",dataSnapshot.getRef().toString());
+
+                                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            //  Intent i = new Intent(this,)
+                                          //  Log.d("status",dataSnapshot.child("typeOfFeture").getValue(String.class));
+                                            try {
+                                                if(dataSnapshot.child("typeOfFeture").getValue(String.class).equals("StallShop")){
+                                                    Intent i = new Intent(v.getContext(), AddminListItemView.class);
+                                                    context.startActivity(i);}
+                                                Log.d("statusPage","can click");
+                                            }catch (Exception e){}
+
+
+                                        }
+                                    });
                                 }
 
                                 @Override

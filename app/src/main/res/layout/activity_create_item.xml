@@ -16,7 +16,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".UsersActivity">
+        >
 
 
         <RelativeLayout
@@ -25,7 +25,7 @@
             tools:ignore="MissingConstraints">
 
             <android.support.design.widget.BottomNavigationView
-                android:id="@+id/bottom_nav"
+                android:id="@+id/bottom_add_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -41,30 +41,29 @@
 
             <android.support.constraint.ConstraintLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/btnProfile"
+                android:id="@+id/btnAddItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/img_room"
+                    android:id="@+id/img_add_item"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-
                     android:layout_marginEnd="8dp"
+
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.502"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_public_black_24dp" />
+                    tools:layout_editor_absoluteY="0dp"
+                    app:srcCompat="@drawable/ic_public_black_24dp"
+                    />
 
 
                 <Button
-                    android:id="@+id/btn_add_room"
+                    android:id="@+id/btn_add_item"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,26 +73,25 @@
                     android:onClick="click"
                     android:text="add imge"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.529"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/img_room" />
+                    app:layout_constraintTop_toBottomOf="@+id/img_add_item" />
 
                 <EditText
-                    android:id="@+id/txt_create_room_name"
+                    android:id="@+id/txt_create_item_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="43dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="Room Name"
+                    android:text="item name"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_add_room" />
+                    app:layout_constraintTop_toBottomOf="@+id/btn_add_item" />
 
                 <EditText
-                    android:id="@+id/txt_create_room_detail"
+                    android:id="@+id/txt_create_item_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -104,10 +102,10 @@
                     android:text="Detail"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_create_room_name" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_create_item_name" />
 
                 <EditText
-                    android:id="@+id/txt_create_room_type"
+                    android:id="@+id/txt_create_item_type"
                     android:layout_width="wrap_content"
                     android:layout_height="51dp"
                     android:layout_marginStart="8dp"
@@ -115,22 +113,22 @@
                     android:layout_marginEnd="8dp"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="Type Room"
+                    android:text="Type item"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_create_room_detail" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_create_item_detail" />
 
                 <Button
-                    android:id="@+id/btn_create_room"
+                    android:id="@+id/btn_create_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="create_room"
+                    android:text="create item"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_create_room_type" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_create_item_type" />
 
 
             </android.support.constraint.ConstraintLayout>
