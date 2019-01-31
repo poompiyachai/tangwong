@@ -13,7 +13,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Tang Wong"
-
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
@@ -58,7 +57,14 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
-            android:value="true" />
+            android:value="true"
+
+            />
+        <meta-data
+
+            android:name="com.google.android.geo.API_KEY"
+
+            android:value="@string/google_maps_key"/>
 
         <activity android:name=".time" />
         <activity android:name=".notification" />

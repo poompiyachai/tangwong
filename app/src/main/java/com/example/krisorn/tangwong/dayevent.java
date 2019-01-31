@@ -1,14 +1,14 @@
 package com.example.krisorn.tangwong;
 
-import android.content.Intent;
-import android.os.CountDownTimer;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,17 +23,25 @@ public class dayevent extends AppCompatActivity {
     private String id="1";
     private int i=0;
     public DatabaseReference nameCard;
+    private FirebaseAuth mAuth;
+    private String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_dayevent);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        uid = user.getUid ();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         nameCard =database.getReference();
 
         nameCard.addValueEventListener (new ValueEventListener () {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                id = dataSnapshot.child ("user").child (uid).child ("livenow").getValue (String.class);
               /* if(dataSnapshot.child ("room").child (id).child ("time_noti").child ("status") .getValue (String.class).equals ("1"))
                 {
                     long num = dataSnapshot.child ("room").child (id).child ("people_live").getChildrenCount ();
@@ -127,9 +135,9 @@ public class dayevent extends AppCompatActivity {
             if(asd-asdasd>0)
             {
                 totaltime = asd-asdasd;
-                /*mDatabase.child ("room").child (id).child ("date_event").child (String.valueOf (i)).child ("totaltime").setValue (totaltime);
+                mDatabase.child ("room").child (id).child ("date_event").child (String.valueOf (i)).child ("totaltime").setValue (totaltime);
                 mDatabase.child ("room").child (id).child ("date_event").child (String.valueOf (i)).child ("time").setValue (time);
-                mDatabase.child ("room").child (id).child ("date_event").child (String.valueOf (i)).child ("text").setValue (text.getText ().toString ());*/
+                mDatabase.child ("room").child (id).child ("date_event").child (String.valueOf (i)).child ("text").setValue (text.getText ().toString ());
             }
             else
             {

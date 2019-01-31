@@ -246,6 +246,8 @@
         android:layout_height="wrap_content"
         android:text="Follow Me"/>
 
+</LinearLayout>
+  
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
@@ -268,3 +270,4 @@
     </android.support.v4.widget.DrawerLayout>
 
 </layout>
+

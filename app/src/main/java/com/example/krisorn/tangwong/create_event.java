@@ -1,16 +1,17 @@
 package com.example.krisorn.tangwong;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.krisorn.tangwong.ownRoom.carlender;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +26,8 @@ public class create_event extends AppCompatActivity {
     EditText text;
     String roomid="1";
     String date;
+    private FirebaseAuth mAuth;
+    private String uid;
    private boolean check = false;
     boolean one=false;
     int i=0;
@@ -34,6 +37,9 @@ public class create_event extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_create_event);
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        uid = user.getUid ();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child ("aa").setValue ("asd");
@@ -42,6 +48,7 @@ public class create_event extends AppCompatActivity {
         nameCard =database.getReference();
         nameCard.addValueEventListener (new ValueEventListener () {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                roomid = dataSnapshot.child ("user").child (uid).child ("livenow").getValue (String.class);
                 Log.d("test", String.valueOf (one));
                 while(true)
                 {
