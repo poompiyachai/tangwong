@@ -2,16 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.krisorn.tangwong">
-
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
-    -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="com.androidtutorialpoint.mymapsappsdirection.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -26,28 +17,14 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label">
 
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+        <activity android:name=".user_Question"></activity>
+        <activity android:name=".user_InterfaceIntoRoom"></activity>
+        <activity android:name=".user_idSearch"></activity>
+        <activity android:name=".user_poll"></activity>
+        <activity android:name=".user_qrcode"></activity>
+        <activity android:name=".user_search"></activity>
+        <activity android:name=".profile_ex"></activity>
 
-        <activity
-            android:name=".Maps"
-            android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".user_Question" />
-        <activity android:name=".user_InterfaceIntoRoom" />
-        <activity android:name=".user_idSearch" />
-        <activity android:name=".user_poll" />
-        <activity android:name=".user_qrcode" />
-        <activity android:name=".user_search" />
-        <activity android:name=".profile_ex" />
         <activity android:name=".AddFeatureActivity" />
         <activity android:name=".add_feature" />
         <activity android:name=".EmailPasswordActivity">
@@ -73,6 +50,11 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
         <activity android:name=".create_roomActiviity" />
+
+        <activity android:name=".user_qrcode" />
+
+
+
         <activity android:name=".AdminDashBoradView" />
 
         <meta-data
@@ -88,9 +70,13 @@
 
         <activity android:name=".time" />
         <activity android:name=".notification" />
+
+        <activity android:name=".own_room" />
         <activity android:name=".ownRoom.carlender" />
         <activity android:name=".create_event" />
-        <activity android:name=".dayevent" />
+        <activity android:name=".dayevent"></activity>
+
+
     </application>
 
 </manifest>
