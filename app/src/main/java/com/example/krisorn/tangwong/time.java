@@ -60,7 +60,7 @@ public class time extends AppCompatActivity {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         nameCard =database.getReference();
-
+int A;
         nameCard.addValueEventListener (new ValueEventListener () {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
