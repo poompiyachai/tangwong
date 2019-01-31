@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home">
+    >
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout_add_feature"
         android:layout_width="match_parent"
@@ -27,6 +27,7 @@
             android:id="@+id/list_add_feature"
             android:background="@android:color/transparent"/>
     </android.support.v4.widget.DrawerLayout>
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -71,6 +71,7 @@ public class AddFeatureActivity extends AppCompatActivity
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         Log.d("list data","can create");
+
         loadListItem();
 
 
@@ -87,7 +88,6 @@ public class AddFeatureActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(AddFeatureActivity.this);
         navigationView.bringToFront();
         //end side bar
-
 
     }
 

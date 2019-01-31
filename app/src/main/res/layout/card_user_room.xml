@@ -18,14 +18,10 @@
     >
 
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-
-
         >
 
         <ImageView
@@ -59,7 +55,7 @@
             app:layout_constraintStart_toEndOf="@+id/img_card_user_room"
             app:layout_constraintTop_toBottomOf="@+id/text_card_user_room" />
 
-    </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout >
 </android.support.v7.widget.CardView>
 
 </RelativeLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true">
+
+    <LinearLayout
+        android:id="@+id/searchActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        style="@style/Widget.AppCompat.Button.Colored"
+        tools:layout_editor_absoluteX="143dp"
+        tools:layout_editor_absoluteY="212dp"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/ToSearchId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search ID"
+            android:onClick="click"/>
+
+        <Button
+            android:id="@+id/ToSearchQRcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search QR"
+            android:onClick="click"/>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

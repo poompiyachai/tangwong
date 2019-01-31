@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.example.krisorn.tangwong.AddminListItemView;
 import com.example.krisorn.tangwong.AdminDashBoradView;
 import com.example.krisorn.tangwong.Model.Order;
 import com.example.krisorn.tangwong.R;
@@ -106,7 +107,7 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
             public void onClick(View v) {
                 //  Intent i = new Intent(this,)
 
-                Intent i = new Intent(v.getContext(), list_itemActivity.class);
+                Intent i = new Intent(v.getContext(), AddminListItemView.class);
                 context.startActivity(i);
 
                 Log.d("statusPage","can click");
@@ -115,42 +116,42 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
         });
         Log.d("list data","can not get firebase");
         try {
-          mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                  final String roomLiveNow= dataSnapshot.getValue(String.class);
-                  Log.d("canRetrive","livenow");
+            mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    final String roomLiveNow= dataSnapshot.getValue(String.class);
+                    Log.d("canRetrive","livenow");
 
-                  mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf(position)).addListenerForSingleValueEvent(new ValueEventListener() {
-                      @Override
-                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                          mDatabase.child("room").child(roomLiveNow).child(dataSnapshot.getValue(String.class)).addListenerForSingleValueEvent(new ValueEventListener() {
-                              @Override
-                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                  holder.txtNameRoom.setText(dataSnapshot.child("nameOfFeture").getValue(String.class));
-                                  holder.txtDetail.setText(dataSnapshot.child("detailOfFeture").getValue(String.class));
-                                  Log.d("canRetriveFeature",dataSnapshot.getRef().toString());
-                              }
+                    mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf(position)).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            mDatabase.child("room").child(roomLiveNow).child(dataSnapshot.getValue(String.class)).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    holder.txtNameRoom.setText(dataSnapshot.child("nameOfFeture").getValue(String.class));
+                                    holder.txtDetail.setText(dataSnapshot.child("detailOfFeture").getValue(String.class));
+                                    Log.d("canRetriveFeature",dataSnapshot.getRef().toString());
+                                }
 
-                              @Override
-                              public void onCancelled(@NonNull DatabaseError databaseError) {
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                              }
-                          });
-                      }
+                                }
+                            });
+                        }
 
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                      }
-                  });
-              }
+                        }
+                    });
+                }
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-              }
-          });
+                }
+            });
 
         }catch (Exception e ){
 

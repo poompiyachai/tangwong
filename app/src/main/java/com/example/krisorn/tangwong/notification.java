@@ -1,9 +1,8 @@
 package com.example.krisorn.tangwong;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -16,15 +15,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 public class notification extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private String id="2";
@@ -32,11 +22,40 @@ public class notification extends AppCompatActivity {
     private FirebaseAuth mAuth;
     public DatabaseReference nameCard;
 
+    private String uid;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_notification);
+        final FirebaseUser user = mAuth.getCurrentUser();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        uid = user.getUid ();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        nameCard =database.getReference();
 
+        nameCard.addValueEventListener (new ValueEventListener () {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                id = dataSnapshot.child ("user").child (uid).child ("livenow").getValue (String.class);
+
+
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+
+        });
     }
 
     public void click(View view) {

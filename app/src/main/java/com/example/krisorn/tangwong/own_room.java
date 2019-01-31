@@ -48,15 +48,15 @@ public class own_room extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_own_room);
         recyclerView = (RecyclerView)findViewById(R.id.list_own_room);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         Log.d("list data","can create");
+
         loadListItem();
+
     }
 
 

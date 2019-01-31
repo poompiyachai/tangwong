@@ -97,6 +97,46 @@ public class AdminDashBoradView extends AppCompatActivity
         //end side bar
 
 
+      //  findViewById(R.id.layout_add_button).setVisibility(View.INVISIBLE);
+        //findViewById(R.id.layout_add_button).setVisibility(View.GONE);
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final String roomLiveNow= dataSnapshot.getValue(String.class);
+                Log.d("canRetrive","livenow");
+
+                mDatabase.child("room").child(roomLiveNow).child("feature").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        countOrderNow= (int) dataSnapshot.getChildrenCount();
+                        Log.d("list2", String.valueOf(countOrderNow));
+                        adapter = new AdminDashBoradAdapter(countOrderNow,AdminDashBoradView.this);
+                        recyclerView.setAdapter(adapter);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+          findViewById(R.id.fab).setVisibility(View.INVISIBLE);
+                findViewById(R.id.fab).setVisibility(View.GONE);
+
+
+
     }
 
 
