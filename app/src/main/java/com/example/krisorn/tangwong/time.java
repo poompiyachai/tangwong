@@ -65,22 +65,23 @@ int A;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 id = dataSnapshot.child ("user").child (uid).child ("livenow").getValue (String.class);
-            if(dataSnapshot.child ("room").child (id).child ("time_noti").child ("status") .getValue (String.class).equals ("1"))
-            {
-                long num = dataSnapshot.child ("room").child (id).child ("people_live").getChildrenCount ();
-                for(long i=0;i<num;i++)
-                {
-                    if(dataSnapshot.child ("room").child (id).child("people_live").child (Long.toString (i)).child ("uid").getValue (String.class)!=null)
-                    {
-                        String tempUid =  dataSnapshot.child ("room").child (id).child("people_live").child (Long.toString (i)).child ("uid").getValue (String.class);
-                        String text = dataSnapshot.child ("room").child (id).child ("time_noti").child ("text") .getValue (String.class);
-                        mDatabase.child ("user").child (tempUid).child ("time").child ("status") .setValue ("1");
-                        mDatabase.child ("user").child (tempUid).child ("time").child ("text") .setValue (text);
-                    }
 
+                long num = dataSnapshot.child ("room").child (id).child ("people_live").getChildrenCount ();
+
+                if(dataSnapshot.child ("room").child (id).child ("time_noti").child ("status") .getValue (String.class).equals ("1")) {
+                    for (long i = 1; i <= num; i++) {
+                        if (dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class) != null) {
+                            Log.d ("aasdaa", "asddsa");
+                            String tempUid = dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class);
+                            String text = dataSnapshot.child ("room").child (id).child ("time_noti").child ("text").getValue (String.class);
+                            mDatabase.child ("user").child (tempUid).child ("time").child ("status").setValue ("1");
+                            mDatabase.child ("user").child (tempUid).child ("time").child ("text").setValue (text);
+                        }
+
+                    }
+                    mDatabase.child ("room").child (id).child ("time_noti").child ("status") .setValue ("0");
                 }
-                mDatabase.child ("room").child (id).child ("time_noti").child ("status") .setValue ("0");
-            }
+
 
 
 
@@ -130,13 +131,13 @@ int A;
             int asdd = Integer.parseInt(String.valueOf (a+b));
             int asdasd = Integer.parseInt(String.valueOf (aa+bb));
 
-            int asd = Integer.parseInt(String.valueOf (asdd-asdasd))*1000;
+            int asd = Integer.parseInt(String.valueOf (asdd-asdasd))*1000-(Integer.parseInt(s)*1000);
             if(asdd-asdasd<=0)
             {
                 asd = (24*60*60)+Integer.parseInt(String.valueOf (asdd-asdasd));
                 asd = asd*1000;
             }
-            Log.d("aasdaa", hr+":"+mi);
+            Log.d("aasdaa", String.valueOf (asd/1000));
            new CountDownTimer (asd, 1000) {
                 EditText text = findViewById(R.id.text);
 

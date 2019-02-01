@@ -129,7 +129,7 @@ public class OwnRoomAdapter extends RecyclerView.Adapter<OwnRoomViewHolder> {
                 Intent i = new Intent(v.getContext(),AdminDashBoradView.class);
                 context.startActivity(i);
 
-                Log.d("statusPage","can click");
+                Log.d("statusPage","can click ownRoom");
 
                 mDatabase.child("user").child(user.getUid()).child("owner").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

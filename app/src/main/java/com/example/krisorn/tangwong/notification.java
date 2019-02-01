@@ -29,9 +29,13 @@ public class notification extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_notification);
+        mAuth = FirebaseAuth.getInstance();
+
         final FirebaseUser user = mAuth.getCurrentUser();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         uid = user.getUid ();
+/*        mDatabase.child ("asd").setValue ("asd");
+        mDatabase.child ("asd").setValue ("ddsa");*/
         mDatabase = FirebaseDatabase.getInstance().getReference();
         nameCard =database.getReference();
 
@@ -75,7 +79,7 @@ public class notification extends AppCompatActivity {
 
             nameCard = database.getReference();
 
-            ValueEventListener valueEventListener = nameCard.addValueEventListener (new ValueEventListener () {
+             nameCard.addListenerForSingleValueEvent (new ValueEventListener () {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     //final FirebaseUser user = mAuth.getCurrentUser ();
@@ -87,7 +91,7 @@ public class notification extends AppCompatActivity {
 
                     if (dataSnapshot.child ("room").child (id).child ("q").child (roomq.getText ().toString ()).child ("noti_status").getValue ((String.class)).equals ("1")) {
                         //roomq = findViewById(R.id.roomid).toString ();
-                        String tempuid = dataSnapshot.child ("room").child (id).child ("q").child (roomq.getText ().toString ()).child ("uid").getValue ((String.class));
+                        String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (roomq.getText ().toString ()).child ("uid").getValue ((String.class));
 
                         Log.d ("aasd", tempuid);
                         mDatabase.child ("room").child (id).child ("q").child (roomq.getText ().toString ()).child ("text").setValue (message.getText ().toString ());

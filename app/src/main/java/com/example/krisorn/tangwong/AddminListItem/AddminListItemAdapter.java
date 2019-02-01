@@ -67,7 +67,7 @@ class AddminListItemViewHolder extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View v) {
-        // Log.d("statusPage","can click");
+        Log.d("statusPage","can click admin list item");
     }
 }
 
@@ -110,16 +110,22 @@ public class AddminListItemAdapter extends RecyclerView.Adapter<AddminListItemVi
 
         mDatabase = database.getReference();
 
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("onClick","onClick"+position);
 
-                mDatabase.child("user").child(uid).child("live").child(String.valueOf(position)).addValueEventListener(new ValueEventListener() {
+                Intent i = new Intent(v.getContext(),list_itemActivity.class);
+                context.startActivity(i);
+
+                Log.d("statusPage","can click addminlist item");
+
+                mDatabase.child("user").child(user.getUid()).child("owner").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        mDatabase.child("user").child(uid).child("liveItemNow").setValue(String.valueOf(position));
-
+                        String room = dataSnapshot.child(String.valueOf(position)).getValue(String.class);
+                        mDatabase.child("user").child(user.getUid()).child("livefeaturenow").setValue("1111111111");
+                        //  Log.d("ttttttttttttt",mDatabase.getPath().getParent().toString());
                     }
 
                     @Override
@@ -127,11 +133,9 @@ public class AddminListItemAdapter extends RecyclerView.Adapter<AddminListItemVi
 
                     }
                 });
-
-                Intent i = new Intent(v.getContext(), list_itemActivity.class);
-                context.startActivity(i);
             }
         });
+
 
         //  mDatabase.child("user").child(uid).orderByChild("live").equalTo(i).limitToFirst(1).addValueEventListener(new ValueEventListener() {
         mDatabase.child("user").child(uid).child("livenow").addValueEventListener(new ValueEventListener() {
@@ -150,7 +154,7 @@ public class AddminListItemAdapter extends RecyclerView.Adapter<AddminListItemVi
                         Picasso.get().load(imgUrl).into(holder.imageView);
                         holder.txtNameRoom.setText(title);
                         holder.txtDetail.setText(detail);
-
+                        Log.d("addMinList","This is addmin list item yahhh");
                     }
 
                     @Override

@@ -115,9 +115,194 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
                                             .setValue("q");
-                                    mDatabase.child("room").child(roomLiveNow).child("q").child("nameOfFeture").setValue("รายการสินค้า");
+                                    mDatabase.child("room").child(roomLiveNow).child("q").child("nameOfFeture").setValue("รายการสินค้า(แผงลอย)");
                                     mDatabase.child("room").child(roomLiveNow).child("q").child("detailOfFeture").setValue(dataSnapshot.child("data")
                                             .getValue(String.class));
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }else   if (position==1){
+
+                    mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final String roomLiveNow= dataSnapshot.getValue(String.class);
+                            Log.d("canRetrive","livenow");
+
+                            mDatabase.child("room").child(roomLiveNow).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
+                                            .setValue("store");
+                                    mDatabase.child("room").child(roomLiveNow).child("store").child("nameOfFeture").setValue("รายการสินค้า(แบบderivery)");
+                                    mDatabase.child("room").child(roomLiveNow).child("store").child("detailOfFeture").setValue(dataSnapshot.child("data")
+                                            .getValue(String.class));
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }else   if (position==2){
+
+                    mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final String roomLiveNow= dataSnapshot.getValue(String.class);
+                            Log.d("canRetrive","livenow");
+
+                            mDatabase.child("room").child(roomLiveNow).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
+                                            .setValue("store");
+                                    mDatabase.child("room").child(roomLiveNow).child("store").child("nameOfFeture").setValue("รายการสินค้า(แบบderivery)");
+                                    mDatabase.child("room").child(roomLiveNow).child("store").child("detailOfFeture").setValue(dataSnapshot.child("data")
+                                            .getValue(String.class));
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }else   if (position==3){
+
+                    mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final String roomLiveNow= dataSnapshot.getValue(String.class);
+                            Log.d("canRetrive","livenow");
+
+                            mDatabase.child("room").child(roomLiveNow).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
+                                            .setValue("store");
+                                    mDatabase.child("room").child(roomLiveNow).child("store").child("nameOfFeture").setValue("รายการสินค้า(แบบderivery)");
+                                    mDatabase.child("room").child(roomLiveNow).child("store").child("detailOfFeture").setValue(dataSnapshot.child("data")
+                                            .getValue(String.class));
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }else   if (position==4){
+
+                    mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final String roomLiveNow= dataSnapshot.getValue(String.class);
+                            Log.d("canRetrive","livenow");
+
+                            mDatabase.child("room").child(roomLiveNow).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
+                                            .setValue("notification");
+                                    mDatabase.child("room").child(roomLiveNow).child("notification").child("nameOfFeture").setValue("แจ้งเตือน");
+                                    mDatabase.child("room").child(roomLiveNow).child("notification").child("detailOfFeture").setValue("แจ้งเตือนคนในกลุ่ม");
+                                    mDatabase.child("room").child(roomLiveNow).child("notification").child("typeOfFeture").setValue("notification");
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }else   if (position==5){
+
+                    mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final String roomLiveNow= dataSnapshot.getValue(String.class);
+                            Log.d("canRetrive","livenow");
+
+                            mDatabase.child("room").child(roomLiveNow).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
+                                            .setValue("canlender_settime");
+                                    mDatabase.child("room").child(roomLiveNow).child("canlender_settime").child("nameOfFeture").setValue("แจ้งเตือนตั้งเวลา");
+                                    mDatabase.child("room").child(roomLiveNow).child("canlender_settime").child("detailOfFeture").setValue("แจ้งเตือนตั้งเวลาคนในกลุ่ม");
+                                    mDatabase.child("room").child(roomLiveNow).child("canlender_settime").child("typeOfFeture").setValue("canlender_settime");
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }else   if (position==6){
+
+                    mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final String roomLiveNow= dataSnapshot.getValue(String.class);
+                            Log.d("canRetrive","livenow");
+
+                            mDatabase.child("room").child(roomLiveNow).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
+                                            .setValue("calender");
+                                    mDatabase.child("room").child(roomLiveNow).child("calender").child("nameOfFeture").setValue("ดูปฎิทิน");
+                                    mDatabase.child("room").child(roomLiveNow).child("calender").child("detailOfFeture").setValue("ดูปฎิทิน");
+                                    mDatabase.child("room").child(roomLiveNow).child("calender").child("typeOfFeture").setValue("calender");
 
                                 }
 
@@ -137,7 +322,7 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
 
                 Intent i = new Intent(v.getContext(), AdminDashBoradView.class);
                 context.startActivity(i);
-                Log.d("statusPage","can click");
+                Log.d("statusPage","can click addfeature");
 
             }});
         if(position==0){
@@ -172,12 +357,24 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
             String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
             Picasso.get().load(imgUrl).into(holder.imageView);
         }
+        if (position==5){
+            holder.txtNameRoom.setText("แจ้งเตือนแบบตั้งเวลา");
+            holder.txtDetail.setText("แจ้งเตือนทุกคนในกลุ่ม");
+            String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
+            Picasso.get().load(imgUrl).into(holder.imageView);
+        }
+        if (position==6){
+            holder.txtNameRoom.setText("ปฎิทิน");
+            holder.txtDetail.setText("ดูปฎิทิน");
+            String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
+            Picasso.get().load(imgUrl).into(holder.imageView);
+        }
 
     }
 
     @Override
     public int getItemCount() {
 
-        return 5;
+        return 7;
     }
 }

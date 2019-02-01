@@ -8,28 +8,16 @@ import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
-import android.os.CountDownTimer;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
-//import android.support.v4.media.app.NotificationCompat;
-
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Intent;
-
-
-//import android.support.v4.media.app.NotificationCompat;
-import android.util.Log;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -39,15 +27,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-//import android.widget.TextView;
 
 import com.example.krisorn.tangwong.databinding.ActivityProfileExBindingImpl;
-import com.example.krisorn.tangwong.databinding.ActivityUsersBindingImpl;
-import com.example.krisorn.tangwong.ownRoom.carlender;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -59,15 +41,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
+import java.util.UUID;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Map;
-
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.toUnsignedString;
+//import android.support.v4.media.app.NotificationCompat;
+//import android.support.v4.media.app.NotificationCompat;
+//import android.widget.TextView;
 
 public class UsersActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -198,7 +176,7 @@ public class UsersActivity extends AppCompatActivity
                     String timetext = dataSnapshot.child ("user").child (uid).child ("time").child ("text").getValue (String.class);
                     showNotification (timetext);
                 }
-                
+
                 String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
 
                 String pathPhoto=dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
@@ -385,7 +363,7 @@ public class UsersActivity extends AppCompatActivity
         if(requestCode==GALLERY_INTENT && resultCode==RESULT_OK){
 
             Uri uri=data.getData();
-            final StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
+            final StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment()+ UUID.randomUUID().toString());
 
             mProgressDialog.setMessage("Uploading....");
             mProgressDialog.show();
@@ -502,6 +480,10 @@ public class UsersActivity extends AppCompatActivity
 
         }else if (id == R.id.nav_poll){
             Intent i = new Intent(this,user_Question.class);
+            startActivity(i);
+        }else if(id == R.id.nav_logout){
+            mAuth.signOut();
+            Intent i = new Intent(this,EmailPasswordActivity.class);
             startActivity(i);
         }
 

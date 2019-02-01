@@ -16,15 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-
-        <activity android:name=".user_Question"></activity>
-        <activity android:name=".user_InterfaceIntoRoom"></activity>
-        <activity android:name=".user_idSearch"></activity>
-        <activity android:name=".user_poll"></activity>
-        <activity android:name=".user_qrcode"></activity>
-        <activity android:name=".user_search"></activity>
-        <activity android:name=".profile_ex"></activity>
-
+        <activity android:name=".create_itemActivity"></activity>
+        <activity android:name=".user_Question" />
+        <activity android:name=".user_InterfaceIntoRoom" />
+        <activity android:name=".user_idSearch" />
+        <activity android:name=".user_poll" />
+        <activity android:name=".user_qrcode" />
+        <activity android:name=".user_search" />
+        <activity android:name=".profile_ex" />
         <activity android:name=".AddFeatureActivity" />
         <activity android:name=".add_feature" />
         <activity android:name=".EmailPasswordActivity">
@@ -50,11 +49,6 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
         <activity android:name=".create_roomActiviity" />
-
-        <activity android:name=".user_qrcode" />
-
-
-
         <activity android:name=".AdminDashBoradView" />
 
         <meta-data
@@ -70,13 +64,9 @@
 
         <activity android:name=".time" />
         <activity android:name=".notification" />
-
-        <activity android:name=".own_room" />
         <activity android:name=".ownRoom.carlender" />
         <activity android:name=".create_event" />
-        <activity android:name=".dayevent"></activity>
-
-
+        <activity android:name=".dayevent" />
     </application>
 
 </manifest>

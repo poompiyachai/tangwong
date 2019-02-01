@@ -20,6 +20,9 @@ import com.example.krisorn.tangwong.Model.Order;
 import com.example.krisorn.tangwong.R;
 import com.example.krisorn.tangwong.UsersViewModel;
 import com.example.krisorn.tangwong.list_itemActivity;
+import com.example.krisorn.tangwong.notification;
+import com.example.krisorn.tangwong.ownRoom.carlender;
+import com.example.krisorn.tangwong.time;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -102,18 +105,7 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //  Intent i = new Intent(this,)
 
-                Intent i = new Intent(v.getContext(), AddminListItemView.class);
-                context.startActivity(i);
-
-                Log.d("statusPage","can click");
-
-            }
-        });
         Log.d("list data","can not get firebase");
         try {
             mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -125,12 +117,43 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
                     mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf(position)).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Log.d("statuspage",dataSnapshot.getValue(String.class));
                             mDatabase.child("room").child(roomLiveNow).child(dataSnapshot.getValue(String.class)).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                                     holder.txtNameRoom.setText(dataSnapshot.child("nameOfFeture").getValue(String.class));
                                     holder.txtDetail.setText(dataSnapshot.child("detailOfFeture").getValue(String.class));
                                     Log.d("canRetriveFeature",dataSnapshot.getRef().toString());
+
+                                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            //  Intent i = new Intent(this,)
+                                          //  Log.d("status",dataSnapshot.child("typeOfFeture").getValue(String.class));
+                                            try {
+                                                if(dataSnapshot.child("typeOfFeture").getValue(String.class).equals("StallShop")){
+                                                    Intent i = new Intent(v.getContext(), AddminListItemView.class);
+                                                    context.startActivity(i);
+                                                Log.d("statuspage","can eccess store");
+                                                }else if(dataSnapshot.child("typeOfFeture").getValue(String.class).equals("notification")){
+                                                    Intent i = new Intent(v.getContext(), notification.class);
+                                                    context.startActivity(i);
+                                                    Log.d("statuspage","can eccess store");
+                                                }else if(dataSnapshot.child("typeOfFeture").getValue(String.class).equals("canlender_settime")){
+                                                    Intent i = new Intent(v.getContext(), time.class);
+                                                    context.startActivity(i);
+                                                    Log.d("statuspage","can eccess store");
+                                                }else if(dataSnapshot.child("typeOfFeture").getValue(String.class).equals("calender")){
+                                                    Intent i = new Intent(v.getContext(), carlender.class);
+                                                    context.startActivity(i);
+                                                    Log.d("statuspage","can eccess store");
+                                                }
+                                                Log.d("statusPage","can click admin dash borad");
+                                            }catch (Exception e){}
+
+
+                                        }
+                                    });
                                 }
 
                                 @Override

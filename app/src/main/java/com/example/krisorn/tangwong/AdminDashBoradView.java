@@ -96,7 +96,8 @@ public class AdminDashBoradView extends AppCompatActivity
         navigationView.bringToFront();
         //end side bar
 
-
+        findViewById(R.id.fab).setVisibility(View.INVISIBLE);
+        findViewById(R.id.fab).setVisibility(View.GONE);
       //  findViewById(R.id.layout_add_button).setVisibility(View.INVISIBLE);
         //findViewById(R.id.layout_add_button).setVisibility(View.GONE);
         mAuth = FirebaseAuth.getInstance();
@@ -107,16 +108,19 @@ public class AdminDashBoradView extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final String roomLiveNow= dataSnapshot.getValue(String.class);
-                Log.d("canRetrive","livenow");
+                Log.d("canRetrive","livenow"+roomLiveNow);
 
-                mDatabase.child("room").child(roomLiveNow).child("feature").addListenerForSingleValueEvent(new ValueEventListener() {
+                mDatabase.child("user").child(user.getUid()).child("owner").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        countOrderNow= (int) dataSnapshot.getChildrenCount();
-                        Log.d("list2", String.valueOf(countOrderNow));
-                        adapter = new AdminDashBoradAdapter(countOrderNow,AdminDashBoradView.this);
-                        recyclerView.setAdapter(adapter);
+                        Log.d("canRetrive","livenowin"+roomLiveNow);
+                        for(long i = 0 ; i<dataSnapshot.getChildrenCount();i++){
+                            if(dataSnapshot.child(String.valueOf(i)).getValue()==roomLiveNow){
+                                findViewById(R.id.fab).setVisibility(View.VISIBLE);
+                               // findViewById(R.id.fab).setVisibility(View.GONE);
+                                Log.d("AdminDashBoradView","myRoom");
+                            }
+                        }
 
                     }
 
@@ -132,8 +136,7 @@ public class AdminDashBoradView extends AppCompatActivity
 
             }
         });
-          findViewById(R.id.fab).setVisibility(View.INVISIBLE);
-                findViewById(R.id.fab).setVisibility(View.GONE);
+
 
 
 

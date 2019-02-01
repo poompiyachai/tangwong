@@ -117,7 +117,7 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("statusPage","can click");
+                Log.d("statusPage","can click feature adapter");
             }
         });
         Log.d("list data","can not get firebase");
