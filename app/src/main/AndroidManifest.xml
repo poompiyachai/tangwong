@@ -49,6 +49,9 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
         <activity android:name=".create_roomActiviity" />
+
+
+
         <activity android:name=".AdminDashBoradView" />
 
         <meta-data
@@ -64,6 +67,8 @@
 
         <activity android:name=".time" />
         <activity android:name=".notification" />
+
+
         <activity android:name=".ownRoom.carlender" />
         <activity android:name=".create_event" />
         <activity android:name=".dayevent" />
