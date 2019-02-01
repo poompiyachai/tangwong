@@ -29,6 +29,8 @@ public class notification extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_notification);
+        mAuth = FirebaseAuth.getInstance();
+
         final FirebaseUser user = mAuth.getCurrentUser();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         uid = user.getUid ();

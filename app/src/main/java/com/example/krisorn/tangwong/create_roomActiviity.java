@@ -1,6 +1,7 @@
 package com.example.krisorn.tangwong;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,10 +19,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.krisorn.tangwong.Database.Database;
+import com.example.krisorn.tangwong.Model.Request;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -101,6 +107,8 @@ public class create_roomActiviity extends AppCompatActivity
                 mDatabase.child("room").child(Long.toString(roomid)).child("photoPath").setValue(url);
 
                 mDatabase.child("user").child(user.getUid()).child("owner").child(String.valueOf(count_own_room_count)).setValue((Long.toString(roomid)));
+
+                showAlertDialog();
 
             }
         });
@@ -228,4 +236,35 @@ public class create_roomActiviity extends AppCompatActivity
         }
 
     }
+
+    private void showAlertDialog() {
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(create_roomActiviity.this);
+        alertDialog.setTitle("สำเร็จ");
+        alertDialog.setMessage("การสร้างห้องสำเร็จแล้ว");
+
+        Log.d("showAlertDialog","showAlertDialog");
+        final EditText edtAddress = new EditText(create_roomActiviity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        );
+
+        edtAddress.setLayoutParams(lp);
+
+
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+
+        });
+
+
+        alertDialog.show();
+    }
+
 }
