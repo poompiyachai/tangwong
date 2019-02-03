@@ -60,7 +60,18 @@ public class user_idSearch extends AppCompatActivity {
                                         final FirebaseUser user = mAuth.getCurrentUser();
                                         long numberOfpeople_live = dataSnapshot.child("room").child(text_search.getText().toString()).child("people_live").getChildrenCount();
 
-                                        searchRoom.child("user").child(user.getUid()).child("live").child(text_search.getText().toString()).setValue("1");
+                                        searchRoom.child("user").child(user.getUid()).child("live").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                Long noOfRoom = dataSnapshot.getChildrenCount();
+                                                searchRoom.child("user").child(user.getUid()).child("live").child(String.valueOf(noOfRoom)).setValue(text_search.getText().toString());
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
                                         searchRoom.child("user").child(user.getUid()).child("livenow").setValue(text_search.getText().toString());
                                         searchRoom.child("room").child(text_search.getText().toString()).child("people_live").child(Long.toString(numberOfpeople_live += 1)).child("uid").setValue (user.getUid ());
 

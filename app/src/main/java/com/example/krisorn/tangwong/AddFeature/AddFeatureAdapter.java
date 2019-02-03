@@ -116,8 +116,8 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                     mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
                                             .setValue("q");
                                     mDatabase.child("room").child(roomLiveNow).child("q").child("nameOfFeture").setValue("รายการสินค้า(แผงลอย)");
-                                    mDatabase.child("room").child(roomLiveNow).child("q").child("detailOfFeture").setValue(dataSnapshot.child("data")
-                                            .getValue(String.class));
+                                    mDatabase.child("room").child(roomLiveNow).child("q").child("detailOfFeture").setValue(dataSnapshot.child("data").getValue(String.class));
+                                    mDatabase.child("room").child(roomLiveNow).child("q").child("typeOfFeture").setValue("StallShop");
 
                                 }
 
@@ -149,6 +149,7 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                     mDatabase.child("room").child(roomLiveNow).child("store").child("nameOfFeture").setValue("รายการสินค้า(แบบderivery)");
                                     mDatabase.child("room").child(roomLiveNow).child("store").child("detailOfFeture").setValue(dataSnapshot.child("data")
                                             .getValue(String.class));
+                                    mDatabase.child("room").child(roomLiveNow).child("store").child("typeOfFeture").setValue("store");
 
                                 }
 
