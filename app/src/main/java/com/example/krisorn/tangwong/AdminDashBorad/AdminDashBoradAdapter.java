@@ -23,7 +23,9 @@ import com.example.krisorn.tangwong.UsersViewModel;
 import com.example.krisorn.tangwong.list_itemActivity;
 import com.example.krisorn.tangwong.notification;
 import com.example.krisorn.tangwong.ownRoom.carlender;
+import com.example.krisorn.tangwong.pool_interface;
 import com.example.krisorn.tangwong.time;
+import com.example.krisorn.tangwong.user_Question;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -152,7 +154,19 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
                                                     Log.d("statusPage","can click viewqueue");
                                                     Intent i = new Intent(v.getContext(), StatusCostomer.class);
                                                     context.startActivity(i);
-                                                    Log.d("statuspage","can eccess store");
+
+                                                    Log.d("statuspage","can eccess viewqueue");
+                                                }else if(dataSnapshot.child("typeOfFeture").getValue(String.class).equals("poll")){
+                                                    Log.d("statusPage","can click poll");
+                                                    Intent i = new Intent(v.getContext(), user_Question.class);
+                                                    context.startActivity(i);
+                                                    Log.d("statuspage","can eccess poll");
+                                                }else if(dataSnapshot.child("typeOfFeture").getValue(String.class).equals("pollview")){
+                                                    Log.d("statusPage","can click viewpoll");
+                                                    Intent i = new Intent(v.getContext(), pool_interface.class);
+                                                    context.startActivity(i);
+                                                    Log.d("statuspage","can eccess viewpoll");
+
                                                 }
                                                 Log.d("statusPage","can click admin dash borad");
                                             }catch (Exception e){Log.d("statuspage", String.valueOf(e));
