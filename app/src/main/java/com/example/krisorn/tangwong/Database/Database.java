@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.util.Log;
 
 import com.example.krisorn.tangwong.Model.Order;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
@@ -20,10 +21,11 @@ public class Database extends SQLiteAssetHelper {
     }
 
     public List<Order> getCarts(){
+        Log.d("database","getcarts");
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         String[] sqlSelect={"productName","productID","quanlity","price"};
-        String sqlTable = "orderDerail";
+        String sqlTable = "OrderDerail";
 
         qb.setTables(sqlTable);
         Cursor c = qb.query(db,sqlSelect,null,null,null,null,null);
@@ -44,9 +46,10 @@ public class Database extends SQLiteAssetHelper {
     }
 
     public void addToCart(Order order){
+        Log.d("database","addtocart");
         SQLiteDatabase db = getReadableDatabase();
         String query = String.format("INSERT INTO orderDerail(productID,productName,quanlity,price) VALUES('%s','%s','%s','%s');",
-                order.getProductID(),
+                order.getLivenow(),
                 order.getProductName(),
                 order.getQuanlity(),
                 order.getPrice());
@@ -56,8 +59,11 @@ public class Database extends SQLiteAssetHelper {
 
     public void cleanCart(){
         SQLiteDatabase db = getReadableDatabase();
-        String query = String.format("DELETE FROM orderDerail");
+        String query = String.format("DELETE FROM OrderDerail");
+        Log.d("database","clean cart" + query);
+
         db.execSQL(query);
+        db.delete("OrderDerail", null, null);
     }
 
 }

@@ -177,10 +177,11 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
-                                            .setValue("store");
-                                    mDatabase.child("room").child(roomLiveNow).child("store").child("nameOfFeture").setValue("รายการสินค้า(แบบderivery)");
-                                    mDatabase.child("room").child(roomLiveNow).child("store").child("detailOfFeture").setValue(dataSnapshot.child("data")
+                                            .setValue("viewqueue");
+                                    mDatabase.child("room").child(roomLiveNow).child("viewqueue").child("nameOfFeture").setValue("ดูคิวลูกค้า");
+                                    mDatabase.child("room").child(roomLiveNow).child("viewqueue").child("detailOfFeture").setValue(dataSnapshot.child("data")
                                             .getValue(String.class));
+                                    mDatabase.child("room").child(roomLiveNow).child("viewqueue").child("typeOfFeture").setValue("viewqueue");
 
                                 }
 
@@ -341,8 +342,8 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
             Picasso.get().load(imgUrl).into(holder.imageView);
         }
         if (position==2){
-            holder.txtNameRoom.setText("เพิ่มร้าน(แบบมีโต๊ะ)");
-            holder.txtDetail.setText("เพิ่มร้านค้าหรือร้านอาหารเแบบมีโต๊ะ");
+            holder.txtNameRoom.setText("เพิ่มดูสถาณะร้านค้า");
+            holder.txtDetail.setText("เอาไว้ดูลำดับคิวลูกค้า");
             String imgUrl = "http://เซ้งร้าน.com/img/dorm/img_1437667740.jpeg";
             Picasso.get().load(imgUrl).into(holder.imageView);
         }

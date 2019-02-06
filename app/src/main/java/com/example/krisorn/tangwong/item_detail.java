@@ -70,21 +70,24 @@ public class item_detail extends AppCompatActivity {
                  mAuth=FirebaseAuth.getInstance();
                  FirebaseUser user = mAuth.getCurrentUser();
                  final String uid = user.getUid();
-                 mUser.addValueEventListener(new ValueEventListener() {
+                 mUser.addListenerForSingleValueEvent(new ValueEventListener() {
                      @Override
                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                         String livenow = dataSnapshot.child(uid).child("livenow").getValue(String.class);
+                         final String livenow = dataSnapshot.child(uid).child("livenow").getValue(String.class);
                          final String liveItemNow = dataSnapshot.child(uid).child("liveItemNow").getValue(String.class);
+
                          Log.d("liveItemNow","liveItemNow"+liveItemNow);
-                         mRoom.child(livenow).child("menu").child(liveItemNow).addValueEventListener(new ValueEventListener() {
+                         mRoom.child(livenow).child("menu").child(liveItemNow).addListenerForSingleValueEvent(new ValueEventListener() {
                              @Override
                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                  //collapsingToolbarLayout.setTitle(dataSnapshot.child("name").getValue(String.class));
+                                 Log.d("database","firebase add data");
                                  new Database(getBaseContext()).addToCart(new Order(
-                                        liveItemNow,
+                                         livenow,
                                          dataSnapshot.child("name").getValue(String.class),
                                          numberButton.getNumber(),
                                          dataSnapshot.child("price").getValue(String.class)
+
 
                                  ));
                                 /* item_price.setText(dataSnapshot.child("price").getValue(String.class));

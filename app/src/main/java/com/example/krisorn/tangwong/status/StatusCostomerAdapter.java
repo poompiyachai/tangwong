@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-class StatusViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+class StatusCostomerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
 
     public TextView txtNameRoom, txtSumPrice,txtStatus,txtNumberOfItem;
@@ -68,7 +68,7 @@ class StatusViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         this.txtNumberOfItem = txtNumberOfItem;
     }
 
-    public StatusViewHolder(@NonNull View itemView) {
+    public StatusCostomerViewHolder(@NonNull View itemView) {
         super(itemView);
 
 
@@ -80,11 +80,11 @@ class StatusViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-       // Log.d("statusPage","can click");
+        // Log.d("statusPage","can click");
     }
 }
 
-public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
+public class StatusCostomerAdapter extends RecyclerView.Adapter<StatusViewHolder> {
 
     private Context context;
     public DatabaseReference mDatabase;
@@ -92,7 +92,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
     public int countOrderNow;
 
 
-    public StatusAdapter(int countOrderNow,Context context){
+    public StatusCostomerAdapter(int countOrderNow,Context context){
         this.countOrderNow=countOrderNow;
         this.context = context;
     }
@@ -110,7 +110,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
     public void onBindViewHolder(@NonNull final StatusViewHolder holder, final int position) {
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
-      //  TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuanlity(),Color.RED);
+        //  TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuanlity(),Color.RED);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
@@ -122,10 +122,10 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
         });
         Log.d("list data","can not get firebase");
         try {
-            mDatabase.child("user").child(user.getUid()).child("orderNow").addListenerForSingleValueEvent(new ValueEventListener() {
+            mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String room = dataSnapshot.child(String.valueOf(position)).getValue(String.class);
+                    String room = dataSnapshot.getValue(String.class);
                     Log.d("list data", "can get fribase1" + room + " " + position );
                     try {
 
@@ -133,26 +133,22 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
                         mDatabase.child("room").child(room).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                int i = 0;
+                                int i = position;
                                 Log.d("list data", "can get fribase2");
-                                while (i < dataSnapshot.child("q").child("queue").getChildrenCount()) {
                                     Log.d("list data", String.valueOf(i));
 
                                     String getuid =dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("uid").getValue(String.class);
                                     Log.d("listStatus","getuid= "+getuid);
                                     String usergetUid =user.getUid();
-
-                                    if (getuid != null && getuid.equals(usergetUid)) {
-                                        Log.d("listEqal", dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("total").getValue(String.class));
+                                      //  Log.d("listEqal", dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("total").getValue(String.class));
                                         holder.txtNameRoom.setText(dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("name").getValue(String.class));
                                         holder.txtNumberOfItem.setText(String.valueOf(dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("items").getChildrenCount()));
                                         holder.txtStatus.setText(dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("status").getValue(String.class));
                                         holder.txtSumPrice.setText(dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("total").getValue(String.class));
 
                                         Log.d("listStatus", dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("status").getValue(String.class));
-                                    }
-                                    i++;
-                                }
+
+
                             }
 
                             @Override
