@@ -7,6 +7,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/logo_design_png_transparent_7">
 
+
+    <Spinner android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/list"
+        tools:ignore="MissingConstraints">
+
+    </Spinner>
+
+
     <EditText
         android:id="@+id/q"
         android:layout_width="308dp"
@@ -39,21 +48,9 @@
         app:layout_constraintBottom_toTopOf="@+id/roomid"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sec" />
+        app:layout_constraintTop_toBottomOf="@+id/q" />
 
-    <EditText
-        android:id="@+id/roomid"
-        android:layout_width="308dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="180dp"
-        android:ems="10"
-        android:hint="roomid"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/setnoti"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
     <Button
         android:id="@+id/setnoti"

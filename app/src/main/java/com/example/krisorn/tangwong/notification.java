@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,6 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class notification extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private String id="2";
@@ -23,13 +28,21 @@ public class notification extends AppCompatActivity {
     public DatabaseReference nameCard;
 
     private String uid;
-
+    private Spinner name;
+    private  List<String> namelist = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_notification);
         mAuth = FirebaseAuth.getInstance();
+
+
+
+        name = (Spinner) findViewById(R.id.list);
+
+
+
 
         final FirebaseUser user = mAuth.getCurrentUser();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -45,8 +58,24 @@ public class notification extends AppCompatActivity {
 
                 id = dataSnapshot.child ("user").child (uid).child ("livenow").getValue (String.class);
 
+                int loop = (int) dataSnapshot.child ("room").child (id).child ("people_live").getChildrenCount ();
+                Log.d("follows",String.valueOf (loop));
+               for (int i=1;i<=loop;i++)
+               {
+                    String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (String.valueOf (i)).child ("uid").getValue (String.class);
+                    String tempname = dataSnapshot.child ("user").child (tempuid).child ("name").getValue (String.class);
+                    namelist.add(String.valueOf (i)+" "+tempname);
+               }
 
 
+                // Creating adapter for spinner
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(notification.this, android.R.layout.simple_spinner_item, namelist);
+
+                // Drop down layout style - list view with radio button
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                // attaching data adapter to spinner
+                name.setAdapter(dataAdapter);
 
 
 

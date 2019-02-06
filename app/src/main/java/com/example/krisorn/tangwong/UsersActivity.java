@@ -110,7 +110,7 @@ public class UsersActivity extends AppCompatActivity
         // mselectImage=(Button) findViewById(R.id.btn_addImage);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
+        mDatabase.child("test").orderByValue ();
         try {
             new DownloadImageTask((ImageView) findViewById(R.id.profile_ex)).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a");
         }

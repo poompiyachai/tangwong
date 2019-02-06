@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +28,6 @@ public class user_poll extends AppCompatActivity {
     private DatabaseReference Polldatabase;
     private FirebaseAuth mAuth;
     private String getKey ;
-    private int getCount ;
     private int numBtQuiz = 0;
     List<FormObject> formObjects = new ArrayList<FormObject>();
 
@@ -105,6 +103,8 @@ public class user_poll extends AppCompatActivity {
                         long getCount =  dataSnapshot.child("room").child(getKey).child("Poll").getChildrenCount();
                         long getChoice = dataSnapshot.child("room").child(getKey).child("Poll").child(Long.toString(getCount)).child("Choice").getChildrenCount();
                         Polldatabase.child("room").child(getKey).child("Poll").child(Long.toString(getCount)).child("Choice").child(Long.toString(getChoice)).child("sub-topic").setValue(formBuilder.formMap.get("text").getValue());
+                        Polldatabase.child("room").child(getKey).child("Poll").child(Long.toString(getCount)).child("Choice").child(Long.toString(getChoice)).child ("select").setValue ("0");
+                        Polldatabase.child("room").child(getKey).child("Poll").child(Long.toString(getCount)).child("Choice").child (Long.toString(getChoice)).child ("number").setValue ("0");
                         Intent i = new Intent(user_poll.this,user_poll.class);
                         startActivity(i);
                     }

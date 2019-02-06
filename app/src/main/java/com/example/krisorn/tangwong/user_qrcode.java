@@ -31,19 +31,16 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
-
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class user_qrcode extends AppCompatActivity {
     public final static int QRcodeWidth = 500 ;
@@ -189,7 +186,7 @@ public class user_qrcode extends AppCompatActivity {
                     e.printStackTrace();
                     textScanner.setText(result.getContents()); //ค่า id ที่เราscanได้ เอาไปใช้ต่อ
                     Log.d(result.getContents(),"GGTOZO");
-                    searchRoom.child("room").addListenerForSingleValueEvent(new ValueEventListener() {
+                    searchRoom.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                             mAuth=FirebaseAuth.getInstance();

@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.example.krisorn.tangwong.Database.Database;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -56,8 +54,9 @@ public class user_Question extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     getKey =  dataSnapshot.child("user").child(user.getUid()).child("livenow").getValue(String.class);
                     long getCount =  dataSnapshot.child("room").child(getKey).child("Poll").getChildrenCount();
-                    getCount += 1;
+                    getCount+=1;
                     Polldatabase.child("room").child(getKey).child("Poll").child(Long.toString(getCount)).child("Topic").setValue(Question);
+                    Polldatabase.child("room").child(getKey).child("showPoll").setValue("1");
                     Intent i = new Intent(user_Question.this,user_poll.class);
                     startActivity(i);
                 }

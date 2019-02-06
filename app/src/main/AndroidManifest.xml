@@ -16,12 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".create_itemActivity"></activity>
+        <activity android:name=".pool_interface"></activity>
+
         <activity android:name=".user_Question" />
         <activity android:name=".user_InterfaceIntoRoom" />
         <activity android:name=".user_idSearch" />
         <activity android:name=".user_poll" />
         <activity android:name=".user_qrcode" />
+        <activity android:name=".show_data"
+            tools:ignore="DuplicateActivity" />
         <activity android:name=".user_search" />
         <activity android:name=".profile_ex" />
         <activity android:name=".AddFeatureActivity" />
@@ -49,26 +52,17 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
         <activity android:name=".create_roomActiviity" />
-
-
-
         <activity android:name=".AdminDashBoradView" />
 
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
-            android:value="true"
-
-            />
+            android:value="true" />
         <meta-data
-
             android:name="com.google.android.geo.API_KEY"
-
-            android:value="@string/google_maps_key"/>
+            android:value="@string/google_maps_key" />
 
         <activity android:name=".time" />
         <activity android:name=".notification" />
-
-
         <activity android:name=".ownRoom.carlender" />
         <activity android:name=".create_event" />
         <activity android:name=".dayevent" />
