@@ -79,9 +79,18 @@ public class pool_interface extends AppCompatActivity {
                                                     if(dataSnapshot.child("room").child(getKey).child("Poll").child(getcount).child("Choice").child(Long.toString(finalI)).child ("select").getValue ()=="1"){
                                                         Toast.makeText(pool_interface.this,"You didn't choose : " + dataSnapshot.child("room").child(getKey).child("Poll").child(getcount).child("Choice").child(Long.toString(finalI)).child("sub-topic").getValue(String.class),Toast.LENGTH_LONG).show();
                                                         Polldatabase.child("room").child(getKey).child("Poll").child(getcount).child("Choice").child(Long.toString(finalI)).child ("select").setValue ("0");
+                                                        String gettemp = dataSnapshot.child("room").child(getKey).child("Poll").child(String.valueOf (getcount)).child("Choice").child (String.valueOf (finalI)).child ("number").getValue (String.class);
+                                                        long integernumber = Integer.parseInt(gettemp);
+                                                        integernumber--;
+                                                        Log.d ("GGOO",String.valueOf (integernumber)+ "value");
+                                                        Polldatabase.child("room").child(getKey).child("Poll").child(getcount).child("Choice").child(Long.toString(finalI)).child ("number").setValue (String.valueOf (integernumber));
                                                     }else {
+                                                        String gettemp = dataSnapshot.child("room").child(getKey).child("Poll").child(String.valueOf (getcount)).child("Choice").child (String.valueOf (finalI)).child ("number").getValue (String.class);
+                                                        long integernumber = Integer.parseInt(gettemp);
+                                                        integernumber++;
                                                         Toast.makeText(pool_interface.this,"You choose : " + dataSnapshot.child("room").child(getKey).child("Poll").child(getcount).child("Choice").child(Long.toString(finalI)).child("sub-topic").getValue(String.class),Toast.LENGTH_LONG).show();
                                                         Polldatabase.child("room").child(getKey).child("Poll").child(getcount).child("Choice").child(Long.toString(finalI)).child ("select").setValue ("1");
+                                                        Polldatabase.child("room").child(getKey).child("Poll").child(getcount).child("Choice").child(Long.toString(finalI)).child ("number").setValue (String.valueOf (integernumber));
 
                                                     }
 

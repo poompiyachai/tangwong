@@ -479,7 +479,7 @@ public class UsersActivity extends AppCompatActivity
             startActivity(i);
 
         }else if (id == R.id.nav_poll){
-            Intent i = new Intent(this,user_Question.class);
+            Intent i = new Intent(this, pool_interface.class);
             startActivity(i);
         }else if(id == R.id.nav_logout){
             mAuth.signOut();
