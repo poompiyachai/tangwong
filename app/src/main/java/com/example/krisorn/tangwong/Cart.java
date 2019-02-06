@@ -165,6 +165,7 @@ public class Cart extends AppCompatActivity {
         edtAddress.setLayoutParams(lp);
         alertDialog.setView(edtAddress);
 
+
         alertDialog.setSingleChoiceItems(CLUBS, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -172,11 +173,13 @@ public class Cart extends AppCompatActivity {
             }
         });
 
+
         alertDialog.setIcon(R.drawable.ic_shopping_cart);
 
         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 FirebaseUser user = mAuth.getCurrentUser();
                 Request request = new Request(
                         "wait",
@@ -225,6 +228,7 @@ public class Cart extends AppCompatActivity {
         });
      alertDialog.show();
 
+
     }
 
     private void showAlertDialog(){
@@ -252,6 +256,7 @@ public class Cart extends AppCompatActivity {
 
 // สุดท้ายอย่าลืม show() ด้วย
         builder.show();
+
     }
 
     private void loadListItem(){

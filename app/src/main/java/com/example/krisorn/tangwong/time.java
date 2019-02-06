@@ -75,6 +75,7 @@ int A;
                             String tempUid = dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class);
                             String text = dataSnapshot.child ("room").child (id).child ("time_noti").child ("text").getValue (String.class);
                             mDatabase.child ("user").child (tempUid).child ("time").child ("status").setValue ("1");
+                            mDatabase.child ("user").child (tempUid).child ("time").child ("room").setValue (id);
                             mDatabase.child ("user").child (tempUid).child ("time").child ("text").setValue (text);
                         }
 

@@ -124,7 +124,9 @@ public class notification extends AppCompatActivity {
 
                         Log.d ("aasd", tempuid);
                         mDatabase.child ("room").child (id).child ("q").child (roomq.getText ().toString ()).child ("text").setValue (message.getText ().toString ());
-                        mDatabase.child ("user").child (tempuid).child ("notification").setValue ("1");
+                        mDatabase.child ("user").child (tempuid).child ("notification").child ("status").setValue ("1");
+                        mDatabase.child ("user").child (tempuid).child ("notification").child ("text").setValue (message.getText ().toString ());
+                        mDatabase.child ("user").child (tempuid).child ("notification").child ("room").setValue (id);
                     }
 
                 }

@@ -154,6 +154,7 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
                                                     Log.d("statusPage","can click viewqueue");
                                                     Intent i = new Intent(v.getContext(), StatusCostomer.class);
                                                     context.startActivity(i);
+
                                                     Log.d("statuspage","can eccess viewqueue");
                                                 }else if(dataSnapshot.child("typeOfFeture").getValue(String.class).equals("poll")){
                                                     Log.d("statusPage","can click poll");
@@ -165,6 +166,7 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
                                                     Intent i = new Intent(v.getContext(), pool_interface.class);
                                                     context.startActivity(i);
                                                     Log.d("statuspage","can eccess viewpoll");
+
                                                 }
                                                 Log.d("statusPage","can click admin dash borad");
                                             }catch (Exception e){Log.d("statuspage", String.valueOf(e));

@@ -79,6 +79,8 @@ public class UsersActivity extends AppCompatActivity
     private boolean check=false;
     private long num=0;
     private long newroom=0;
+    private  String a = "0";
+    private String timestatus = "0";
 
 
 
@@ -157,17 +159,25 @@ public class UsersActivity extends AppCompatActivity
 
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
+                if(dataSnapshot.child ("user").child (uid).child ("notification").hasChild ("status"))
+                {
+                    a =dataSnapshot.child ("user").child (uid).child ("notification").child ("status").getValue((String.class));
+                }
 
+                 if(dataSnapshot.child ("user").child (uid).child ("time").hasChild ("status"))
+                 {
+                     timestatus =dataSnapshot.child ("user").child (uid).child ("time").child ("status").getValue((String.class));
+                 }
 
-                String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
-                String timestatus =dataSnapshot.child ("user").child (uid).child ("time").child ("status").getValue((String.class));
 
                 if(a.equals ("1"))
                 {
-                    String b =dataSnapshot.child ("room").child (id).child ("q").child (roomq).child ("text").getValue((String.class));
+                    id = dataSnapshot.child ("user").child (uid).child ("notification").child ("room").getValue ((String.class));
+                    String b =dataSnapshot.child ("user").child (uid).child ("notification").child ("text").getValue((String.class));
+                    String roomname =dataSnapshot.child ("room").child (id).child ("name").getValue((String.class));
 
-                    showNotification (b);
-                    mDatabase.child("user").child(uid).child("notification").setValue("0");
+                    showNotification (b,roomname);
+                    mDatabase.child("user").child(uid).child("notification").child ("status").setValue("0");
                     mDatabase.child ("room").child (id).child ("q").child (roomq).child ("noti_status").setValue ("0");
                     check=false;
                 }
@@ -177,10 +187,11 @@ public class UsersActivity extends AppCompatActivity
                 if(timestatus.equals ("1"))
                 {
 
-
+                    id = dataSnapshot.child ("user").child (uid).child ("time").child ("room").getValue (String.class);
                     mDatabase.child ("user").child (uid).child ("time").child ("status").setValue ("0");
                     String timetext = dataSnapshot.child ("user").child (uid).child ("time").child ("text").getValue (String.class);
-                    showNotification (timetext);
+                    String roomname =dataSnapshot.child ("room").child (id).child ("name").getValue((String.class));
+                    showNotification (timetext,roomname);
                 }
 
                 String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
@@ -405,7 +416,7 @@ public class UsersActivity extends AppCompatActivity
         }
     }
 
-    private void showNotification(String text) {Intent intent = new Intent(this, UsersActivity.class);
+    private void showNotification(String text,String text2) {Intent intent = new Intent(this, UsersActivity.class);
         intent.putExtra("message", text);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addParentStack(UsersActivity.class);
@@ -416,7 +427,7 @@ public class UsersActivity extends AppCompatActivity
         Notification notification =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("การเเจ้งเตือน")
+                        .setContentTitle(text2)
                         .setContentText(text)
                         .setAutoCancel(true)
                         .setContentIntent(pendingIntent)
