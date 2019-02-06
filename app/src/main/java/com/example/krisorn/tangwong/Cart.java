@@ -45,6 +45,11 @@ public class Cart extends AppCompatActivity {
     TextView txtTotalPrice;
     Button btnPlace;
 
+    private static final String[] CLUBS =
+            {"Arsenal", "Chelsea", "Liverpool", "Man City", "Man Utd"};
+
+    String mSelected;
+
     List<Order> cart = new ArrayList<>();
     CartAdapter adapter;
 
@@ -142,7 +147,7 @@ public class Cart extends AppCompatActivity {
 
     }
 
-    private void showAlertDialog() {
+    private void showAlertDialog2() {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         Log.d("CartPage", String.valueOf(cart));
@@ -160,15 +165,19 @@ public class Cart extends AppCompatActivity {
         edtAddress.setLayoutParams(lp);
         alertDialog.setView(edtAddress);
 
+        alertDialog.setSingleChoiceItems(CLUBS, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mSelected = CLUBS[which];
+            }
+        });
+
         alertDialog.setIcon(R.drawable.ic_shopping_cart);
 
         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-
                 FirebaseUser user = mAuth.getCurrentUser();
-
                 Request request = new Request(
                         "wait",
                         user.getUid(),
@@ -216,6 +225,33 @@ public class Cart extends AppCompatActivity {
         });
      alertDialog.show();
 
+    }
+
+    private void showAlertDialog(){
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(Cart.this);
+        builder.setTitle("Select Favorite Team");
+        builder.setSingleChoiceItems(CLUBS, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mSelected = CLUBS[which];
+            }
+        });
+        builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // ส่วนนี้สำหรับเซฟค่าลง database หรือ SharedPreferences.
+                Toast.makeText(getApplicationContext(), "คุณชอบ " +
+                        mSelected, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("ไม่ชอบซักทีม", null);
+        builder.create();
+
+// สุดท้ายอย่าลืม show() ด้วย
+        builder.show();
     }
 
     private void loadListItem(){

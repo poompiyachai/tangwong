@@ -505,6 +505,69 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
 
                         }
                     });
+                }else   if (position==7){
+
+                    mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final String roomLiveNow= dataSnapshot.getValue(String.class);
+                            Log.d("canRetrive","livenow");
+
+                            mDatabase.child("room").child(roomLiveNow).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
+                                            .setValue("poll");
+                                    mDatabase.child("room").child(roomLiveNow).child("poll").child("nameOfFeture").setValue("โพล");
+                                    mDatabase.child("room").child(roomLiveNow).child("poll").child("detailOfFeture").setValue("โพล");
+                                    mDatabase.child("room").child(roomLiveNow).child("poll").child("typeOfFeture").setValue("poll");
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                else   if (position==8){
+
+                    mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            final String roomLiveNow= dataSnapshot.getValue(String.class);
+                            Log.d("canRetrive","livenow");
+
+                            mDatabase.child("room").child(roomLiveNow).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
+                                            .setValue("pollview");
+                                    mDatabase.child("room").child(roomLiveNow).child("pollview").child("nameOfFeture").setValue("ดูโพล");
+                                    mDatabase.child("room").child(roomLiveNow).child("pollview").child("detailOfFeture").setValue("ดูโพล");
+                                    mDatabase.child("room").child(roomLiveNow).child("pollview").child("typeOfFeture").setValue("pollview");
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
 
                 Intent i = new Intent(v.getContext(), AdminDashBoradView.class);
@@ -556,12 +619,23 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
             String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
             Picasso.get().load(imgUrl).into(holder.imageView);
         }
+        if (position==7){
+            holder.txtNameRoom.setText("โพล");
+            holder.txtDetail.setText("โพล");
+            String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
+            Picasso.get().load(imgUrl).into(holder.imageView);
+        }if (position==8){
+            holder.txtNameRoom.setText("ดูโพล");
+            holder.txtDetail.setText("ดูโพล");
+            String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
+            Picasso.get().load(imgUrl).into(holder.imageView);
+        }
 
     }
 
     @Override
     public int getItemCount() {
 
-        return 7;
+        return 9;
     }
 }
