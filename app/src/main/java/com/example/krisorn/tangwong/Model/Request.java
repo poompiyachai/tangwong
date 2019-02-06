@@ -8,6 +8,27 @@ public class Request {
     private String status;
     private String uid;
     private String phone;
+    private String roomNumber;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public Request(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
 
     private String name;
     private String moreDetail;
@@ -67,7 +88,7 @@ public class Request {
         this.status = status;
     }
 
-    public Request(String status, String uid, String phone, String name, String moreDetail, String total, List<Order> items) {
+    public Request(String status, String uid, String phone, String name, String moreDetail, String total, List<Order> items,String roomNumber) {
         this.status = status;
         this.uid = uid;
         this.phone = phone;
@@ -75,5 +96,7 @@ public class Request {
         this.moreDetail = moreDetail;
         this.total = total;
         this.items = items;
+        this.roomNumber= roomNumber;
+
     }
 }

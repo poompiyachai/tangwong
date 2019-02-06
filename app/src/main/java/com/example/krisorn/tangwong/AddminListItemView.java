@@ -78,7 +78,7 @@ public class AddminListItemView extends AppCompatActivity
                 Snackbar.make(view, "create feature", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                Intent i = new Intent(view.getContext(),AddFeatureActivity.class);
+                Intent i = new Intent(view.getContext(),create_itemActiviity.class);
                 startActivity(i);
             }
         });

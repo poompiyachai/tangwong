@@ -135,7 +135,7 @@ public class user_roomActivity extends AppCompatActivity {
 
                         //eventsRef.orderByChild("Name").equalTo("Fb Meetup").limitToFirst(1)
                         noRoom =dataSnapshot.getValue(String.class);
-                        Log.d("live","live "+ title + " " + i);
+                        Log.d("live","live "+ noRoom + " " + i);
                         mDatabase.child("room").child(noRoom).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

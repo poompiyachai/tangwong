@@ -128,7 +128,8 @@ public class EmailPasswordActivity extends AppCompatActivity implements
 
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
-                            mStatusTextView.setText(R.string.auth_failed);
+                        //    mStatusTextView.setText(R.string.auth_failed);
+
                         }
                         //     hideProgressDialog();
                         // [END_EXCLUDE]

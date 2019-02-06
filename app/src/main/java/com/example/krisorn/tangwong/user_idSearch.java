@@ -58,11 +58,25 @@ public class user_idSearch extends AppCompatActivity {
                                         dialog.cancel();
                                         mAuth=FirebaseAuth.getInstance();
                                         final FirebaseUser user = mAuth.getCurrentUser();
-                                        long numberOfpeople_live = dataSnapshot.child("room").child(text_search.getText().toString()).child("people_live").getChildrenCount();
 
-                                        searchRoom.child("user").child(user.getUid()).child("live").child(text_search.getText().toString()).setValue("1");
-                                        searchRoom.child("user").child(user.getUid()).child("livenow").setValue(text_search.getText().toString());
-                                        searchRoom.child("room").child(text_search.getText().toString()).child("people_live").child(Long.toString(numberOfpeople_live += 1)).child("uid").setValue (user.getUid ());
+                                        searchRoom.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                Long noOfRoom = dataSnapshot.child("user").child(user.getUid()).child("live").getChildrenCount();
+                                                long numberOfpeople_live = dataSnapshot.child("room").child(text_search.getText().toString()).child("people_live").getChildrenCount();
+                                                Log.d("Taxx",String.valueOf(numberOfpeople_live));
+
+                                                searchRoom.child("user").child(user.getUid()).child("live").child(String.valueOf(noOfRoom)).setValue(text_search.getText().toString());
+                                                searchRoom.child("user").child(user.getUid()).child("livenow").setValue(text_search.getText().toString());
+                                                searchRoom.child("room").child(text_search.getText().toString()).child("people_live").child(Long.toString(numberOfpeople_live += 1)).child("uid").setValue (user.getUid ());
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
 
                                         Intent i = new Intent(user_idSearch.this,user_roomActivity.class);
                                         startActivity(i);

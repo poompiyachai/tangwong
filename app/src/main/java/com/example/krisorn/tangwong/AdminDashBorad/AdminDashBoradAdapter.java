@@ -18,6 +18,7 @@ import com.example.krisorn.tangwong.AddminListItemView;
 import com.example.krisorn.tangwong.AdminDashBoradView;
 import com.example.krisorn.tangwong.Model.Order;
 import com.example.krisorn.tangwong.R;
+import com.example.krisorn.tangwong.StatusCostomer;
 import com.example.krisorn.tangwong.UsersViewModel;
 import com.example.krisorn.tangwong.list_itemActivity;
 import com.example.krisorn.tangwong.notification;
@@ -147,9 +148,16 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
                                                     Intent i = new Intent(v.getContext(), carlender.class);
                                                     context.startActivity(i);
                                                     Log.d("statuspage","can eccess store");
+                                                }else if(dataSnapshot.child("typeOfFeture").getValue(String.class).equals("viewqueue")){
+                                                    Log.d("statusPage","can click viewqueue");
+                                                    Intent i = new Intent(v.getContext(), StatusCostomer.class);
+                                                    context.startActivity(i);
+                                                    Log.d("statuspage","can eccess store");
                                                 }
                                                 Log.d("statusPage","can click admin dash borad");
-                                            }catch (Exception e){}
+                                            }catch (Exception e){Log.d("statuspage", String.valueOf(e));
+                                            }
+
 
 
                                         }

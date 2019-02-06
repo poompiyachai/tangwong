@@ -18,7 +18,9 @@
         tools:replace="android:label">
         <activity android:name=".pool_interface"></activity>
 
+        <activity android:name=".create_itemActiviity"></activity>
         <activity android:name=".user_Question" />
+        <activity android:name=".StatusCostomer" />
         <activity android:name=".user_InterfaceIntoRoom" />
         <activity android:name=".user_idSearch" />
         <activity android:name=".user_poll" />

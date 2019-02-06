@@ -205,11 +205,24 @@ public class user_qrcode extends AppCompatActivity {
                                                 dialog.cancel();
                                                 mAuth=FirebaseAuth.getInstance();
                                                 final FirebaseUser user = mAuth.getCurrentUser();
-                                                long numberOfpeople_live = dataSnapshot.child("room").child(result.getContents()).child("people_live").getChildrenCount();
+                                                searchRoom.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        Long noOfRoom = dataSnapshot.child("user").child(user.getUid()).child("live").getChildrenCount();
+                                                        long numberOfpeople_live = dataSnapshot.child("room").child(result.getContents()).child("people_live").getChildrenCount();
+                                                        Log.d("Taxx",String.valueOf(numberOfpeople_live));
 
-                                                searchRoom.child("user").child(user.getUid()).child("live").child(result.getContents()).setValue("1");
-                                                searchRoom.child("user").child(user.getUid()).child("livenow").setValue(result.getContents());
-                                                searchRoom.child("room").child(result.getContents()).child("people_live").child(Long.toString(numberOfpeople_live += 1)).child("uid").setValue (user.getUid ());
+                                                        searchRoom.child("user").child(user.getUid()).child("live").child(String.valueOf(noOfRoom)).setValue(result.getContents());
+                                                        searchRoom.child("user").child(user.getUid()).child("livenow").setValue(result.getContents());
+                                                        searchRoom.child("room").child(result.getContents()).child("people_live").child(Long.toString(numberOfpeople_live += 1)).child("uid").setValue (user.getUid ());
+
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
 
                                                 Intent i = new Intent(user_qrcode.this,user_roomActivity.class);
                                                 startActivity(i);
