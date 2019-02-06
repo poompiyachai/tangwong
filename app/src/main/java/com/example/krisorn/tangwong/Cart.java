@@ -1,6 +1,7 @@
 package com.example.krisorn.tangwong;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,9 +55,12 @@ public class Cart extends AppCompatActivity {
     private long noOfOder =0;
     String name = null;
     String phoneNumber= null;
+    String roomNumber= null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("database","Oncreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
@@ -81,28 +86,28 @@ public class Cart extends AppCompatActivity {
             }
         });
 
-        loadListItem();
+
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
 
         mDatabase.child("user").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                name = dataSnapshot.child("name").getValue(String.class);
+
                 phoneNumber= dataSnapshot.child("phoneNumber").getValue(String.class);
                 livenow=dataSnapshot.child("livenow").getValue(String.class);
-
+                // roomNumber=livenow;
 
 
                 try {
-                    mDatabase.addValueEventListener(new ValueEventListener() {
+                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            turnq = dataSnapshot.child("room").child(livenow).child("q").getChildrenCount()+1;
+                            turnq = dataSnapshot.child("room").child(livenow).child("q").child("queue").getChildrenCount();
+                            name = dataSnapshot.child("room").child(livenow).child("name").getValue(String.class);
                             noOfOder= dataSnapshot.child("user").child(user.getUid()).child("orderNow").getChildrenCount();
                             Log.d("trunq","trunq !!!!!"+turnq);
 
@@ -133,18 +138,19 @@ public class Cart extends AppCompatActivity {
 
 
         });
+        loadListItem();
 
     }
 
     private void showAlertDialog() {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
+        Log.d("CartPage", String.valueOf(cart));
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(Cart.this);
         alertDialog.setTitle("ระบุเพิ่มเติม");
         alertDialog.setMessage("ระบุเพิ่มเติม");
 
-        Log.d("showAlertDialog","showAlertDialog");
+        Log.d("database","showAlertDialog");
         final EditText edtAddress = new EditText(Cart.this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -153,11 +159,13 @@ public class Cart extends AppCompatActivity {
 
         edtAddress.setLayoutParams(lp);
         alertDialog.setView(edtAddress);
+
         alertDialog.setIcon(R.drawable.ic_shopping_cart);
 
         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
 
                 FirebaseUser user = mAuth.getCurrentUser();
 
@@ -168,19 +176,31 @@ public class Cart extends AppCompatActivity {
                         name,
                         edtAddress.getText().toString(),
                         txtTotalPrice.getText().toString(),
-                        cart
+                        cart,
+                        roomNumber
                 );
-
+                Request requestUser = new Request(
+                        "wait",
+                        user.getUid(),
+                        phoneNumber,
+                        name,
+                        edtAddress.getText().toString(),
+                        txtTotalPrice.getText().toString(),
+                        cart,
+                        roomNumber
+                );
                 // user = mAuth.getCurrentUser();
-                Log.d("show live now ","livenow"+livenow);
-                Log.d("show turnq","turnq"+turnq);
+                Log.d("database","livenow"+livenow);
+                Log.d("database","turnq"+turnq);
         // mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).child("uid").setValue(user.getUid());
-                mDatabase.child("room").child(livenow).child("q").child(Long.toString(turnq)).setValue(request);
+                mDatabase.child("room").child(livenow).child("q").child("queue").child(Long.toString(turnq)).setValue(request);
                 mDatabase.child("user").child(user.getUid()).child("orderNow").child(String.valueOf(noOfOder)).setValue(livenow);
-
                 new Database(getBaseContext()).cleanCart();
-                Toast.makeText(Cart.this,"Thank you, Order Place",Toast.LENGTH_SHORT).show();
+                cart.clear();
+                Toast.makeText(Cart.this,"Thank you , order has been placed", Toast.LENGTH_SHORT).show();
                 finish();
+
+
             }
 
         });
@@ -188,30 +208,41 @@ public class Cart extends AppCompatActivity {
         alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Log.d("database","can click no");
                 dialog.dismiss();
+
+
             }
         });
      alertDialog.show();
+
     }
 
     private void loadListItem(){
+        Log.d("database","access loadlistitem");
     cart = new Database(this).getCarts();
     adapter = new CartAdapter(cart,this);
     recyclerView.setAdapter(adapter);
 
     int total =0 ;
-    for (Order order:cart)
+    for (Order order:cart){
         try{
-        total+=(Integer.parseInt(order.getPrice()))*(Integer.parseInt(order.getQuanlity()));}
+
+        total+=(Integer.parseInt(order.getPrice()))*(Integer.parseInt(order.getQuanlity()));
+        livenow=order.getLivenow();
+        }
         catch (Exception e){
         total = 0;
         }
+
+    }
 
 
         Locale locale = new Locale("en","US");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
 
         txtTotalPrice.setText(fmt.format(total));
+
 
     }
 }

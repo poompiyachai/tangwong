@@ -5,23 +5,29 @@ public class Order {
     private String productName;
     private String quanlity;
     private String price;
+    private String livenow;
 
     public Order() {
     }
 
-    public Order(String productID, String productName, String quanlity, String price) {
-        this.productID = productID;
+    public String getLivenow() {
+        return livenow;
+    }
+
+    public void setLivenow(String livenow) {
+        this.livenow = livenow;
+    }
+
+    public Order(String livenow) {
+        this.livenow = livenow;
+    }
+
+    public Order(String livenow, String productName, String quanlity, String price) {
+
         this.productName = productName;
         this.quanlity = quanlity;
         this.price = price;
-    }
-
-    public String getProductID() {
-        return productID;
-    }
-
-    public void setProductID(String productID) {
-        this.productID = productID;
+        this.livenow=livenow;
     }
 
     public String getProductName() {
