@@ -186,7 +186,8 @@ public class StatusCostomerAdapter extends RecyclerView.Adapter<StatusViewHolder
                                                     mDatabase.child ("user").child (dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("uid").getValue(String.class)).child ("notification").child ("status").setValue ("1");
                                                     mDatabase.child ("user").child (dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("uid").getValue(String.class)).child ("notification").child ("text").setValue ("ถึงคิวคุณแล้ว");
                                                     mDatabase.child ("user").child (dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("uid").getValue(String.class)).child ("notification").child ("room").setValue (String.valueOf(room));
-
+                                                    Intent intentt = new Intent(context, StatusCostomer.class);
+                                                    context.startActivity(intentt);
                                                 }
                                                 else  if(mSelected.equals("กำลังทำ")){
 
@@ -196,7 +197,8 @@ public class StatusCostomerAdapter extends RecyclerView.Adapter<StatusViewHolder
                                                     mDatabase.child ("user").child (dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("uid").getValue(String.class)).child ("notification").child ("text").setValue ("ใกล้ถึงคิวคุณแล้ว");
                                                     mDatabase.child ("user").child (dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("uid").getValue(String.class)).child ("notification").child ("room").setValue (String.valueOf(room));
 
-
+                                                    Intent intentt = new Intent(context, StatusCostomer.class);
+                                                    context.startActivity(intentt);
                                                 }else  if(mSelected.equals("เอาออกจากคิว")){
 
                                                     mDatabase.child("room").child(room).child("q").child("queue").child(String.valueOf(i)).child("status").setValue("เอาออกจากคิว");
@@ -210,20 +212,26 @@ public class StatusCostomerAdapter extends RecyclerView.Adapter<StatusViewHolder
 
                                                 }else  if(mSelected.equals("ดูรายการ")){
                                                     int countItem = (int) dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("items").getChildrenCount();
-                                                    final String[] list = new String[countItem];
+                                                    ;
+                                                    final String[] list = new String[countItem+1];
                                                     for(int coutLoop =0;coutLoop<countItem;coutLoop++){
-
-
+                                                        list[coutLoop]=dataSnapshot.child("q").child("queue").child(String.valueOf(i))
+                                                                .child("items").child(String.valueOf(coutLoop)).child("productName").getValue(String.class)
+                                                        + " x " +
+                                                        dataSnapshot.child("q").child("queue").child(String.valueOf(i))
+                                                                .child("items").child(String.valueOf(coutLoop)).child("quanlity").getValue(String.class);
                                                     }
+                                                    list[countItem]="รายละเอียดเพิ่มเติม: " + dataSnapshot.child("q").child("queue").child(String.valueOf(i))
+                                                            .child("moreDetail").getValue(String.class);
+
                                                     AlertDialog.Builder builder =
                                                             new AlertDialog.Builder(context);
-                                                    builder.setTitle("Select Favorite Team");
+                                                    builder.setTitle("รายการ");
                                                     builder.setItems(list, new DialogInterface.OnClickListener() {
                                                         @Override
                                                         public void onClick(DialogInterface dialog, int which) {
-                                                            String selected2 = list[which];
-                                                            Toast.makeText(getApplicationContext(), "คุณชอบ " +
-                                                                    selected2, Toast.LENGTH_SHORT).show();
+                                                          //  String selected2 = list[which];
+
                                                         }
                                                     });
                                                     builder.setNegativeButton("เสร็จสิน", null);
@@ -232,6 +240,8 @@ public class StatusCostomerAdapter extends RecyclerView.Adapter<StatusViewHolder
 // สุดท้ายอย่าลืม show() ด้วย
                                                     builder.show();
                                                     Log.d("liststatus","ดูรายการ");
+
+
                                                 }
 
                                                 Log.d("listStatus", dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("status").getValue(String.class));
