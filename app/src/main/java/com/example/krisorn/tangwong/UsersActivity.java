@@ -41,6 +41,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Map;
 import java.util.UUID;
 
 //import android.support.v4.media.app.NotificationCompat;
