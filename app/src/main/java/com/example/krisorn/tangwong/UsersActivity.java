@@ -410,10 +410,10 @@ public class UsersActivity extends AppCompatActivity
         }
     }
 
-    private void showNotification(String text,String text2) {Intent intent = new Intent(this, UsersActivity.class);
+    private void showNotification(String text,String text2) {Intent intent = new Intent(this, AdminDashBoradView.class);
         intent.putExtra("message", text);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(UsersActivity.class);
+        stackBuilder.addParentStack(AdminDashBoradView.class);
         stackBuilder.addNextIntent(intent);
         PendingIntent pendingIntent =
                 stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
