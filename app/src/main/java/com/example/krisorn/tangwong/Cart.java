@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class Cart extends AppCompatActivity {
 
     RecyclerView recyclerView;
@@ -45,8 +47,8 @@ public class Cart extends AppCompatActivity {
     TextView txtTotalPrice;
     Button btnPlace;
 
-    private static final String[] CLUBS =
-            {"Arsenal", "Chelsea", "Liverpool", "Man City", "Man Utd"};
+    private static final String[] MENU =
+            {"ถึงคิวแล้ว", "กำลังทำ", "ดูรายการ"};
 
     String mSelected;
 
@@ -147,7 +149,7 @@ public class Cart extends AppCompatActivity {
 
     }
 
-    private void showAlertDialog2() {
+    private void showAlertDialog() {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         Log.d("CartPage", String.valueOf(cart));
@@ -166,12 +168,7 @@ public class Cart extends AppCompatActivity {
         alertDialog.setView(edtAddress);
 
 
-        alertDialog.setSingleChoiceItems(CLUBS, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mSelected = CLUBS[which];
-            }
-        });
+
 
 
         alertDialog.setIcon(R.drawable.ic_shopping_cart);
@@ -231,14 +228,14 @@ public class Cart extends AppCompatActivity {
 
     }
 
-    private void showAlertDialog(){
+    private void showAlertDialog2(){
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(Cart.this);
         builder.setTitle("Select Favorite Team");
-        builder.setSingleChoiceItems(CLUBS, 0, new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(MENU, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mSelected = CLUBS[which];
+                mSelected = MENU[which];
             }
         });
         builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
@@ -256,7 +253,6 @@ public class Cart extends AppCompatActivity {
 
 // สุดท้ายอย่าลืม show() ด้วย
         builder.show();
-
     }
 
     private void loadListItem(){

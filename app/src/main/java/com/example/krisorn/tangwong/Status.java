@@ -42,6 +42,10 @@ public class Status extends AppCompatActivity {
     private FirebaseAuth mAuth;
     StatusAdapter adapter;
     public int countOrderNow=0;
+    private static final String[] MENU =
+            {"ถึงคิวแล้ว", "กำลังทำ", "ดูรายการ"};
+
+    String mSelected;
 
 
     @Override
@@ -75,6 +79,7 @@ loadListItem();
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     countOrderNow= (int) dataSnapshot.getChildrenCount();
                     Log.d("list2", String.valueOf(countOrderNow));
+
                     adapter = new StatusAdapter(countOrderNow,Status.this);
                     recyclerView.setAdapter(adapter);
                 }
@@ -97,4 +102,33 @@ loadListItem();
 
 
     }
+
+    private void showAlertDialog(){
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(Status.this);
+        builder.setTitle("Select Favorite Team");
+        builder.setSingleChoiceItems(MENU, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mSelected = MENU[which];
+            }
+        });
+        builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // ส่วนนี้สำหรับเซฟค่าลง database หรือ SharedPreferences.
+                Toast.makeText(getApplicationContext(), "คุณชอบ " +
+                        mSelected, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("ไม่ชอบซักทีม", null);
+        builder.create();
+
+// สุดท้ายอย่าลืม show() ด้วย
+        builder.show();
+
+    }
+
 }

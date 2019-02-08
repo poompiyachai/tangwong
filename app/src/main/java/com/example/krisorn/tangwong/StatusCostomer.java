@@ -65,42 +65,65 @@ public class StatusCostomer extends AppCompatActivity {
         Log.d("list data","can load list");
 
 
-        mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = mAuth.getCurrentUser();
+
+
+
+
+
+        Log.d("list1", String.valueOf(countOrderNow));
+                countOrderNow=0;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-        Log.d("list1", String.valueOf(countOrderNow));
-        try {
-            mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                   mDatabase.child("room").child(dataSnapshot.getValue(String.class)).child("q").child("queue").addListenerForSingleValueEvent(new ValueEventListener() {
-                       @Override
-                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                           countOrderNow= (int) dataSnapshot.getChildrenCount();
-                           Log.d("statusCostomer", String.valueOf(countOrderNow));
-                           adapter = new StatusCostomerAdapter(countOrderNow,StatusCostomer.this);
-                           recyclerView.setAdapter(adapter);
-                       }
-
-                       @Override
-                       public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                       }
-                   });
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-        }
-        catch (Exception e ){
+        final FirebaseUser user = mAuth.getCurrentUser();
+        Log.d("listtttttttttttttttt", user.getUid());
 
 
-        }
+            try {
+
+                mDatabase.child("user").child(user.getUid()).child("livenow").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String room = dataSnapshot.getValue(String.class);
+                        Log.d("liststatus","now is room "+room);
+                        try {
+                            mDatabase.child("room").child(room).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                    for(int countorder =0 ;countorder<dataSnapshot.child("q").child("queue").getChildrenCount();countorder++) {
+                                        String getuid = dataSnapshot.child("q").child("queue").child(String.valueOf(countorder)).child("uid").getValue(String.class);
+                                        Log.d("listStatus", dataSnapshot.child("q").child("queue").child(String.valueOf(countorder)).child("status").getValue(String.class));
+                                        if(!dataSnapshot.child("q").child("queue").child(String.valueOf(countorder)).child("status").getValue(String.class).equals("เอาออกจากคิว")){
+                                            countOrderNow++;
+                                        }
+                                    }
+                                    Log.d("liststatus","countordernow  "+countOrderNow);
+                                    adapter = new StatusCostomerAdapter(countOrderNow,StatusCostomer.this);
+                                    recyclerView.setAdapter(adapter);
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }catch (Exception e){
+                            Log.d("liststatusin", String.valueOf(e));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }catch (Exception e ){
+                Log.d("liststatusout", String.valueOf(e));
+
+            }
         Log.d("list", String.valueOf(countOrderNow));
 
 
