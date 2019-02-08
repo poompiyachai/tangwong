@@ -2,8 +2,10 @@ package com.example.krisorn.tangwong.status;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.krisorn.tangwong.Model.Order;
 import com.example.krisorn.tangwong.R;
+import com.example.krisorn.tangwong.Status;
 import com.example.krisorn.tangwong.UsersViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +34,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 class StatusViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -90,17 +96,21 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
     public DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     public int countOrderNow;
+    private static final String[] MENU =
+            {"ถึงคิวแล้ว", "กำลังทำ", "ดูรายการ"};
 
+    String mSelected;
 
-    public StatusAdapter(int countOrderNow,Context context){
-        this.countOrderNow=countOrderNow;
+    public StatusAdapter(int countOrderNow, Context context) {
+        this.countOrderNow = countOrderNow;
         this.context = context;
     }
+
     @NonNull
     @Override
     public StatusViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View itemView = inflater.inflate(R.layout.status_layout,parent,false);
+        View itemView = inflater.inflate(R.layout.status_layout, parent, false);
 
 
         return new StatusViewHolder(itemView);
@@ -110,23 +120,47 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
     public void onBindViewHolder(@NonNull final StatusViewHolder holder, final int position) {
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
-      //  TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuanlity(),Color.RED);
+        //  TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuanlity(),Color.RED);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("statusPage","can click");
+                Log.d("statusPage", "can click");
+                AlertDialog.Builder builder =
+                        new AlertDialog.Builder(context);
+                builder.setTitle("Select Favorite Team");
+                builder.setSingleChoiceItems(MENU, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mSelected = MENU[which];
+                    }
+                });
+                builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // ส่วนนี้สำหรับเซฟค่าลง database หรือ SharedPreferences.
+                        Toast.makeText(getApplicationContext(), "คุณชอบ " +
+                                mSelected, Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("ไม่ชอบซักทีม", null);
+                builder.create();
+
+// สุดท้ายอย่าลืม show() ด้วย
+                builder.show();
             }
         });
-        Log.d("list data","can not get firebase");
+        Log.d("list data", "can not get firebase");
         try {
             mDatabase.child("user").child(user.getUid()).child("orderNow").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String room = dataSnapshot.child(String.valueOf(position)).getValue(String.class);
-                    Log.d("list data", "can get fribase1" + room + " " + position );
+                    Log.d("list data", "can get fribase1" + room + " " + position);
                     try {
 
 
@@ -138,9 +172,9 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
                                 while (i < dataSnapshot.child("q").child("queue").getChildrenCount()) {
                                     Log.d("list data", String.valueOf(i));
 
-                                    String getuid =dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("uid").getValue(String.class);
-                                    Log.d("listStatus","getuid= "+getuid);
-                                    String usergetUid =user.getUid();
+                                    String getuid = dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("uid").getValue(String.class);
+                                    Log.d("listStatus", "getuid= " + getuid);
+                                    String usergetUid = user.getUid();
 
                                     if (getuid != null && getuid.equals(usergetUid)) {
                                         Log.d("listEqal", dataSnapshot.child("q").child("queue").child(String.valueOf(i)).child("total").getValue(String.class));
@@ -160,7 +194,8 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
 
                             }
                         });
-                    }catch (Exception e){}
+                    } catch (Exception e) {
+                    }
                 }
 
                 @Override
@@ -169,7 +204,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusViewHolder> {
                 }
             });
 
-        }catch (Exception e ){
+        } catch (Exception e) {
 
 
         }

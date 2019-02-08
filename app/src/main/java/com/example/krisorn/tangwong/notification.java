@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -26,7 +27,7 @@ public class notification extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     public DatabaseReference nameCard;
-
+    private String iduser;
     private String uid;
     private Spinner name;
     private  List<String> namelist = new ArrayList<String>();
@@ -51,6 +52,18 @@ public class notification extends AppCompatActivity {
         mDatabase.child ("asd").setValue ("ddsa");*/
         mDatabase = FirebaseDatabase.getInstance().getReference();
         nameCard =database.getReference();
+        name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener () {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                iduser = String.valueOf (position);
+                Log.d("aaaaaaaaa",iduser);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+        });
 
         nameCard.addValueEventListener (new ValueEventListener () {
             @Override
@@ -60,12 +73,13 @@ public class notification extends AppCompatActivity {
 
                 int loop = (int) dataSnapshot.child ("room").child (id).child ("people_live").getChildrenCount ();
                 Log.d("follows",String.valueOf (loop));
-               for (int i=1;i<=loop;i++)
-               {
+                namelist.add(" ");
+                for (int i=1;i<=loop;i++)
+                {
                     String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (String.valueOf (i)).child ("uid").getValue (String.class);
                     String tempname = dataSnapshot.child ("user").child (tempuid).child ("name").getValue (String.class);
                     namelist.add(String.valueOf (i)+" "+tempname);
-               }
+                }
 
 
                 // Creating adapter for spinner
@@ -105,14 +119,14 @@ public class notification extends AppCompatActivity {
             mDatabase.child("eiei").setValue("dsacfvf");
             //mDatabase.child ("room").child (id).child ("q").child (roomq).child ("uid").setValue ("0");
 
-
             nameCard = database.getReference();
 
-             nameCard.addListenerForSingleValueEvent (new ValueEventListener () {
+            nameCard.addListenerForSingleValueEvent (new ValueEventListener () {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     //final FirebaseUser user = mAuth.getCurrentUser ();
                     //String uid = user.getUid ();
+                    // String iduser = String.valueOf(name.getId ());
                     EditText roomq = findViewById (R.id.q);
                     EditText message = findViewById (R.id.text);
 
@@ -120,13 +134,13 @@ public class notification extends AppCompatActivity {
 
                     if (dataSnapshot.child ("room").child (id).child ("q").child (roomq.getText ().toString ()).child ("noti_status").getValue ((String.class)).equals ("1")) {
                         //roomq = findViewById(R.id.roomid).toString ();
-                        String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (roomq.getText ().toString ()).child ("uid").getValue ((String.class));
+                     /*   String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (roomq.getText ().toString ()).child ("uid").getValue ((String.class));
 
                         Log.d ("aasd", tempuid);
                         mDatabase.child ("room").child (id).child ("q").child (roomq.getText ().toString ()).child ("text").setValue (message.getText ().toString ());
                         mDatabase.child ("user").child (tempuid).child ("notification").child ("status").setValue ("1");
                         mDatabase.child ("user").child (tempuid).child ("notification").child ("text").setValue (message.getText ().toString ());
-                        mDatabase.child ("user").child (tempuid).child ("notification").child ("room").setValue (id);
+                        mDatabase.child ("user").child (tempuid).child ("notification").child ("room").setValue (id);*/
                     }
 
                 }
@@ -136,6 +150,8 @@ public class notification extends AppCompatActivity {
 
                 }
             });
+
+
         }
     }
 
