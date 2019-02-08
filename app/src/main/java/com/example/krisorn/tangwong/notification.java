@@ -59,7 +59,7 @@ public class notification extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 iduser = String.valueOf (position);
                 Log.d("aaaaaaaaa",iduser);
-                // mDatabase.child ("asd").setValue (iduser);
+
             }
 
             @Override
@@ -89,6 +89,7 @@ public class notification extends AppCompatActivity {
                     namelist.add("All");
                     check=true;
                 }
+
 
 
 
@@ -153,7 +154,7 @@ public class notification extends AppCompatActivity {
                     //final FirebaseUser user = mAuth.getCurrentUser ();
                     //String uid = user.getUid ();
                     // String iduser = String.valueOf(name.getId ());
-                    //  EditText roomq = findViewById (R.id.q);
+
                     EditText message = findViewById (R.id.text);
 
                     //  Log.d("aasd",dataSnapshot.child ("room").child (id).child ("q").child (iduser).child ("noti_status").getValue ((String.class)));
@@ -186,8 +187,7 @@ public class notification extends AppCompatActivity {
                             }
                         }
 
-
-                    }
+              
                 }
 
 
