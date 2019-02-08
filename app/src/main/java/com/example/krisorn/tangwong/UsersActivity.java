@@ -41,12 +41,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Map;
 import java.util.UUID;
 
 //import android.support.v4.media.app.NotificationCompat;
@@ -81,6 +77,7 @@ public class UsersActivity extends AppCompatActivity
     private long newroom=0;
     private  String a = "0";
     private String timestatus = "0";
+    private int count = 1;
 
 
 
@@ -159,6 +156,12 @@ public class UsersActivity extends AppCompatActivity
 
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
+                if(dataSnapshot.child ("user").child (uid).hasChild ("keep_noti"))
+                {
+                   count= (int) dataSnapshot.child ("user").child (uid).child("keep_noti").getChildrenCount ();
+                   count++;
+                }
+
                 if(dataSnapshot.child ("user").child (uid).child ("notification").hasChild ("status"))
                 {
                     a =dataSnapshot.child ("user").child (uid).child ("notification").child ("status").getValue((String.class));
@@ -179,6 +182,18 @@ public class UsersActivity extends AppCompatActivity
                     showNotification (b,roomname);
                     mDatabase.child("user").child(uid).child("notification").child ("status").setValue("0");
                     mDatabase.child ("room").child (id).child ("q").child (roomq).child ("noti_status").setValue ("0");
+
+                    Calendar c = Calendar.getInstance();
+
+                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+
+                    String H = df.format(c.getTime());
+
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("text").setValue (b);
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("room").setValue (roomname);
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("time").setValue (H);
+
+
                     check=false;
                 }
 
@@ -192,6 +207,16 @@ public class UsersActivity extends AppCompatActivity
                     String timetext = dataSnapshot.child ("user").child (uid).child ("time").child ("text").getValue (String.class);
                     String roomname =dataSnapshot.child ("room").child (id).child ("name").getValue((String.class));
                     showNotification (timetext,roomname);
+
+                    Calendar c = Calendar.getInstance();
+
+                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+
+                    String H = df.format(c.getTime());
+
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("text").setValue (timetext);
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("room").setValue (roomname);
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("time").setValue (H);
                 }
 
                 String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
@@ -495,8 +520,8 @@ public class UsersActivity extends AppCompatActivity
             Intent i = new Intent(this,own_room.class);
             startActivity(i);
 
-        }else if (id == R.id.nav_poll){
-            Intent i = new Intent(this, pool_interface.class);
+        }else if (id == R.id.nav_maps){
+            Intent i = new Intent(this, Maps_string.class);
             startActivity(i);
         }else if(id == R.id.nav_logout){
             mAuth.signOut();
