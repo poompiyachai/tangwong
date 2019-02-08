@@ -31,6 +31,8 @@ public class notification extends AppCompatActivity {
     private String uid;
     private Spinner name;
     private  List<String> namelist = new ArrayList<String>();
+    private boolean check = false;
+    private int ALL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class notification extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 iduser = String.valueOf (position);
                 Log.d("aaaaaaaaa",iduser);
+
             }
 
             @Override
@@ -72,14 +75,22 @@ public class notification extends AppCompatActivity {
                 id = dataSnapshot.child ("user").child (uid).child ("livenow").getValue (String.class);
 
                 int loop = (int) dataSnapshot.child ("room").child (id).child ("people_live").getChildrenCount ();
+                ALL=loop;
                 Log.d("follows",String.valueOf (loop));
-                namelist.add(" ");
-                for (int i=1;i<=loop;i++)
+                if(check==false)
                 {
-                    String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (String.valueOf (i)).child ("uid").getValue (String.class);
-                    String tempname = dataSnapshot.child ("user").child (tempuid).child ("name").getValue (String.class);
-                    namelist.add(String.valueOf (i)+" "+tempname);
+                    namelist.add("Select");
+                    for (int i=1;i<=loop;i++)
+                    {
+                        String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (String.valueOf (i)).child ("uid").getValue (String.class);
+                        String tempname = dataSnapshot.child ("user").child (tempuid).child ("name").getValue (String.class);
+                        namelist.add(String.valueOf (i)+" "+tempname);
+                    }
+                    namelist.add("All");
+                    check=true;
                 }
+
+
 
 
                 // Creating adapter for spinner
@@ -109,8 +120,24 @@ public class notification extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         if(view.getId()==R.id.setnoti){
-            EditText roomq = findViewById (R.id.q);
-            mDatabase.child ("room").child (id).child ("q").child (roomq.getText ().toString ()).child ("noti_status").setValue ("1");
+            // EditText roomq = findViewById (R.id.q);
+            final int a = ALL+1;
+            Log.d("saaaaaaaaa", String.valueOf (a));
+            Log.d("saaaaaaaaa", iduser);
+            if(iduser.equals (String.valueOf(a)))
+            {
+
+                for (long i=1;i<=ALL;i++)
+                {
+                    Log.d("saaaaaaaaa", "eieieei");
+                    mDatabase.child ("room").child (id).child ("people_live").child (String.valueOf (i)).child ("noti_status").setValue ("1");
+                }
+            }
+            else if(!(iduser.equals (String.valueOf(0))))
+            {
+                mDatabase.child ("room").child (id).child ("people_live").child (iduser).child ("noti_status").setValue ("1");
+            }
+
             FirebaseDatabase database2 = FirebaseDatabase.getInstance();
 
 
@@ -127,23 +154,42 @@ public class notification extends AppCompatActivity {
                     //final FirebaseUser user = mAuth.getCurrentUser ();
                     //String uid = user.getUid ();
                     // String iduser = String.valueOf(name.getId ());
-                    EditText roomq = findViewById (R.id.q);
+
                     EditText message = findViewById (R.id.text);
 
-                    Log.d("aasd",dataSnapshot.child ("room").child (id).child ("q").child (roomq.getText ().toString ()).child ("noti_status").getValue ((String.class)));
+                    //  Log.d("aasd",dataSnapshot.child ("room").child (id).child ("q").child (iduser).child ("noti_status").getValue ((String.class)));
+                    if(!(iduser.equals (String.valueOf(0))))
+                    {
 
-                    if (dataSnapshot.child ("room").child (id).child ("q").child (roomq.getText ().toString ()).child ("noti_status").getValue ((String.class)).equals ("1")) {
-                        //roomq = findViewById(R.id.roomid).toString ();
-                     /*   String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (roomq.getText ().toString ()).child ("uid").getValue ((String.class));
+                        if(iduser.equals  (String.valueOf(a)))
+                        {
+                            for (long i=1;i<=ALL;i++)
+                            {
+                                if (dataSnapshot.child ("room").child (id).child ("people_live").child (String.valueOf (i)).child ("noti_status").getValue ((String.class)).equals ("1")) {
+                                    String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (String.valueOf (i)).child ("uid").getValue ((String.class));
+                                    mDatabase.child ("user").child (tempuid).child ("notification").child ("status").setValue ("1");
+                                    mDatabase.child ("user").child (tempuid).child ("notification").child ("text").setValue (message.getText ().toString ());
+                                    mDatabase.child ("user").child (tempuid).child ("notification").child ("room").setValue (id);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (dataSnapshot.child ("room").child (id).child ("people_live").child (iduser).child ("noti_status").getValue ((String.class)).equals ("1")) {
+                                //roomq = findViewById(R.id.roomid).toString ();
+                                String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (iduser).child ("uid").getValue ((String.class));
 
-                        Log.d ("aasd", tempuid);
-                        mDatabase.child ("room").child (id).child ("q").child (roomq.getText ().toString ()).child ("text").setValue (message.getText ().toString ());
-                        mDatabase.child ("user").child (tempuid).child ("notification").child ("status").setValue ("1");
-                        mDatabase.child ("user").child (tempuid).child ("notification").child ("text").setValue (message.getText ().toString ());
-                        mDatabase.child ("user").child (tempuid).child ("notification").child ("room").setValue (id);*/
-                    }
+                                Log.d ("aasd", tempuid);
+                                // mDatabase.child ("room").child (id).child ("q").child (roomq.getText ().toString ()).child ("text").setValue (message.getText ().toString ());
+                                mDatabase.child ("user").child (tempuid).child ("notification").child ("status").setValue ("1");
+                                mDatabase.child ("user").child (tempuid).child ("notification").child ("text").setValue (message.getText ().toString ());
+                                mDatabase.child ("user").child (tempuid).child ("notification").child ("room").setValue (id);
+                            }
+                        }
 
+              
                 }
+
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {

@@ -8,45 +8,31 @@
     android:background="@drawable/logo_design_png_transparent_7">
 
 
-    <Spinner android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Spinner
         android:id="@+id/list"
-        tools:ignore="MissingConstraints">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="181dp"
+        tools:layout_editor_absoluteY="104dp">
 
     </Spinner>
 
 
     <EditText
-        android:id="@+id/q"
-        android:layout_width="308dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:hint="q"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.204" />
-
-
-    <EditText
         android:id="@+id/text"
         android:layout_width="308dp"
-        android:layout_height="wrap_content"
+        android:layout_height="49dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="416dp"
         android:ems="10"
         android:hint="text"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/roomid"
+        app:layout_constraintBottom_toTopOf="@+id/setnoti"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/q" />
 
