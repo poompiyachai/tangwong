@@ -528,12 +528,7 @@ public class UsersActivity extends AppCompatActivity
             mAuth.signOut();
             Intent i = new Intent(this,EmailPasswordActivity.class);
             startActivity(i);
-        }else if(id == R.id.nav_logout){
-            mAuth.signOut();
-            Intent i = new Intent(this,EmailPasswordActivity.class);
-            startActivity(i);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_user);
         drawer.closeDrawer(GravityCompat.START);
         return true;
