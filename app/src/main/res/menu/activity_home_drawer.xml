@@ -7,45 +7,42 @@
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/profile"
-            android:title="Profile" />
+            android:title="โปรไฟล์" />
         <item
             android:id="@+id/nav_room"
             android:icon="@drawable/ic_room"
-            android:title="Room" />
+            android:title="วงที่เข้าร่วม" />
+        <item
+            android:id="@+id/nav_myroom"
+            android:icon="@drawable/ic_myroom"
+            android:title="วงของฉัน" />
         <item
             android:id="@+id/nav_add_room"
             android:icon="@drawable/ic_add_room"
-            android:title="Add Room" />
+            android:title="ตั้งวงกันเหอะ" />
         <item
             android:id="@+id/nav_cart"
-            android:icon="@drawable/ic_add_shopping_cart_black_24dp"
-            android:title="Cart" />
+            android:icon="@drawable/ic_boxs"
+            android:title="เก็บใส่กล่อง" />
         <item
             android:id="@+id/nav_maps"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Maps" />
+            android:icon="@drawable/ic_maps_1"
+            android:title="แผนที่" />
         <item
             android:id="@+id/nav_qr"
             android:icon="@drawable/ic_crop_free_black_24dp"
-            android:title="QR Code" />
+            android:title="คิวอาร์โค้ด" />
+
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_menu_share"
+            android:title="สถานะ" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_lock_out"
+            android:title="ออกจากระบบ" />
 
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="status" />
-            <item
-                android:id="@+id/nav_myroom"
-                android:icon="@drawable/ic_menu_send"
-                android:title="myroom" />
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_lock_out"
-                android:title="logout" />
-        </menu>
-    </item>
 
 </menu>

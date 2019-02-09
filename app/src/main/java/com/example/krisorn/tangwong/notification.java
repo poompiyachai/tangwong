@@ -158,13 +158,10 @@ public class notification extends AppCompatActivity {
                     EditText message = findViewById (R.id.text);
 
                     //  Log.d("aasd",dataSnapshot.child ("room").child (id).child ("q").child (iduser).child ("noti_status").getValue ((String.class)));
-                    if(!(iduser.equals (String.valueOf(0))))
-                    {
+                    if(!(iduser.equals (String.valueOf(0)))) {
 
-                        if(iduser.equals  (String.valueOf(a)))
-                        {
-                            for (long i=1;i<=ALL;i++)
-                            {
+                        if (iduser.equals (String.valueOf (a))) {
+                            for (long i = 1; i <= ALL; i++) {
                                 if (dataSnapshot.child ("room").child (id).child ("people_live").child (String.valueOf (i)).child ("noti_status").getValue ((String.class)).equals ("1")) {
                                     String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (String.valueOf (i)).child ("uid").getValue ((String.class));
                                     mDatabase.child ("user").child (tempuid).child ("notification").child ("status").setValue ("1");
@@ -172,9 +169,7 @@ public class notification extends AppCompatActivity {
                                     mDatabase.child ("user").child (tempuid).child ("notification").child ("room").setValue (id);
                                 }
                             }
-                        }
-                        else
-                        {
+                        } else {
                             if (dataSnapshot.child ("room").child (id).child ("people_live").child (iduser).child ("noti_status").getValue ((String.class)).equals ("1")) {
                                 //roomq = findViewById(R.id.roomid).toString ();
                                 String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (iduser).child ("uid").getValue ((String.class));
@@ -186,8 +181,8 @@ public class notification extends AppCompatActivity {
                                 mDatabase.child ("user").child (tempuid).child ("notification").child ("room").setValue (id);
                             }
                         }
+                    }
 
-              
                 }
 
 
