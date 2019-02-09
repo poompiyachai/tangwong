@@ -155,37 +155,36 @@ public class notification extends AppCompatActivity {
                     //String uid = user.getUid ();
                     // String iduser = String.valueOf(name.getId ());
 
-                    EditText message = findViewById(R.id.text);
+                    EditText message = findViewById (R.id.text);
 
                     //  Log.d("aasd",dataSnapshot.child ("room").child (id).child ("q").child (iduser).child ("noti_status").getValue ((String.class)));
-                    if (!(iduser.equals(String.valueOf(0)))) {
+                    if(!(iduser.equals (String.valueOf(0)))) {
 
-                        if (iduser.equals(String.valueOf(a))) {
+                        if (iduser.equals (String.valueOf (a))) {
                             for (long i = 1; i <= ALL; i++) {
-                                if (dataSnapshot.child("room").child(id).child("people_live").child(String.valueOf(i)).child("noti_status").getValue((String.class)).equals("1")) {
-                                    String tempuid = dataSnapshot.child("room").child(id).child("people_live").child(String.valueOf(i)).child("uid").getValue((String.class));
-                                    mDatabase.child("user").child(tempuid).child("notification").child("status").setValue("1");
-                                    mDatabase.child("user").child(tempuid).child("notification").child("text").setValue(message.getText().toString());
-                                    mDatabase.child("user").child(tempuid).child("notification").child("room").setValue(id);
+                                if (dataSnapshot.child ("room").child (id).child ("people_live").child (String.valueOf (i)).child ("noti_status").getValue ((String.class)).equals ("1")) {
+                                    String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (String.valueOf (i)).child ("uid").getValue ((String.class));
+                                    mDatabase.child ("user").child (tempuid).child ("notification").child ("status").setValue ("1");
+                                    mDatabase.child ("user").child (tempuid).child ("notification").child ("text").setValue (message.getText ().toString ());
+                                    mDatabase.child ("user").child (tempuid).child ("notification").child ("room").setValue (id);
                                 }
                             }
                         } else {
-                            if (dataSnapshot.child("room").child(id).child("people_live").child(iduser).child("noti_status").getValue((String.class)).equals("1")) {
+                            if (dataSnapshot.child ("room").child (id).child ("people_live").child (iduser).child ("noti_status").getValue ((String.class)).equals ("1")) {
                                 //roomq = findViewById(R.id.roomid).toString ();
-                                String tempuid = dataSnapshot.child("room").child(id).child("people_live").child(iduser).child("uid").getValue((String.class));
+                                String tempuid = dataSnapshot.child ("room").child (id).child ("people_live").child (iduser).child ("uid").getValue ((String.class));
 
-                                Log.d("aasd", tempuid);
+                                Log.d ("aasd", tempuid);
                                 // mDatabase.child ("room").child (id).child ("q").child (roomq.getText ().toString ()).child ("text").setValue (message.getText ().toString ());
-                                mDatabase.child("user").child(tempuid).child("notification").child("status").setValue("1");
-                                mDatabase.child("user").child(tempuid).child("notification").child("text").setValue(message.getText().toString());
-                                mDatabase.child("user").child(tempuid).child("notification").child("room").setValue(id);
+                                mDatabase.child ("user").child (tempuid).child ("notification").child ("status").setValue ("1");
+                                mDatabase.child ("user").child (tempuid).child ("notification").child ("text").setValue (message.getText ().toString ());
+                                mDatabase.child ("user").child (tempuid).child ("notification").child ("room").setValue (id);
                             }
                         }
                     }
 
-
-                    }
                 }
+
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
