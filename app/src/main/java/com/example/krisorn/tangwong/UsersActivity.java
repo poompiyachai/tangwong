@@ -192,6 +192,7 @@ public class UsersActivity extends AppCompatActivity
                     mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("text").setValue (b);
                     mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("room").setValue (roomname);
                     mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("time").setValue (H);
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("status").setValue ("ยังไม่ได้ลบ");
 
 
                     check=false;
@@ -265,8 +266,8 @@ public class UsersActivity extends AppCompatActivity
                         return  true;
                     case R.id.alert:
                         Log.d("click","click alert");
-                        //   Toast.makeText(UsersActivity.this,"ALERT",Toast.LENGTH_SHORT);
-                        //jump to activity
+                        Intent i1 = new Intent(UsersActivity.this,StatusAlert2.class);
+                        startActivity(i1);
                         return  true;
 
                     case R.id.me_profile:
