@@ -4,30 +4,20 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
-//import android.support.v4.media.app.NotificationCompat;
-
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Intent;
-
-
-//import android.support.v4.media.app.NotificationCompat;
-import android.util.Log;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -37,13 +27,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-//import android.widget.TextView;
 
-import com.example.krisorn.tangwong.databinding.ActivityUsersBindingImpl;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.krisorn.tangwong.databinding.ActivityProfileExBindingImpl;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -55,12 +41,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.UUID;
 
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.toUnsignedString;
+//import android.support.v4.media.app.NotificationCompat;
+//import android.support.v4.media.app.NotificationCompat;
+//import android.widget.TextView;
 
 public class UsersActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -69,7 +56,7 @@ public class UsersActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     // TODO Step 1: Declare binding instance instead view's (binding class is auto-generated)
     //private TextView textView;
-    ActivityUsersBindingImpl binding;
+    ActivityProfileExBindingImpl binding;
 
     private EditText mtypeField;
     private EditText mdataField;
@@ -82,6 +69,17 @@ public class UsersActivity extends AppCompatActivity
     private int change=0;
     private long turnq=1;
     private String livenow;
+    private String id="2";
+    private String roomq="1";
+    private String tempuid="asd";
+    private boolean check=false;
+    private long num=0;
+    private long newroom=0;
+    private  String a = "0";
+    private String timestatus = "0";
+    private int count = 1;
+
+
 
 
 
@@ -103,24 +101,24 @@ public class UsersActivity extends AppCompatActivity
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_users);
+        setContentView(R.layout.activity_profile_ex);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         viewModel = new UsersViewModel(this);
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
 
 
-         //bn_nav
+        //bn_nav
         mProgressDialog= new ProgressDialog(this);
         mStorage=FirebaseStorage.getInstance().getReference();
-       // mselectImage=(Button) findViewById(R.id.btn_addImage);
+        // mselectImage=(Button) findViewById(R.id.btn_addImage);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-         try {
-             new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a");
-         }
-         catch (Exception e){}
+        mDatabase.child("test").orderByValue ();
+        try {
+            new DownloadImageTask((ImageView) findViewById(R.id.profile_ex)).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a");
+        }
+        catch (Exception e){}
         initView();
         //get firebase
 
@@ -132,32 +130,109 @@ public class UsersActivity extends AppCompatActivity
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String uid = user.getUid();
 
+                if(findViewById(R.id.roomid)!=null)
+                {
+                    EditText check = findViewById(R.id.roomid);
+                    while (true)
+                    {
+                        if((!dataSnapshot.child("room").child(check.getText().toString()).child("people_live").child(Long.toString(num)).hasChildren ()))
+                        {
+                            break;
+                        }
+                        else if(!dataSnapshot.child("room").child(check.getText().toString()).child("people_live").child(Long.toString(num)).getValue ().equals (uid))
+                        {
+                            break;
+                        }
+                        else num++;
+                    }
+                }
+
+                newroom = dataSnapshot.child ("room").getChildrenCount ();
+
+
+
+
 
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
-               String a =dataSnapshot.child ("user").child (uid).child ("notification").getValue((String.class));
-                Log.d("aasd",a);
-               if(a.equals ("1"))
-               {
-                   showNotification ("test");
-                   mDatabase.child("user").child(uid).child("notification").setValue("1");
-               }
+                if(dataSnapshot.child ("user").child (uid).hasChild ("keep_noti"))
+                {
+                   count= (int) dataSnapshot.child ("user").child (uid).child("keep_noti").getChildrenCount ();
+                   count++;
+                }
 
-              String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
+                if(dataSnapshot.child ("user").child (uid).child ("notification").hasChild ("status"))
+                {
+                    a =dataSnapshot.child ("user").child (uid).child ("notification").child ("status").getValue((String.class));
+                }
 
-             String pathPhoto=dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
-              viewModel.setName(name);
+                 if(dataSnapshot.child ("user").child (uid).child ("time").hasChild ("status"))
+                 {
+                     timestatus =dataSnapshot.child ("user").child (uid).child ("time").child ("status").getValue((String.class));
+                 }
 
-              viewModel.setPathPhoto(pathPhoto);
+
+                if(a.equals ("1"))
+                {
+                    id = dataSnapshot.child ("user").child (uid).child ("notification").child ("room").getValue ((String.class));
+                    String b =dataSnapshot.child ("user").child (uid).child ("notification").child ("text").getValue((String.class));
+                    String roomname =dataSnapshot.child ("room").child (id).child ("name").getValue((String.class));
+
+                    showNotification (b,roomname);
+                    mDatabase.child("user").child(uid).child("notification").child ("status").setValue("0");
+                    mDatabase.child ("room").child (id).child ("q").child (roomq).child ("noti_status").setValue ("0");
+
+                    Calendar c = Calendar.getInstance();
+
+                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+
+                    String H = df.format(c.getTime());
+
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("text").setValue (b);
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("room").setValue (roomname);
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("time").setValue (H);
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("status").setValue ("ยังไม่ได้ลบ");
 
 
-              binding.name.setText(viewModel.getName());
+                    check=false;
+                }
 
-              try {
-                  new DownloadImageTask((ImageView) findViewById(R.id.profile)).execute(pathPhoto);
-              }
-              catch (Exception e) {
-              }
+
+
+                if(timestatus.equals ("1"))
+                {
+
+                    id = dataSnapshot.child ("user").child (uid).child ("time").child ("room").getValue (String.class);
+                    mDatabase.child ("user").child (uid).child ("time").child ("status").setValue ("0");
+                    String timetext = dataSnapshot.child ("user").child (uid).child ("time").child ("text").getValue (String.class);
+                    String roomname =dataSnapshot.child ("room").child (id).child ("name").getValue((String.class));
+                    showNotification (timetext,roomname);
+
+                    Calendar c = Calendar.getInstance();
+
+                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+
+                    String H = df.format(c.getTime());
+
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("text").setValue (timetext);
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("room").setValue (roomname);
+                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("time").setValue (H);
+                }
+
+                String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
+
+                String pathPhoto=dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
+                viewModel.setName(name);
+
+                viewModel.setPathPhoto(pathPhoto);
+
+                binding.nameEx.setText(viewModel.getName());
+
+                try {
+                    new DownloadImageTask((ImageView) findViewById(R.id.profile_ex)).execute(pathPhoto);
+                }
+                catch (Exception e) {
+                }
 
             }
 
@@ -182,7 +257,7 @@ public class UsersActivity extends AppCompatActivity
                         return  true;
                     case R.id.search:
                         Log.d("click","click search");
-                        Intent i = new Intent(UsersActivity.this,Cart.class);
+                        Intent i = new Intent(UsersActivity.this,user_search.class);
                         startActivity(i);
 
                         //  Toast.makeText(UsersActivity.this,"SEARCH",Toast.LENGTH_SHORT);
@@ -190,8 +265,8 @@ public class UsersActivity extends AppCompatActivity
                         return  true;
                     case R.id.alert:
                         Log.d("click","click alert");
-                        //   Toast.makeText(UsersActivity.this,"ALERT",Toast.LENGTH_SHORT);
-                        //jump to activity
+                        Intent i1 = new Intent(UsersActivity.this,StatusAlert2.class);
+                        startActivity(i1);
                         return  true;
 
                     case R.id.me_profile:
@@ -229,21 +304,23 @@ public class UsersActivity extends AppCompatActivity
 
     private void initView(){
 
-       // FirebaseUser currentUser = mAuth.getCurrentUser();
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_users);
+        // FirebaseUser currentUser = mAuth.getCurrentUser();
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile_ex);
         binding.setViewmodel(viewModel);
 
     }
 
     public void click(View view) {
+
+/*
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         if(view.getId()==R.id.button){
-        int current=parseInt(viewModel.getString(),10);
-        current++;
-        String strCurrent= String.valueOf(current);
+            int current=parseInt(viewModel.getString(),10);
+            current++;
+            String strCurrent= String.valueOf(current);
 
-        viewModel.setString(strCurrent);
-        binding.textView2.setText(viewModel.getString());
+            viewModel.setString(strCurrent);
+            binding.textView2.setText(viewModel.getString());
         }
         else if(view.getId()==R.id.btn_addImage){
             Intent intent =new Intent(Intent.ACTION_PICK);
@@ -251,7 +328,14 @@ public class UsersActivity extends AppCompatActivity
             startActivityForResult(intent,GALLERY_INTENT);
         }
         else if(view.getId()==R.id.addroom){
-            setContentView(R.layout.activity_addroom);
+            Intent i = new Intent (this,create_event.class);
+            startActivity (i);
+            //setContentView(R.layout.activity_addroom);
+
+        }
+        else if(view.getId()==R.id.notification){
+            Intent i = new Intent (this,time.class);
+            startActivity (i);
 
         }
 
@@ -259,24 +343,16 @@ public class UsersActivity extends AppCompatActivity
             jroomid = findViewById(R.id.roomid);
             FirebaseUser user = mAuth.getCurrentUser();
 
-                mDatabase.child("user").child(user.getUid()).child("live").child(jroomid.getText().toString()).setValue("1");
-
-
-
-            setContentView(R.layout.activity_addq);
+            mDatabase.child("user").child(user.getUid()).child("live").child(jroomid.getText().toString()).setValue("1");
+            mDatabase.child("room").child(jroomid.getText().toString()).child("people_live").child(Long.toString(num)).child("uid").setValue (user.getUid ());
 
         }
         else if(view.getId()==R.id.enter){
             jroomid = findViewById(R.id.roomid);
             FirebaseUser user = mAuth.getCurrentUser();
 
-         //   mDatabase.child("user").child(user.getUid()).child("nowlive").setValue(jroomid.getText().toString());
-
-
             Intent i =new Intent(this,addqActivity.class);
             startActivity(i);
-         //   setContentView(R.layout.activity_addq);
-
 
         }
 
@@ -291,13 +367,13 @@ public class UsersActivity extends AppCompatActivity
 
 
 
-                    mtypeField = findViewById(R.id.type);
+            mtypeField = findViewById(R.id.type);
             mdataField = findViewById(R.id.data);
             nameField=findViewById(R.id.name);
 
-            mDatabase.child("room").child(Long.toString(roomid)).child("name").setValue(nameField.getText().toString());
-            mDatabase.child("room").child(Long.toString(roomid)).child("type").setValue(mtypeField.getText().toString());
-            mDatabase.child("room").child(Long.toString(roomid)).child("data").setValue(mdataField.getText().toString());
+            mDatabase.child("room").child(Long.toString(newroom)).child("name").setValue(nameField.getText().toString());
+            mDatabase.child("room").child(Long.toString(newroom)).child("type").setValue(mtypeField.getText().toString());
+            mDatabase.child("room").child(Long.toString(newroom)).child("data").setValue(mdataField.getText().toString());
             FirebaseUser user = mAuth.getCurrentUser();
             mDatabase.child("user").child(user.getUid()).child("owner").child(Long.toString(roomid)).setValue(nameField.getText().toString());
             setContentView(R.layout.activity_users);
@@ -306,31 +382,33 @@ public class UsersActivity extends AppCompatActivity
             Intent i = new Intent(this,user_roomActivity.class);
             startActivity(i);
         }
+
+       */
+
     }
+
+
     public void signOut(View view) {
         viewModel.setLogoutSatus();
         mAuth.signOut();
         Intent i = new Intent(this,EmailPasswordActivity.class);
         startActivity(i);
     }
+    public void test(View view) {
+
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-/*
-        tempData =data;
-        tempRequestCode=requestCode;
-        tempResultCode=resultCode;
-        */
-
         if(requestCode==GALLERY_INTENT && resultCode==RESULT_OK){
 
             Uri uri=data.getData();
-            final StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment());
-           // mProgressDialog.setMessage("Uploading....");
-            mProgressDialog.setMessage("uploading....");
-            mProgressDialog.show();
+            final StorageReference filepath = mStorage.child("Photos").child(uri.getLastPathSegment()+ UUID.randomUUID().toString());
 
+            mProgressDialog.setMessage("Uploading....");
+            mProgressDialog.show();
            Log.d("11111111","11111111");
 
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -363,15 +441,18 @@ public class UsersActivity extends AppCompatActivity
         }
     }
 
-    private void showNotification(String text) {
-        Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("http://devahoy.com/posts/android-notification/"));
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+    private void showNotification(String text,String text2) {Intent intent = new Intent(this, AdminDashBoradView.class);
+        intent.putExtra("message", text);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(AdminDashBoradView.class);
+        stackBuilder.addNextIntent(intent);
+        PendingIntent pendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("การเเจ้งเตือน")
+                        .setContentTitle(text2)
                         .setContentText(text)
                         .setAutoCancel(true)
                         .setContentIntent(pendingIntent)
@@ -382,9 +463,8 @@ public class UsersActivity extends AppCompatActivity
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(1000, notification);
-
-        Log.d("aasd","asdasda");
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -432,10 +512,22 @@ public class UsersActivity extends AppCompatActivity
             Intent i = new Intent(this,user_qrcode.class);
             startActivity(i);
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_share) {
+            Intent i = new Intent(this,Status.class);
+            startActivity(i);
 
+        }else if(id==R.id.nav_myroom){
+            Intent i = new Intent(this,own_room.class);
+            startActivity(i);
+
+        }else if (id == R.id.nav_maps){
+            Intent i = new Intent(this, Maps_string.class);
+            startActivity(i);
+        }else if(id == R.id.nav_logout){
+            mAuth.signOut();
+            Intent i = new Intent(this,EmailPasswordActivity.class);
+            startActivity(i);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_user);
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/content_poll"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="top"
+        tools:ignore="MissingConstraints">
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/content_bn_question"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom">
+        <Button
+            android:id="@+id/increase_Quize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Add Poll"
+            android:onClick="click"
+            style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"/>
+
+            <Button
+                android:id="@+id/start_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="start question"
+                android:layout_gravity="center"
+                android:onClick="click"
+                style="@style/Widget.AppCompat.Button.Colored" />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

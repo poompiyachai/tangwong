@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true">
+
+<LinearLayout
+    android:id="@+id/larde"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_corner"
+    android:gravity="center">
+    <LinearLayout
+        android:id="@+id/lin2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="2"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/imag_1"
+            android:layout_height="150dp"
+            android:layout_width="150dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_id"/>
+        <ImageView
+            android:id="@+id/imag_2"
+            android:layout_height="150dp"
+            android:layout_width="150dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_qr"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/searchActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/ToSearchId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search ID"
+            android:background="@drawable/rounded_cornor_color"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:onClick="click"/>
+
+        <Button
+            android:id="@+id/ToSearchQRcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_cornor_color"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="Search QR"
+            android:onClick="click"/>
+    </LinearLayout>
+</LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

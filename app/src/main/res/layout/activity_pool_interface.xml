@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/poll_interface"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="top"
+        tools:ignore="MissingConstraints">
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/content_bn_question"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="bottom">
+        <RelativeLayout
+            android:id="@+id/bn_contianer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            tools:ignore="MissingConstraints">
+
+            <Button
+                android:id="@+id/bn_previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:onClick="click"
+                android:layout_marginBottom="10dp"
+                android:text="PREVIOUS"></Button>
+
+            <Button
+                android:id="@+id/bn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="290dp"
+                android:onClick="click"
+                android:text="NEXT"></Button>
+            <Button
+                android:id="@+id/bn_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="150dp"
+                android:onClick="click"
+                android:text="DATA"></Button>
+
+        </RelativeLayout>/>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

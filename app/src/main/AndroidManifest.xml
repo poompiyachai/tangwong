@@ -2,18 +2,39 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.krisorn.tangwong">
-
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application xmlns:tools="http://schemas.android.com/tools"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Final Project"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="Tang Wong"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
+        <activity android:name=".pool_interface"></activity>
+        <activity android:name=".StatusAlert"></activity>
+        <activity android:name=".StatusAlert2"></activity>
+        <activity android:name=".create_itemActiviity"></activity>
+        <activity android:name=".user_Question" />
+        <activity android:name=".StatusCostomer" />
+        <activity android:name=".Maps_string"/>
+        <activity android:name=".user_InterfaceIntoRoom" />
+        <activity android:name=".user_idSearch" />
+        <activity android:name=".user_poll" />
+        <activity android:name=".user_qrcode" />
+        <activity android:name=".show_data"
+            tools:ignore="DuplicateActivity" />
+        <activity android:name=".user_search" />
+        <activity android:name=".profile_ex" />
+        <activity android:name=".AddFeatureActivity" />
+        <activity android:name=".add_feature" />
         <activity android:name=".EmailPasswordActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +43,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".UsersActivity" />
+        <activity android:name=".own_room" />
         <activity android:name=".MainActivity" />
         <activity android:name=".registerActivity" />
         <activity android:name=".user_roomActivity" />
@@ -29,15 +51,27 @@
         <activity android:name=".list_itemActivity" />
         <activity android:name=".item_detail" />
         <activity android:name=".Cart" />
+        <activity android:name=".Status" />
+        <activity android:name=".AddminListItemView" />
         <activity
             android:name=".home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
-        <activity android:name=".create_roomActiviity"></activity>
-        <activity android:name=".user_qrcode"></activity>
+        <activity android:name=".create_roomActiviity" />
+        <activity android:name=".AdminDashBoradView" />
+
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
-            android:value="true"/>
+            android:value="true" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity android:name=".time" />
+        <activity android:name=".notification" />
+        <activity android:name=".ownRoom.carlender" />
+        <activity android:name=".create_event" />
+        <activity android:name=".dayevent" />
     </application>
 
 </manifest>
