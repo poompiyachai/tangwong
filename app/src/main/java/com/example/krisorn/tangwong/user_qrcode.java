@@ -67,11 +67,11 @@ public class user_qrcode extends AppCompatActivity {
 
 
         //QR_code
-        Image_QR =(ImageView)findViewById(R.id.imageQR);
-        String_QR = (EditText)findViewById(R.id.string_QR);
-        Gen_QR =(Button)findViewById(R.id.gen_QR);
+        //Image_QR =(ImageView)findViewById(R.id.imageQR);
+        //String_QR = (EditText)findViewById(R.id.string_QR);
+        //Gen_QR =(Button)findViewById(R.id.gen_QR);
 
-        Gen_QR.setOnClickListener(new View.OnClickListener() {
+        /*Gen_QR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(String_QR.getText().toString().trim().length()==0){
@@ -87,7 +87,7 @@ public class user_qrcode extends AppCompatActivity {
                     }
                 }
             }
-        });
+        });*/
         /*Scan_QR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,6 +174,7 @@ public class user_qrcode extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable final Intent data) {
         final IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
         if(result != null){
+            Log.d ("kkkk",String.valueOf (result.getContents ()));
             if(result.getContents()== null){
                 Toast.makeText(this,"Not Found",Toast.LENGTH_SHORT);
             }else{
@@ -192,7 +193,7 @@ public class user_qrcode extends AppCompatActivity {
                             mAuth=FirebaseAuth.getInstance();
                             FirebaseUser user = mAuth.getCurrentUser();
                              user = mAuth.getCurrentUser();
-                            if (dataSnapshot.hasChild(result.getContents())) {
+                            if (dataSnapshot.child("room").hasChild(result.getContents())) {
                                 AlertDialog.Builder builder1 = new AlertDialog.Builder(user_qrcode.this);
                                 builder1.setMessage("You want Tungwong this");
                                 builder1.setCancelable(true);

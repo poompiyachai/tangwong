@@ -9,37 +9,34 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:background="@drawable/rounded_corner"
         android:orientation="vertical">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/string_QR"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
-            android:hint="Enter String" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/gen_QR"
-            android:text="GENERATE QR"
-            android:layout_marginTop="10dp"/>
-
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:id="@+id/imageQR"/>
+            android:id="@+id/image_1"
+            android:layout_height="150dp"
+            android:layout_width="150dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_qr"/>
+
         <Button
+            android:layout_marginTop="15dp"
             android:id="@+id/Scaner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="scan"
+            android:background="@drawable/rounded_cornor_color"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_gravity="center"
             android:onClick="scanQRCode"
             />
         <TextView
-            android:text="result"
+            android:text="วงเลขที่"
             android:id="@+id/textScanner"
-            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_corner"
+            android:layout_height="30dp"
             android:layout_width="wrap_content"
             />
 
