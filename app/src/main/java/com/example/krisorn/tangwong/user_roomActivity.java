@@ -123,7 +123,7 @@ public class user_roomActivity extends AppCompatActivity {
 
                             }
                         });
-                        Intent i = new Intent(user_roomActivity.this,AdminDashBoradView.class);
+                        Intent i = new Intent(user_roomActivity.this,UserDashBorad.class);
                         startActivity(i);
                     }
                 });
