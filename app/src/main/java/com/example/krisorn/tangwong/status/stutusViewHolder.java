@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import com.example.krisorn.tangwong.R;
 
-import org.w3c.dom.Text;
-
 public class stutusViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     public TextView txtNameRoom, txtSumPrice,txtStatus,txtNumberOfItem;
 
@@ -17,7 +15,7 @@ public class stutusViewHolder extends RecyclerView.ViewHolder implements View.On
 
         txtNameRoom= (TextView)itemView.findViewById(R.id.name_room);
         txtNumberOfItem=(TextView)itemView.findViewById(R.id.NumberOfItem);
-        txtStatus= (TextView)itemView.findViewById(R.id.status);
+        txtStatus= (TextView)itemView.findViewById(R.id.status_q);
         txtSumPrice= (TextView)itemView.findViewById(R.id.sumPice);
 
         itemView.setOnClickListener(this);
