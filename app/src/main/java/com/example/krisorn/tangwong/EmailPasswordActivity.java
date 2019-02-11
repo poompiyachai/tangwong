@@ -205,7 +205,6 @@ public class EmailPasswordActivity extends AppCompatActivity implements
             this.startActivity(i);
 
 
-
 //            findViewById(R.id.emailPasswordButtons).setVisibility(View.GONE);
    ////         findViewById(R.id.emailPasswordFields).setVisibility(View.GONE);
       //      findViewById(R.id.signedInButtons).setVisibility(View.VISIBLE);

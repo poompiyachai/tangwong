@@ -19,7 +19,8 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label">
         <activity android:name=".pool_interface"></activity>
-
+        <activity android:name=".StatusAlert"></activity>
+        <activity android:name=".StatusAlert2"></activity>
         <activity android:name=".create_itemActiviity"></activity>
         <activity android:name=".user_Question" />
         <activity android:name=".StatusCostomer" />
@@ -28,6 +29,7 @@
         <activity android:name=".user_idSearch" />
         <activity android:name=".user_poll" />
         <activity android:name=".user_qrcode" />
+        <activity android:name=".UserDashBorad" />
         <activity android:name=".show_data"
             tools:ignore="DuplicateActivity" />
         <activity android:name=".user_search" />

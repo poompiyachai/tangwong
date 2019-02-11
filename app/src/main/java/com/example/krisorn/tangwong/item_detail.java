@@ -88,7 +88,6 @@ public class item_detail extends AppCompatActivity {
                                          numberButton.getNumber(),
                                          dataSnapshot.child("price").getValue(String.class)
 
-
                                  ));
                                 /* item_price.setText(dataSnapshot.child("price").getValue(String.class));
                                  item_name.setText(dataSnapshot.child("name").getValue(String.class));

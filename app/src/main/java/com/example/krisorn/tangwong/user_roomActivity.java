@@ -123,7 +123,7 @@ public class user_roomActivity extends AppCompatActivity {
 
                             }
                         });
-                        Intent i = new Intent(user_roomActivity.this,list_itemActivity.class);
+                        Intent i = new Intent(user_roomActivity.this,UserDashBorad.class);
                         startActivity(i);
                     }
                 });
