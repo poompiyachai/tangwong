@@ -68,24 +68,23 @@ int A;
 
                 long num = dataSnapshot.child ("room").child (id).child ("people_live").getChildrenCount ();
 
-                if(dataSnapshot.child ("room").child (id).child ("time_noti").child ("status") .getValue (String.class).equals ("1")) {
-                    for (long i = 1; i <= num; i++) {
-                        if (dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class) != null) {
-                            Log.d ("aasdaa", "asddsa");
-                            String tempUid = dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class);
-                            String text = dataSnapshot.child ("room").child (id).child ("time_noti").child ("text").getValue (String.class);
-                            mDatabase.child ("user").child (tempUid).child ("time").child ("status").setValue ("1");
-                            mDatabase.child ("user").child (tempUid).child ("time").child ("room").setValue (id);
-                            mDatabase.child ("user").child (tempUid).child ("time").child ("text").setValue (text);
+                if(dataSnapshot.child ("room").child (id).hasChild ("time_noti"))
+                {
+                    if(dataSnapshot.child ("room").child (id).child ("time_noti").child ("status") .getValue (String.class).equals ("1")) {
+                        for (long i = 1; i <= num; i++) {
+                            if (dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class) != null) {
+                                Log.d ("aasdaa", "asddsa");
+                                String tempUid = dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class);
+                                String text = dataSnapshot.child ("room").child (id).child ("time_noti").child ("text").getValue (String.class);
+                                mDatabase.child ("user").child (tempUid).child ("time").child ("status").setValue ("1");
+                                mDatabase.child ("user").child (tempUid).child ("time").child ("room").setValue (id);
+                                mDatabase.child ("user").child (tempUid).child ("time").child ("text").setValue (text);
+                            }
+
                         }
-
+                        mDatabase.child ("room").child (id).child ("time_noti").child ("status") .setValue ("0");
                     }
-                    mDatabase.child ("room").child (id).child ("time_noti").child ("status") .setValue ("0");
                 }
-
-
-
-
 
 
 
