@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +27,7 @@ import java.util.Calendar;
 
 public class time extends AppCompatActivity {
     private DatabaseReference mDatabase;
-    private String id="1";
+    private String id ;
     private TimePicker time;
     public DatabaseReference nameCard;
     private String hr,mi;
@@ -44,7 +43,7 @@ public class time extends AppCompatActivity {
         time = (TimePicker)findViewById (R.id.timepicker);
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
-         uid = user.getUid ();
+        uid = user.getUid ();
 
         time.setOnTimeChangedListener (new TimePicker.OnTimeChangedListener () {
             @Override
@@ -52,6 +51,7 @@ public class time extends AppCompatActivity {
                 hr = String.valueOf (hourOfDay);
                 mi = String.valueOf (minute);
             }
+
         });
 
     }
@@ -59,30 +59,27 @@ public class time extends AppCompatActivity {
     public void click(View view) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        nameCard =database.getReference();
-int A;
-        nameCard.addValueEventListener (new ValueEventListener () {
+        nameCard = database.getReference();
+        int A;
+        nameCard.addListenerForSingleValueEvent (new ValueEventListener () {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                uid = mAuth.getUid ();
+                nameCard.child ("temp").setValue (uid);
                 id = dataSnapshot.child ("user").child (uid).child ("livenow").getValue (String.class);
-
                 long num = dataSnapshot.child ("room").child (id).child ("people_live").getChildrenCount ();
-
-                if(dataSnapshot.child ("room").child (id).hasChild ("time_noti"))
-                {
+                    if(dataSnapshot.child ("room").child (id).hasChild ("time_noti")) {
                     if(dataSnapshot.child ("room").child (id).child ("time_noti").child ("status") .getValue (String.class).equals ("1")) {
-                        for (long i = 1; i <= num; i++) {
-                            if (dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class) != null) {
-                                Log.d ("aasdaa", "asddsa");
-                                String tempUid = dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class);
-                                String text = dataSnapshot.child ("room").child (id).child ("time_noti").child ("text").getValue (String.class);
-                                mDatabase.child ("user").child (tempUid).child ("time").child ("status").setValue ("1");
-                                mDatabase.child ("user").child (tempUid).child ("time").child ("room").setValue (id);
-                                mDatabase.child ("user").child (tempUid).child ("time").child ("text").setValue (text);
+                            for (long i = 1; i <= num; i++) {
+                                if (dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class) != null) {
+                                    String tempUid = dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class);
+                                    String text = dataSnapshot.child ("room").child (id).child ("time_noti").child ("text").getValue (String.class);
+                                    mDatabase.child ("user").child (tempUid).child ("time").child ("status").setValue ("1");
+                                    mDatabase.child ("user").child (tempUid).child ("time").child ("room").setValue (id);
+                                    mDatabase.child ("user").child (tempUid).child ("time").child ("text").setValue (text);
+                                }
                             }
-
-                        }
-                        mDatabase.child ("room").child (id).child ("time_noti").child ("status") .setValue ("0");
+                            mDatabase.child ("room").child (id).child ("time_noti").child ("status") .setValue ("0");
                     }
                 }
 
@@ -108,57 +105,64 @@ int A;
 
             SimpleDateFormat df = new SimpleDateFormat("HH");
 
-            String H = df.format(c.getTime());
+            final String H = df.format(c.getTime());
 
 
             SimpleDateFormat mm = new SimpleDateFormat("mm");
 
-            String m = mm.format(c.getTime());
+            final String m = mm.format(c.getTime());
             SimpleDateFormat ss = new SimpleDateFormat("ss");
 
-            String s = ss.format(c.getTime());
-
-            int a = Integer.parseInt (hr);
-            int aa = Integer.parseInt (H);
-            aa=aa*3600;
-            a=a*3600;
-
-            long b = Integer.parseInt (mi);
-            long bb = Integer.parseInt (m);
-            b=b*60;
-            bb=bb*60;
+            final String s = ss.format(c.getTime());
 
 
-            int asdd = Integer.parseInt(String.valueOf (a+b));
-            int asdasd = Integer.parseInt(String.valueOf (aa+bb));
+            mDatabase.addListenerForSingleValueEvent (new ValueEventListener () {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-            int asd = Integer.parseInt(String.valueOf (asdd-asdasd))*1000-(Integer.parseInt(s)*1000);
-            if(asdd-asdasd<=0)
-            {
-                asd = (24*60*60)+Integer.parseInt(String.valueOf (asdd-asdasd));
-                asd = asd*1000;
-            }
-            Log.d("aasdaa", String.valueOf (asd/1000));
-           new CountDownTimer (asd, 1000) {
-                EditText text = findViewById(R.id.text);
+                    int a = Integer.parseInt (hr);
+                    int aa = Integer.parseInt (H);
+                    aa=aa*3600;
+                    a=a*3600;
 
-                public void onTick(long millisUntilFinished) {
+                    long b = Integer.parseInt (mi);
+                    long bb = Integer.parseInt (m);
+                    b=b*60;
+                    bb=bb*60;
+
+
+                    int asdd = Integer.parseInt(String.valueOf (a+b));
+                    int asdasd = Integer.parseInt(String.valueOf (aa+bb));
+
+                    int asd = Integer.parseInt(String.valueOf (asdd-asdasd))*1000-(Integer.parseInt(s)*1000);
+                    if(asdd-asdasd<=0)
+                    {
+                        asd = (24*60*60)+Integer.parseInt(String.valueOf (asdd-asdasd));
+                        asd = asd*1000;
+                    }
+                    Log.d("aasdaa", String.valueOf (asd/1000));
+                    EditText text = findViewById(R.id.text);
+                    id = dataSnapshot.child ("user").child (uid).child ("livenow").getValue (String.class);
+                    long num = dataSnapshot.child ("room").child (id).child ("time_notifi").getChildrenCount ();
+                    mDatabase.child ("room").child (id).child ("time_notifi").child (String.valueOf (num)).child ("countdown") .setValue (String.valueOf (asd));
+                    mDatabase.child ("room").child (id).child ("time_notifi").child (String.valueOf (num)).child ("text") .setValue (text.getText ().toString ());
+                    mDatabase.child ("room").child (id).child ("time_notifi").child (String.valueOf (num)).child ("time") .setValue (H+"/"+m);
 
                 }
 
-                public void onFinish() {
-
-                    mDatabase.child ("room").child (id).child ("time_noti").child ("status") .setValue ("1");
-                    mDatabase.child ("room").child (id).child ("time_noti").child ("text") .setValue (text.getText ().toString ());
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-            }.start();
+            });
 
-            Intent i = new Intent(time.this,UsersActivity.class);
+
+
+
+
+        }else if(view.getId () == R.id.events){
+            Intent i = new Intent(time.this,showtime.class);
             startActivity(i);
-
-
-
 
         }
     }

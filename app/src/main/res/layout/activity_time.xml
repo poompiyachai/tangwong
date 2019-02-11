@@ -40,7 +40,7 @@
             android:id="@+id/set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="set"
+            android:text="ตั้งค่า"
            android:layout_gravity="center"
             android:onClick="click"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -49,6 +49,19 @@
             app:layout_constraintTop_toBottomOf="@+id/password"
             android:theme="@style/ThemeOverlay.MyDarkButton"
             style="@style/Widget.AppCompat.Button.Colored" />
+       <Button
+           android:id="@+id/events"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="กำหนดการ"
+           android:layout_gravity="center"
+           android:onClick="click"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/password"
+           android:theme="@style/ThemeOverlay.MyDarkButton"
+           style="@style/Widget.AppCompat.Button.Colored" />
    </LinearLayout>
 
 

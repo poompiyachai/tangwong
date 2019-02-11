@@ -3,7 +3,6 @@ package com.example.krisorn.tangwong.AdminDashBorad;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,15 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.krisorn.tangwong.AddminListItemView;
-import com.example.krisorn.tangwong.AdminDashBoradView;
-import com.example.krisorn.tangwong.Model.Order;
 import com.example.krisorn.tangwong.R;
 import com.example.krisorn.tangwong.StatusCostomer;
-import com.example.krisorn.tangwong.UsersViewModel;
 import com.example.krisorn.tangwong.create_event;
-import com.example.krisorn.tangwong.list_itemActivity;
 import com.example.krisorn.tangwong.notification;
 import com.example.krisorn.tangwong.ownRoom.carlender;
 import com.example.krisorn.tangwong.pool_interface;
@@ -34,14 +28,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
-
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 class AdminDashBoradViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -127,6 +113,7 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
                                 public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                                     holder.txtNameRoom.setText(dataSnapshot.child("nameOfFeture").getValue(String.class));
                                     holder.txtDetail.setText(dataSnapshot.child("detailOfFeture").getValue(String.class));
+                                   // holder.imageView.setImageURI (dataSnapshot.child ());
                                     Log.d("canRetriveFeature",dataSnapshot.getRef().toString());
 
                                     holder.itemView.setOnClickListener(new View.OnClickListener() {

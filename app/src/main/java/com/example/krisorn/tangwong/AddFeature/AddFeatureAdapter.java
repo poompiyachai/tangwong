@@ -3,7 +3,6 @@ package com.example.krisorn.tangwong.AddFeature;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,12 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.krisorn.tangwong.AdminDashBoradView;
-import com.example.krisorn.tangwong.Model.Order;
 import com.example.krisorn.tangwong.R;
-import com.example.krisorn.tangwong.UsersViewModel;
-import com.example.krisorn.tangwong.list_itemActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,13 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
-
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 class AddFeatureViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -115,14 +103,15 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
                                             .setValue("q");
-                                    mDatabase.child("room").child(roomLiveNow).child("q").child("nameOfFeture").setValue("รายการสินค้า(แผงลอย)");
+                                    mDatabase.child("room").child(roomLiveNow).child("q").child("nameOfFeture").setValue("รายการ");
                                     mDatabase.child("room").child(roomLiveNow).child("q").child("detailOfFeture").setValue(dataSnapshot.child("data").getValue(String.class));
                                     mDatabase.child("room").child(roomLiveNow).child("q").child("typeOfFeture").setValue("StallShop");
                                     mDatabase.child("room").child(roomLiveNow).child("q").child("typeOfFetureShow").setValue("both");
+                                    mDatabase.child ("room").child (roomLiveNow).child ("q").child ("typePicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_makegroup.png?alt=media&token=28954f50-beb4-44ca-b26d-4f8da2420ba6");
 
                                     mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount()+1)))
                                             .setValue("viewqueue");
-                                    mDatabase.child("room").child(roomLiveNow).child("viewqueue").child("nameOfFeture").setValue("ดูคิวลูกค้า");
+                                    mDatabase.child("room").child(roomLiveNow).child("viewqueue").child("nameOfFeture").setValue("คิว");
                                     mDatabase.child("room").child(roomLiveNow).child("viewqueue").child("detailOfFeture").setValue(dataSnapshot.child("data")
                                             .getValue(String.class));
                                     mDatabase.child("room").child(roomLiveNow).child("viewqueue").child("typeOfFeture").setValue("viewqueue");
@@ -325,10 +314,11 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
                                             .setValue("notification");
-                                    mDatabase.child("room").child(roomLiveNow).child("notification").child("nameOfFeture").setValue("แจ้งเตือน");
-                                    mDatabase.child("room").child(roomLiveNow).child("notification").child("detailOfFeture").setValue("แจ้งเตือนคนในกลุ่ม");
+                                    mDatabase.child("room").child(roomLiveNow).child("notification").child("nameOfFeture").setValue("เตือน");
+                                    mDatabase.child("room").child(roomLiveNow).child("notification").child("detailOfFeture").setValue("เตือนในกลุ่ม");
                                     mDatabase.child("room").child(roomLiveNow).child("notification").child("typeOfFeture").setValue("notification");
                                     mDatabase.child("room").child(roomLiveNow).child("notification").child("typeOfFetureShow").setValue("admin");
+                                    mDatabase.child ("room").child (roomLiveNow).child ("notification").child ("typePicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_alert.png?alt=media&token=1df69419-0753-463d-bbee-52d4f24e7b48");
                                 }
 
                                 @Override
@@ -356,10 +346,11 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount())))
                                             .setValue("canlender_settime");
-                                    mDatabase.child("room").child(roomLiveNow).child("canlender_settime").child("nameOfFeture").setValue("แจ้งเตือนตั้งเวลา");
-                                    mDatabase.child("room").child(roomLiveNow).child("canlender_settime").child("detailOfFeture").setValue("แจ้งเตือนตั้งเวลาคนในกลุ่ม");
+                                    mDatabase.child("room").child(roomLiveNow).child("canlender_settime").child("nameOfFeture").setValue("ตั้งเวลา");
+                                    mDatabase.child("room").child(roomLiveNow).child("canlender_settime").child("detailOfFeture").setValue("เเจ้งเตือนเวลา");
                                     mDatabase.child("room").child(roomLiveNow).child("canlender_settime").child("typeOfFeture").setValue("canlender_settime");
                                     mDatabase.child("room").child(roomLiveNow).child("canlender_settime").child("typeOfFetureShow").setValue("admin");
+                                    mDatabase.child ("room").child (roomLiveNow).child ("canlender_settime").child ("typepicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_alert2.png?alt=media&token=88f4cd5d-9559-417d-be6c-d57d9580ce76");
 
                                 }
 
@@ -392,6 +383,7 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                     mDatabase.child("room").child(roomLiveNow).child("calender").child("detailOfFeture").setValue("ดูปฎิทิน");
                                     mDatabase.child("room").child(roomLiveNow).child("calender").child("typeOfFeture").setValue("calender");
                                     mDatabase.child("room").child(roomLiveNow).child("calender").child("typeOfFetureShow").setValue("both");
+                                    mDatabase.child ("room").child (roomLiveNow).child ("calender").child ("typepicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_calender.png?alt=media&token=8d8652df-2123-470e-8f26-12928dbb704f");
 
                                     mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount()+1)))
                                             .setValue("calender_event");
@@ -399,7 +391,7 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                     mDatabase.child("room").child(roomLiveNow).child("calender_event").child("detailOfFeture").setValue("สร้างกิจกรรม");
                                     mDatabase.child("room").child(roomLiveNow).child("calender_event").child("typeOfFeture").setValue("calender_event");
                                     mDatabase.child("room").child(roomLiveNow).child("calender_event").child("typeOfFetureShow").setValue("admin");
-
+                                    mDatabase.child ("room").child (roomLiveNow).child ("calender_event").child ("typepicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_q.png?alt=media&token=cf77e22b-9ad7-4528-b7fe-5f26d6962560");
                                 }
 
                                 @Override
@@ -620,6 +612,7 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                     mDatabase.child("room").child(roomLiveNow).child("poll").child("detailOfFeture").setValue("โพล");
                                     mDatabase.child("room").child(roomLiveNow).child("poll").child("typeOfFeture").setValue("poll");
                                     mDatabase.child("room").child(roomLiveNow).child("poll").child("typeOfFetureShow").setValue("admin");
+                                    mDatabase.child ("room").child (roomLiveNow).child ("poll").child ("typepicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_pool.png?alt=media&token=480efec9-9182-433e-aae1-c97f147d8681");
 
                                     mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount()+1)))
                                             .setValue("pollview");
@@ -627,6 +620,7 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                     mDatabase.child("room").child(roomLiveNow).child("pollview").child("detailOfFeture").setValue("ดูโพล");
                                     mDatabase.child("room").child(roomLiveNow).child("pollview").child("typeOfFeture").setValue("pollview");
                                     mDatabase.child("room").child(roomLiveNow).child("pollview").child("typeOfFetureShow").setValue("user");
+                                    mDatabase.child ("room").child (roomLiveNow).child ("pollview").child ("typepicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_polling.png?alt=media&token=9f63ca6d-2953-4235-bb7f-1a5bcc31b596");
 
 
                                 }
@@ -685,9 +679,9 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
             }});
         if(position==0){
 
-            holder.txtNameRoom.setText("เพิ่มร้านค้าแพงลอย");
-            holder.txtDetail.setText("เพิ่มร้านค้า สำหรับการขายของ");
-            String imgUrl = "http://www.scphtrang.ac.th/main/sites/default/files/10961970_805523669502906_1747785628_n.jpg";
+            holder.txtNameRoom.setText("เพิ่มรายการ");
+            holder.txtDetail.setText("เพิ่มข้อมูลรายละเอียดต่างๆ");
+            String imgUrl = "https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_makegroup.png?alt=media&token=28954f50-beb4-44ca-b26d-4f8da2420ba6";
             Picasso.get().load(imgUrl).into(holder.imageView);
 
         }
@@ -710,32 +704,32 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
             Picasso.get().load(imgUrl).into(holder.imageView);
         }*/
         if (position==1){
-            holder.txtNameRoom.setText("แจ้งเตือนกิจกรรม");
+            holder.txtNameRoom.setText("เตือน");
             holder.txtDetail.setText("แจ้งเตือนทุกคนในกลุ่ม");
-            String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
+            String imgUrl = "https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_alert.png?alt=media&token=1df69419-0753-463d-bbee-52d4f24e7b48";
             Picasso.get().load(imgUrl).into(holder.imageView);
         }
         if (position==2){
-            holder.txtNameRoom.setText("แจ้งเตือนแบบตั้งเวลา");
-            holder.txtDetail.setText("แจ้งเตือนทุกคนในกลุ่ม");
-            String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
+            holder.txtNameRoom.setText("ตั้งเวลา");
+            holder.txtDetail.setText("แจ้งเวลาทุกคนในกลุ่ม");
+            String imgUrl = "https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_alert2.png?alt=media&token=88f4cd5d-9559-417d-be6c-d57d9580ce76";
             Picasso.get().load(imgUrl).into(holder.imageView);
         }
         if (position==3){
             holder.txtNameRoom.setText("ปฎิทิน");
             holder.txtDetail.setText("ดูปฎิทิน");
-            String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
+            String imgUrl = "https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_calender.png?alt=media&token=8d8652df-2123-470e-8f26-12928dbb704f";
             Picasso.get().load(imgUrl).into(holder.imageView);
         }
         if (position==4){
             holder.txtNameRoom.setText("โพล");
             holder.txtDetail.setText("โพล");
-            String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
+            String imgUrl = "https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_pool.png?alt=media&token=480efec9-9182-433e-aae1-c97f147d8681";
             Picasso.get().load(imgUrl).into(holder.imageView);
         }if (position==5){
             holder.txtNameRoom.setText("สร้างกิจกรรม");
             holder.txtDetail.setText("สร้างกิจกรรม");
-            String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
+            String imgUrl = "https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_q.png?alt=media&token=cf77e22b-9ad7-4528-b7fe-5f26d6962560";
             Picasso.get().load(imgUrl).into(holder.imageView);
         }
 
