@@ -53,6 +53,7 @@
                     android:layout_width="match_parent"
                     android:scaleType="centerCrop"
                     android:background="@drawable/bg2_8"/>
+
                 <LinearLayout
                     android:id="@+id/ho"
                     android:layout_height="match_parent"
@@ -64,9 +65,10 @@
                         android:id="@+id/img_add_item"
                         android:layout_width="200dp"
                         android:layout_height="200dp"
-                        android:layout_gravity="top"
+                        android:layout_gravity="center"
                         app:srcCompat="@drawable/ic_pic"
                         tools:ignore="MissingConstraints"/>
+
                     <Button
                         android:id="@+id/btn_add_item"
                         style="@style/Widget.AppCompat.Button.Colored"
@@ -138,21 +140,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/txt_create_item_type" />
-                    <android.support.design.widget.BottomNavigationView
-                        android:id="@+id/bottom_add_menu"
-                        android:layout_width="match_parent"
-                        android:layout_gravity="bottom"
-                        android:layout_height="wrap_content"
-                        app:itemBackground="@color/colorPrimary"
-                        app:itemIconTint="@drawable/nav_bn"
-                        app:itemTextColor="@drawable/nav_bn"
-                        app:menu="@menu/bn_navigation" />
                 </LinearLayout>
-
-
-
-
-
             </android.support.constraint.ConstraintLayout>
-
+        </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.DrawerLayout>
