@@ -7,63 +7,53 @@
     tools:context=".ownRoom.carlender">
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/bg_calen"
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="26dp"
+        android:gravity="center"
+        android:background="@drawable/bg2_8"
         tools:ignore="MissingConstraints">
     <TextView
         android:id="@+id/myDate"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text=""
+        android:text="รายละเอียด"
         android:textAlignment="center"
-        android:textColor="#F0F"
+        android:textColor="@color/white"
         android:textSize="23sp"
+        android:background="@drawable/rounded_corner"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="108dp" />
-
-
-
+        tools:ignore="MissingConstraints" />
 
         <CalendarView
             android:id="@+id/calender"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></CalendarView>
+            android:layout_height="wrap_content">
 
-
-
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_calen"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:text="Save my date"
-        android:onClick="click"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="123dp"
-        tools:layout_editor_absoluteY="492dp" />
-
-
+        </CalendarView>
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="บันทึกวันของฉัน"
+            android:textColor="@color/white"
+            android:onClick="click"
+            style="@style/Widget.AppCompat.Button.Colored"
+            tools:ignore="MissingConstraints" />
         <Button
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_calen"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="Save"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="บันทึก"
+            android:textColor="@color/white"
             android:onClick="click"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="123dp"
-            tools:layout_editor_absoluteY="492dp" />
+            style="@style/Widget.AppCompat.Button.Colored"
+            tools:ignore="MissingConstraints" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
