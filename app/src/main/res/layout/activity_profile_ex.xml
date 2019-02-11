@@ -93,7 +93,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:text="@{viewmodel.countRoom}"
+                        android:id="@+id/countMyRoom"
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:paddingTop="10dp"
@@ -115,7 +116,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:text="@{viewmodel.countJoinRoom}"
+                        android:id="@+id/countMyJoinRoom"
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:paddingTop="10dp"
@@ -151,7 +153,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="kkk@gmail.com"
+                android:text="@{viewmodel.emailUser}"
+                android:id="@+id/myEmail"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -173,7 +176,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="0800080808"
+                android:id="@+id/myPhoneNumber"
+                android:text="@{viewmodel.phoneNumber}"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -195,7 +199,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="20dp"
-                android:text="Add to group"
+                android:id="@+id/changeProfilePicture"
+                android:text="เเปลี่ยนรูปโปรไฟล์"
+                android:onClick="click"
                 android:textStyle="bold" />
         </LinearLayout>
 

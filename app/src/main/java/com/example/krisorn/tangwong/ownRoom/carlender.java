@@ -65,23 +65,27 @@ public class carlender extends AppCompatActivity {
                         Log.d("qweำำ", String.valueOf (count));
                         for(int j=0;j<count;j++)
                         {
-                            if(dataSnapshot.child ("room").child (roomid).child ("event").child (String.valueOf (j)).hasChild ("status"))
+                            if(dataSnapshot.child ("room").child (roomid).hasChild ("event"))
                             {
-
-                                String date2 = dataSnapshot.child ("room").child (roomid).child ("event").child (String.valueOf (j)).child ("date").getValue (String.class);
-                                String message = dataSnapshot.child ("room").child (roomid).child ("event").child (String.valueOf (j)).child ("text").getValue (String.class);
-                                if(date2.equals (date))
+                                if(dataSnapshot.child ("room").child (roomid).child ("event").child (String.valueOf (j)).hasChild ("status"))
                                 {
-                                    myDate.setText (message);
-                                    mDatabase.child ("eiei").setValue (null);
-                                    break;
-                                }
-                                else
-                                {
-                                    myDate.setText (" ");
-                                }
 
+                                    String date2 = dataSnapshot.child ("room").child (roomid).child ("event").child (String.valueOf (j)).child ("date").getValue (String.class);
+                                    String message = dataSnapshot.child ("room").child (roomid).child ("event").child (String.valueOf (j)).child ("text").getValue (String.class);
+                                    if(date2.equals (date))
+                                    {
+                                        myDate.setText (message);
+                                        mDatabase.child ("eiei").setValue (null);
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        myDate.setText (" ");
+                                    }
+
+                                }
                             }
+
                         }
 
 

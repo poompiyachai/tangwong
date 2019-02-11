@@ -58,7 +58,7 @@
             <EditText
                 android:background="@drawable/rounded_corner"
                 android:layout_marginTop="10dp"
-                android:id="@+id/editText2"
+                android:id="@+id/phone_number_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"

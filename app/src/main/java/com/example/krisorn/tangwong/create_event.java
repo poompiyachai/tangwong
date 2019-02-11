@@ -50,41 +50,45 @@ public class create_event extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 roomid = dataSnapshot.child ("user").child (uid).child ("livenow").getValue (String.class);
                 Log.d("test", String.valueOf (one));
-                while(true)
+                if(dataSnapshot.child ("room").child (roomid).hasChild ("event"))
                 {
-                    if(!dataSnapshot.child("room").child(roomid).child("event").child (String.valueOf (i)).hasChild("status"))
+                    while(true)
                     {
-                        break;
-                    }
-                    i++;
-                }
-                if(one==true)
-                {
-                    for(int y=0;y<i;y++)
-                    {
-                        Log.d("test", dataSnapshot.child("room").child(roomid).child("event").child (String.valueOf (y)).child("date").getValue (String.class));
-
-                        Log.d("test", String.valueOf (y));
-                        //Log.d("aasd", dataSnapshot.child("room").child(roomid).child("event").child (String.valueOf (j)).child("date").getValue (String.class));
-                        if(dataSnapshot.child("room").child(roomid).child("event").child (String.valueOf (y)).child("date").getValue (String.class).equals (date))
+                        if(!dataSnapshot.child("room").child(roomid).child("event").child (String.valueOf (i)).hasChild("status"))
                         {
-                            Log.d("aasd", "eiei");
-                            check = true;
-                            j=y;
                             break;
                         }
-                        else
-                        {
-                            check = false;
-                            j=-1;
-                        }
+                        i++;
                     }
-                    one = false;
+                    if(one==true)
+                    {
+                        for(int y=0;y<i;y++)
+                        {
+                            Log.d("test", dataSnapshot.child("room").child(roomid).child("event").child (String.valueOf (y)).child("date").getValue (String.class));
 
+                            Log.d("test", String.valueOf (y));
+                            //Log.d("aasd", dataSnapshot.child("room").child(roomid).child("event").child (String.valueOf (j)).child("date").getValue (String.class));
+                            if(dataSnapshot.child("room").child(roomid).child("event").child (String.valueOf (y)).child("date").getValue (String.class).equals (date))
+                            {
+                                Log.d("aasd", "eiei");
+                                check = true;
+                                j=y;
+                                break;
+                            }
+                            else
+                            {
+                                check = false;
+                                j=-1;
+                            }
+                        }
+                        one = false;
+
+                    }
+
+                    y=j;
+                    Log.d("aasd", String.valueOf (y));
                 }
 
-                y=j;
-                Log.d("aasd", String.valueOf (y));
             }
 
 
