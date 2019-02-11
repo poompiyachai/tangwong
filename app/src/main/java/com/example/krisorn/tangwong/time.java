@@ -90,10 +90,6 @@ int A;
 
 
 
-
-
-
-
             }
 
             @Override
@@ -122,8 +118,8 @@ int A;
 
             String s = ss.format(c.getTime());
 
-            long a = Integer.parseInt (hr);
-            long aa = Integer.parseInt (H);
+            int a = Integer.parseInt (hr);
+            int aa = Integer.parseInt (H);
             aa=aa*3600;
             a=a*3600;
 
@@ -158,7 +154,7 @@ int A;
                 }
             }.start();
 
-            Intent i = new Intent(this,UsersActivity.class);
+            Intent i = new Intent(time.this,UsersActivity.class);
             startActivity(i);
 
 
