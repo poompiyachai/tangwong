@@ -76,6 +76,7 @@ public class registerActivity extends AppCompatActivity implements
         mEmailField = findViewById(R.id.email);
         mPasswordField = findViewById(R.id.password);
         nameField=findViewById(R.id.name);
+        phoneNumberField = findViewById(R.id.phone_number_register);
         btn_add_img = findViewById(R.id.btn_add_img_register);
         img_profile = findViewById(R.id.img_register_add_img);
         mProgressDialog= new ProgressDialog(this);
@@ -142,6 +143,7 @@ public class registerActivity extends AppCompatActivity implements
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                           //  updateUI(user);
+                            mDatabase.child("user").child(user.getUid()).child("phoneNumber").setValue(phoneNumberField.getText().toString());
                             mDatabase.child("user").child(user.getUid()).child("name").setValue(nameField.getText().toString());
                             mDatabase.child("user").child(user.getUid()).child("notification").setValue("0");
                             mDatabase.child ("user").child (user.getUid()).child ("time").child ("status").setValue("0");

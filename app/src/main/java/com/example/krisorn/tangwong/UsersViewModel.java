@@ -49,10 +49,39 @@ public class UsersViewModel extends ViewModel {
     }
 
     private String name;
+    private String phoneNumber;
+    private String EmailUser;
+    private String countRoom;
+    private String countJoinRoom;
+
+    public String getEmailUser() {
+        return EmailUser;
+    }
+
+    public void setEmailUser(String emailUser) {
+        EmailUser = emailUser;
+    }
+
+    public String getCountRoom() {
+        return countRoom;
+    }
+
+    public void setCountRoom(String countRoom) {
+        this.countRoom = countRoom;
+    }
+
+    public String getCountJoinRoom() {
+        return countJoinRoom;
+    }
+
+    public void setCountJoinRoom(String countJoinRoom) {
+        this.countJoinRoom = countJoinRoom;
+    }
+
     private String faculty;
     private String sername;
     private String university;
-    private String phoneNumber;
+
     private Context current;
     private String pathPhoto;
     private boolean logout=false;
@@ -71,6 +100,7 @@ public class UsersViewModel extends ViewModel {
     }
 
     public String getName(){return name;}
+
     public String getFaculty(){return faculty;}
     public String getSername(){return sername;}
     public String getPhoneNumber(){return phoneNumber;}

@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.krisorn.tangwong.databinding.ActivityProfileExBindingImpl;
@@ -58,12 +59,12 @@ public class UsersActivity extends AppCompatActivity
     //private TextView textView;
     ActivityProfileExBindingImpl binding;
 
-    private EditText mtypeField;
-    private EditText mdataField;
-    private EditText nameField;
+   /* private TextView Myroom;
+    private TextView phoneNumberField;
+    private TextView nameField;
+    private TextView myJoinRoom;
+    private TextView myEmail;*/
 
-
-    private EditText jroomid;
     private long roomid;
     private int i=0;
     private int change=0;
@@ -100,13 +101,20 @@ public class UsersActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
 
 
-
+        Log.d("userActivity","oncreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_ex);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         viewModel = new UsersViewModel(this);
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
+
+       /* Myroom = findViewById(R.id.countMyRoom);
+        myJoinRoom=findViewById(R.id.countMyJoinRoom);
+        nameField = findViewById(R.id.name_ex);
+        phoneNumberField= findViewById(R.id.myPhoneNumber);
+        myEmail = findViewById(R.id.myEmail);
+*/
 
 
         //bn_nav
@@ -116,7 +124,10 @@ public class UsersActivity extends AppCompatActivity
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("test").orderByValue ();
+
+
         try {
+            Log.d("userActivity","picture1");
             new DownloadImageTask((ImageView) findViewById(R.id.profile_ex)).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a");
         }
         catch (Exception e){}
@@ -228,8 +239,23 @@ public class UsersActivity extends AppCompatActivity
                 viewModel.setPathPhoto(pathPhoto);
 
                 binding.nameEx.setText(viewModel.getName());
+                mDatabase.child("user").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        binding.countMyRoom.setText(String.valueOf(dataSnapshot.child("owner").getChildrenCount()));
+                        binding.countMyJoinRoom.setText( String.valueOf(dataSnapshot.child("live").getChildrenCount()));
+                        binding.myPhoneNumber.setText(dataSnapshot.child("phoneNumber").getValue(String.class));
+                        binding.myEmail.setText(user.getEmail());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
                 try {
+                    Log.d("userActivity","picture2");
                     new DownloadImageTask((ImageView) findViewById(R.id.profile_ex)).execute(pathPhoto);
                 }
                 catch (Exception e) {
@@ -313,17 +339,14 @@ public class UsersActivity extends AppCompatActivity
 
     public void click(View view) {
 
-/*
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        if(view.getId()==R.id.button){
-            int current=parseInt(viewModel.getString(),10);
-            current++;
-            String strCurrent= String.valueOf(current);
 
-            viewModel.setString(strCurrent);
-            binding.textView2.setText(viewModel.getString());
+
+        if(view.getId()==R.id.changeProfilePicture){
+            Intent intent =new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            startActivityForResult(intent,GALLERY_INTENT);
         }
-        else if(view.getId()==R.id.btn_addImage){
+   /*     else if(view.getId()==R.id.btn_addImage){
             Intent intent =new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
             startActivityForResult(intent,GALLERY_INTENT);
