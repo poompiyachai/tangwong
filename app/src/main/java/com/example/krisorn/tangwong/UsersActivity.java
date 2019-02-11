@@ -41,6 +41,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -128,7 +129,8 @@ public class UsersActivity extends AppCompatActivity
 
         try {
             Log.d("userActivity","picture1");
-            new DownloadImageTask((ImageView) findViewById(R.id.profile_ex)).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a");
+            //new DownloadImageTask((ImageView) findViewById(R.id.profile_ex)).execute("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a");
+            Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fstorage%2Femulated%2F0%2FDCIM%2FCamera%2FIMG_20181216_222350.jpg?alt=media&token=804a1f60-af35-4fe6-beb2-dabf51c3dd5a").into((ImageView)findViewById(R.id.profile_ex));
         }
         catch (Exception e){}
         initView();
@@ -140,26 +142,24 @@ public class UsersActivity extends AppCompatActivity
         nameCard.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String uid = user.getUid();
+                mAuth = FirebaseAuth.getInstance();
+                final FirebaseUser user = mAuth.getCurrentUser();
+                try {
+                    String uid = user.getUid();
 
-                if(findViewById(R.id.roomid)!=null)
-                {
-                    EditText check = findViewById(R.id.roomid);
-                    while (true)
-                    {
-                        if((!dataSnapshot.child("room").child(check.getText().toString()).child("people_live").child(Long.toString(num)).hasChildren ()))
-                        {
-                            break;
+
+                    if (findViewById(R.id.roomid) != null) {
+                        EditText check = findViewById(R.id.roomid);
+                        while (true) {
+                            if ((!dataSnapshot.child("room").child(check.getText().toString()).child("people_live").child(Long.toString(num)).hasChildren())) {
+                                break;
+                            } else if (!dataSnapshot.child("room").child(check.getText().toString()).child("people_live").child(Long.toString(num)).getValue().equals(uid)) {
+                                break;
+                            } else num++;
                         }
-                        else if(!dataSnapshot.child("room").child(check.getText().toString()).child("people_live").child(Long.toString(num)).getValue ().equals (uid))
-                        {
-                            break;
-                        }
-                        else num++;
                     }
-                }
 
-                newroom = dataSnapshot.child ("room").getChildrenCount ();
+                    newroom = dataSnapshot.child("room").getChildrenCount();
 
 
 
@@ -167,100 +167,70 @@ public class UsersActivity extends AppCompatActivity
 
                /* Map map =(Map)dataSnapshot.getValue();
                 String name = String.valueOf(map.get("name"));*/
-                if(dataSnapshot.child ("user").child (uid).hasChild ("keep_noti"))
-                {
-                   count= (int) dataSnapshot.child ("user").child (uid).child("keep_noti").getChildrenCount ();
-                   count++;
-                }
-
-                if(dataSnapshot.child ("user").child (uid).child ("notification").hasChild ("status"))
-                {
-                    a =dataSnapshot.child ("user").child (uid).child ("notification").child ("status").getValue((String.class));
-                }
-
-                 if(dataSnapshot.child ("user").child (uid).child ("time").hasChild ("status"))
-                 {
-                     timestatus =dataSnapshot.child ("user").child (uid).child ("time").child ("status").getValue((String.class));
-                 }
-
-
-                if(a.equals ("1"))
-                {
-                    id = dataSnapshot.child ("user").child (uid).child ("notification").child ("room").getValue ((String.class));
-                    String b =dataSnapshot.child ("user").child (uid).child ("notification").child ("text").getValue((String.class));
-                    String roomname = dataSnapshot.child ("room").child (id).child ("name").getValue((String.class));
-
-                    showNotification (b,roomname);
-                    mDatabase.child("user").child(uid).child("notification").child ("status").setValue("0");
-                    mDatabase.child ("room").child (id).child ("q").child (roomq).child ("noti_status").setValue ("0");
-
-                    Calendar c = Calendar.getInstance();
-
-                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-
-                    String H = df.format(c.getTime());
-
-                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("text").setValue (b);
-                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("room").setValue (roomname);
-                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("time").setValue (H);
-                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("status").setValue ("ยังไม่ได้ลบ");
-
-
-                    check=false;
-                }
-
-
-
-                if(timestatus.equals ("1"))
-                {
-
-                    id = dataSnapshot.child ("user").child (uid).child ("time").child ("room").getValue (String.class);
-                    mDatabase.child ("user").child (uid).child ("time").child ("status").setValue ("0");
-                    String timetext = dataSnapshot.child ("user").child (uid).child ("time").child ("text").getValue (String.class);
-                    String roomname =dataSnapshot.child ("room").child (id).child ("name").getValue((String.class));
-                    showNotification (timetext,roomname);
-
-                    Calendar c = Calendar.getInstance();
-
-                    SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-
-                    String H = df.format(c.getTime());
-
-                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("text").setValue (timetext);
-                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("room").setValue (roomname);
-                    mDatabase.child ("user").child (uid).child("keep_noti").child(String.valueOf (count)).child("time").setValue (H);
-                }
-
-                String name=dataSnapshot.child("user").child(uid).child("name").getValue(String.class);
-
-                String pathPhoto=dataSnapshot.child("user").child(uid).child("pathPhoto").getValue(String.class);
-                viewModel.setName(name);
-
-                viewModel.setPathPhoto(pathPhoto);
-
-                binding.nameEx.setText(viewModel.getName());
-                mDatabase.child("user").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        binding.countMyRoom.setText(String.valueOf(dataSnapshot.child("owner").getChildrenCount()));
-                        binding.countMyJoinRoom.setText( String.valueOf(dataSnapshot.child("live").getChildrenCount()));
-                        binding.myPhoneNumber.setText(dataSnapshot.child("phoneNumber").getValue(String.class));
-                        binding.myEmail.setText(user.getEmail());
+                    if (dataSnapshot.child("user").child(uid).hasChild("keep_noti")) {
+                        count = (int) dataSnapshot.child("user").child(uid).child("keep_noti").getChildrenCount();
+                        count++;
                     }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    if (dataSnapshot.child("user").child(uid).child("notification").hasChild("status")) {
+                        a = dataSnapshot.child("user").child(uid).child("notification").child("status").getValue((String.class));
                     }
-                });
 
-                try {
-                    Log.d("userActivity","picture2");
-                    new DownloadImageTask((ImageView) findViewById(R.id.profile_ex)).execute(pathPhoto);
-                }
-                catch (Exception e) {
-                }
+                    if (dataSnapshot.child("user").child(uid).child("time").hasChild("status")) {
+                        timestatus = dataSnapshot.child("user").child(uid).child("time").child("status").getValue((String.class));
+                    }
 
+
+                    if (a.equals("1")) {
+                        id = dataSnapshot.child("user").child(uid).child("notification").child("room").getValue((String.class));
+                        String b = dataSnapshot.child("user").child(uid).child("notification").child("text").getValue((String.class));
+                        String roomname = dataSnapshot.child("room").child(id).child("name").getValue((String.class));
+
+                        showNotification(b, roomname);
+                        mDatabase.child("user").child(uid).child("notification").child("status").setValue("0");
+                        mDatabase.child("room").child(id).child("q").child(roomq).child("noti_status").setValue("0");
+
+                        Calendar c = Calendar.getInstance();
+
+                        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+
+                        String H = df.format(c.getTime());
+
+                        mDatabase.child("user").child(uid).child("keep_noti").child(String.valueOf(count)).child("text").setValue(b);
+                        mDatabase.child("user").child(uid).child("keep_noti").child(String.valueOf(count)).child("room").setValue(roomname);
+                        mDatabase.child("user").child(uid).child("keep_noti").child(String.valueOf(count)).child("time").setValue(H);
+                        mDatabase.child("user").child(uid).child("keep_noti").child(String.valueOf(count)).child("status").setValue("ยังไม่ได้ลบ");
+
+
+                        check = false;
+                    }
+
+
+                    if (timestatus.equals("1")) {
+
+                        id = dataSnapshot.child("user").child(uid).child("time").child("room").getValue(String.class);
+                        mDatabase.child("user").child(uid).child("time").child("status").setValue("0");
+                        String timetext = dataSnapshot.child("user").child(uid).child("time").child("text").getValue(String.class);
+                        String roomname = dataSnapshot.child("room").child(id).child("name").getValue((String.class));
+                        showNotification(timetext, roomname);
+
+                        Calendar c = Calendar.getInstance();
+
+                        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+
+                        String H = df.format(c.getTime());
+
+                        mDatabase.child("user").child(uid).child("keep_noti").child(String.valueOf(count)).child("text").setValue(timetext);
+                        mDatabase.child("user").child(uid).child("keep_noti").child(String.valueOf(count)).child("room").setValue(roomname);
+                        mDatabase.child("user").child(uid).child("keep_noti").child(String.valueOf(count)).child("time").setValue(H);
+                    }
+
+
+
+                }catch (Exception e){
+                    Intent i = new Intent(UsersActivity.this,EmailPasswordActivity.class);
+                    startActivity(i);
+                }
             }
 
             @Override
@@ -325,7 +295,47 @@ public class UsersActivity extends AppCompatActivity
         navigationView.bringToFront();
         //end side bar
 
+       nameCard.addListenerForSingleValueEvent(new ValueEventListener() {
+    @Override
+    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        String name = dataSnapshot.child("user").child(user.getUid()).child("name").getValue(String.class);
 
+        String pathPhoto = dataSnapshot.child("user").child(user.getUid()).child("pathPhoto").getValue(String.class);
+        viewModel.setName(name);
+
+        viewModel.setPathPhoto(pathPhoto);
+
+        binding.nameEx.setText(viewModel.getName());
+        mDatabase.child("user").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                binding.countMyRoom.setText(String.valueOf(dataSnapshot.child("owner").getChildrenCount()));
+                binding.countMyJoinRoom.setText(String.valueOf(dataSnapshot.child("live").getChildrenCount()));
+                binding.myPhoneNumber.setText(dataSnapshot.child("phoneNumber").getValue(String.class));
+                binding.myEmail.setText(user.getEmail());
+                try {
+                    Log.d("userActivity", "picture2");
+                    String pathPhoto = dataSnapshot.child("pathPhoto").getValue(String.class);
+                    new DownloadImageTask((ImageView) findViewById(R.id.profile_ex)).execute(pathPhoto);
+                    Picasso.get().load(pathPhoto).into((ImageView)findViewById(R.id.profile_ex));
+
+                } catch (Exception e) {
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+    }
+});
 
     }
 
