@@ -250,9 +250,10 @@ public class AdminDashBoradView extends AppCompatActivity
             startActivity(i);
 
         }
-
+        try{
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_own_room);
-        drawer.closeDrawer(GravityCompat.START);
+        drawer.closeDrawer(GravityCompat.START);}
+        catch (Exception e){}
         return true;
     }
 

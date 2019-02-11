@@ -393,6 +393,13 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                     mDatabase.child("room").child(roomLiveNow).child("calender").child("typeOfFeture").setValue("calender");
                                     mDatabase.child("room").child(roomLiveNow).child("calender").child("typeOfFetureShow").setValue("both");
 
+                                    mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount()+1)))
+                                            .setValue("calender_event");
+                                    mDatabase.child("room").child(roomLiveNow).child("calender_event").child("nameOfFeture").setValue("สร้างกิจกรรม");
+                                    mDatabase.child("room").child(roomLiveNow).child("calender_event").child("detailOfFeture").setValue("สร้างกิจกรรม");
+                                    mDatabase.child("room").child(roomLiveNow).child("calender_event").child("typeOfFeture").setValue("calender_event");
+                                    mDatabase.child("room").child(roomLiveNow).child("calender_event").child("typeOfFetureShow").setValue("admin");
+
                                 }
 
                                 @Override
@@ -725,12 +732,12 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
             holder.txtDetail.setText("โพล");
             String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
             Picasso.get().load(imgUrl).into(holder.imageView);
-        }/*if (position==8){
-            holder.txtNameRoom.setText("ดูโพล");
-            holder.txtDetail.setText("ดูโพล");
+        }if (position==5){
+            holder.txtNameRoom.setText("สร้างกิจกรรม");
+            holder.txtDetail.setText("สร้างกิจกรรม");
             String imgUrl = "https://png.pngtree.com/element_origin_min_pic/17/08/03/ab218d702435fd76fc2d02616bdf5604.jpg";
             Picasso.get().load(imgUrl).into(holder.imageView);
-        }*/
+        }
 
     }
 
