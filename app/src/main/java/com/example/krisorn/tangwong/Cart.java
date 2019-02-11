@@ -84,7 +84,6 @@ public class Cart extends AppCompatActivity {
 
         txtTotalPrice = (TextView)findViewById(R.id.total);
         btnPlace = (Button)findViewById(R.id.btnPlaceOrder);
-
         btnPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -279,7 +278,6 @@ public class Cart extends AppCompatActivity {
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
 
         txtTotalPrice.setText(fmt.format(total));
-
 
     }
 }
