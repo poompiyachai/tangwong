@@ -188,7 +188,7 @@ public class UsersActivity extends AppCompatActivity
                 {
                     id = dataSnapshot.child ("user").child (uid).child ("notification").child ("room").getValue ((String.class));
                     String b =dataSnapshot.child ("user").child (uid).child ("notification").child ("text").getValue((String.class));
-                    String roomname =dataSnapshot.child ("room").child (id).child ("name").getValue((String.class));
+                    String roomname = dataSnapshot.child ("room").child (id).child ("name").getValue((String.class));
 
                     showNotification (b,roomname);
                     mDatabase.child("user").child(uid).child("notification").child ("status").setValue("0");
