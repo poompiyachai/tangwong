@@ -1,5 +1,6 @@
 package com.example.krisorn.tangwong;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -32,7 +33,11 @@ public class showtime extends AppCompatActivity {
     private List<Product> lstProducts;
     private String id ;
     private String uid;
-
+    private DatabaseReference mDatabase;
+    private String sendtext;
+    private  boolean check = true;
+    private long numall ;
+    private String showtime ;
 
 
     @Override
@@ -53,16 +58,43 @@ public class showtime extends AppCompatActivity {
                 Log.d ("GGGG","passDATA");
                 uid = dataSnapshot.child ("temp").getValue (String.class);
                 id = dataSnapshot.child ("user").child (uid).child ("livenow").getValue (String.class);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 // เดี๋ยววนตามจำนวนnotfi
                 long value_child_notifi = dataSnapshot.child ("room").child (id).child ("time_notifi").getChildrenCount ();
+
                  for(int i = 0 ;i < value_child_notifi;i++){
-                    String count = dataSnapshot.child ("room").child (id).child ("time_notifi").child (String.valueOf (i)).child ("countdown") .getValue (String.class).toString ();
-                    String text =  dataSnapshot.child ("room").child (id).child ("time_notifi").child (String.valueOf (i)).child ("text") .getValue (String.class).toString ();
-                    String time  = dataSnapshot.child ("room").child (id).child ("time_notifi").child (String.valueOf (i)).child ("time") .getValue (String.class);
-                    lstProducts.add(new Product(text, System.currentTimeMillis() + Integer.parseInt(count) ));
-                    Log.d ("GGGG",count);
+                     if(dataSnapshot.child ("room").child (id).child ("time_notifi").hasChild (String.valueOf (i)))
+                     {
+                         String count = dataSnapshot.child ("room").child (id).child ("time_notifi").child (String.valueOf (i)).child ("countdown") .getValue (String.class).toString ();
+                         String text =  dataSnapshot.child ("room").child (id).child ("time_notifi").child (String.valueOf (i)).child ("text") .getValue (String.class).toString ();
+                         String time  = dataSnapshot.child ("room").child (id).child ("time_notifi").child (String.valueOf (i)).child ("time") .getValue (String.class);
+
+                         lstProducts.add(new Product(text, System.currentTimeMillis() + Integer.parseInt(count) ,time));
+
+                         Log.d ("GGGG",count);
+                     }
+                     else
+                     {
+                         value_child_notifi++;
+                     }
+
                  }
                 lvItems.setAdapter(new CountdownAdapter(showtime.this, lstProducts));
+                numall = value_child_notifi;
+
             }
 
             @Override
@@ -77,10 +109,12 @@ public class showtime extends AppCompatActivity {
     private class Product {
         String name;
         long expirationTime;
+        String time;
 
-        public Product(String name, long expirationTime) {
+        public Product(String name, long expirationTime , String time) {
             this.name = name;
             this.expirationTime = expirationTime;
+            this.time = time;
         }
     }
 
@@ -158,10 +192,77 @@ public class showtime extends AppCompatActivity {
                 int seconds = (int) (timeDiff / 1000) % 60;
                 int minutes = (int) ((timeDiff / (1000 * 60)) % 60);
                 int hours = (int) ((timeDiff / (1000 * 60 * 60)) % 24);
-                tvTimeRemaining.setText(hours + " hrs " + minutes + " mins " + seconds + " sec");
+                tvTimeRemaining.setText(mProduct.time);
             } else {
+                final FirebaseDatabase database = FirebaseDatabase.getInstance();
+               /* mDatabase = FirebaseDatabase.getInstance().getReference();
+                mDatabase.child ("room").child (id).child ("time_noti").child ("status") .setValue ("1");
+                mDatabase.child ("room").child (id).child ("time_noti").child ("text") .setValue (mProduct.name);*/
+
+                nameCard.addListenerForSingleValueEvent (new ValueEventListener () {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        mDatabase = FirebaseDatabase.getInstance().getReference();
+                        uid = dataSnapshot.child ("temp").getValue (String.class);
+                        id = dataSnapshot.child ("user").child (uid).child ("livenow").getValue (String.class);
+                        int asd =0;
+                        while(asd<numall)
+                        {
+                            if(dataSnapshot.child ("room").child (id).child ("time_notifi").hasChild (String.valueOf (asd)))
+                            {
+                                if(dataSnapshot.child ("room").child (id).child ("time_notifi").child (String.valueOf (asd)).child ("text").getValue (String.class).equals (mProduct.name))
+                                {
+                                    break;
+                                }
+                            }
+
+
+                            asd++;
+                        }
+
+
+
+            Log.d("asd",id+"+"+uid);
+                        long num = dataSnapshot.child ("room").child (id).child ("people_live").getChildrenCount ();
+                        Log.d("asd","+"+num);
+
+                        if(dataSnapshot.child ("room").child (id).hasChild ("time_noti")&&asd<numall) {
+                            String text = dataSnapshot.child ("room").child (id).child ("time_notifi").child ("text").getValue (String.class);
+                             for (long i = 1; i <= num; i++) {
+                                 if(dataSnapshot.child ("room").child (id).child ("time_notifi").child (String.valueOf (asd)).child ("status").getValue (String.class).equals ("1")) {
+
+                                     if (dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class) != null) {
+                                        String tempUid = dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class);
+                                       Log.d("asdd", String.valueOf (i));
+
+
+
+                                       // Log.d("asd","+"+text);
+                                         mDatabase.child ("user").child (tempUid).child ("time").child ("status").setValue ("1");
+                                        mDatabase.child ("user").child (tempUid).child ("time").child ("room").setValue (id);
+                                        mDatabase.child ("user").child (tempUid).child ("time").child ("text").setValue (mProduct.name);
+                                    }
+                                }
+                                }
+                            mDatabase.child ("room").child (id).child ("time_notifi").child (String.valueOf (asd)).child ("status") .setValue ("0");
+                            mDatabase.child ("room").child (id).child ("time_notifi").child (String.valueOf (asd)).setValue (null);
+                            Intent i = new Intent(showtime.this,showtime.class);
+                            startActivity(i);
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 tvTimeRemaining.setText("หมดเวลาเเล้ว");
             }
+        }
+
+        public void sendnoti(final String id2, String text) {
+
         }
     }
 }

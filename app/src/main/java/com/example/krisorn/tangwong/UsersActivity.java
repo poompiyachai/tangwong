@@ -26,7 +26,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.krisorn.tangwong.databinding.ActivityProfileExBindingImpl;
@@ -555,8 +554,8 @@ public class UsersActivity extends AppCompatActivity
             startActivity(i);
 
         }else if (id == R.id.nav_maps){
-            Intent i = new Intent(this, Maps_string.class);
-            startActivity(i);
+
+
         }else if(id == R.id.nav_logout){
             mAuth.signOut();
             Intent i = new Intent(this,EmailPasswordActivity.class);

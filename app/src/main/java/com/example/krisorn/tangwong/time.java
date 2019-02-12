@@ -67,26 +67,6 @@ public class time extends AppCompatActivity {
                 uid = mAuth.getUid ();
                 nameCard.child ("temp").setValue (uid);
                 id = dataSnapshot.child ("user").child (uid).child ("livenow").getValue (String.class);
-                long num = dataSnapshot.child ("room").child (id).child ("people_live").getChildrenCount ();
-                    if(dataSnapshot.child ("room").child (id).hasChild ("time_noti")) {
-                    if(dataSnapshot.child ("room").child (id).child ("time_noti").child ("status") .getValue (String.class).equals ("1")) {
-                            for (long i = 1; i <= num; i++) {
-                                if (dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class) != null) {
-                                    String tempUid = dataSnapshot.child ("room").child (id).child ("people_live").child (Long.toString (i)).child ("uid").getValue (String.class);
-                                    String text = dataSnapshot.child ("room").child (id).child ("time_noti").child ("text").getValue (String.class);
-                                    mDatabase.child ("user").child (tempUid).child ("time").child ("status").setValue ("1");
-                                    mDatabase.child ("user").child (tempUid).child ("time").child ("room").setValue (id);
-                                    mDatabase.child ("user").child (tempUid).child ("time").child ("text").setValue (text);
-                                }
-                            }
-                            mDatabase.child ("room").child (id).child ("time_noti").child ("status") .setValue ("0");
-                    }
-                }
-
-
-
-
-
             }
 
             @Override
@@ -146,7 +126,9 @@ public class time extends AppCompatActivity {
                     long num = dataSnapshot.child ("room").child (id).child ("time_notifi").getChildrenCount ();
                     mDatabase.child ("room").child (id).child ("time_notifi").child (String.valueOf (num)).child ("countdown") .setValue (String.valueOf (asd));
                     mDatabase.child ("room").child (id).child ("time_notifi").child (String.valueOf (num)).child ("text") .setValue (text.getText ().toString ());
-                    mDatabase.child ("room").child (id).child ("time_notifi").child (String.valueOf (num)).child ("time") .setValue (H+"/"+m);
+                    mDatabase.child ("room").child (id).child ("time_notifi").child (String.valueOf (num)).child ("time") .setValue (hr+":"+mi);
+                    mDatabase.child ("room").child (id).child ("time_notifi").child (String.valueOf (num)).child ("status") .setValue ("1");
+                    mDatabase.child ("room").child (id).child ("time_noti").child ("status") .setValue ("1");
 
                 }
 
