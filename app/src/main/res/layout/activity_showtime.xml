@@ -14,8 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Product Name"
-            android:textSize="16dp"
+            android:gravity="center"
+            android:text="กิจกรรม"
+            android:textSize="22dp"
+            android:background="@drawable/rounded_corner"
             android:textStyle="bold" />
 
         <TextView
@@ -23,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:gravity="center"
             android:text="Time Remaining : " />
         <ListView
             android:id="@+id/lvItems"

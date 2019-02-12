@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 class AdminDashBoradViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -113,8 +114,8 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
                                 public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                                     holder.txtNameRoom.setText(dataSnapshot.child("nameOfFeture").getValue(String.class));
                                     holder.txtDetail.setText(dataSnapshot.child("detailOfFeture").getValue(String.class));
-                                   // holder.imageView.setImageURI (dataSnapshot.child ());
-                                    Log.d("canRetriveFeature",dataSnapshot.getRef().toString());
+                                    String imgUrl = dataSnapshot.child ("typepicture").getValue (String.class);
+                                    Picasso.get().load(imgUrl).into(holder.imageView);
 
                                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                                         @Override

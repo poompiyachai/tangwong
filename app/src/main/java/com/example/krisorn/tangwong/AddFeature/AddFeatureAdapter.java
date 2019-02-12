@@ -107,7 +107,7 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                     mDatabase.child("room").child(roomLiveNow).child("q").child("detailOfFeture").setValue(dataSnapshot.child("data").getValue(String.class));
                                     mDatabase.child("room").child(roomLiveNow).child("q").child("typeOfFeture").setValue("StallShop");
                                     mDatabase.child("room").child(roomLiveNow).child("q").child("typeOfFetureShow").setValue("both");
-                                    mDatabase.child ("room").child (roomLiveNow).child ("q").child ("typePicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_makegroup.png?alt=media&token=28954f50-beb4-44ca-b26d-4f8da2420ba6");
+                                    mDatabase.child ("room").child (roomLiveNow).child ("q").child ("typepicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_makegroup.png?alt=media&token=28954f50-beb4-44ca-b26d-4f8da2420ba6");
 
                                     mDatabase.child("room").child(roomLiveNow).child("feature").child(String.valueOf((dataSnapshot.child("feature").getChildrenCount()+1)))
                                             .setValue("viewqueue");
@@ -116,7 +116,7 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                             .getValue(String.class));
                                     mDatabase.child("room").child(roomLiveNow).child("viewqueue").child("typeOfFeture").setValue("viewqueue");
                                     mDatabase.child("room").child(roomLiveNow).child("viewqueue").child("typeOfFetureShow").setValue("admin");
-
+                                    mDatabase.child ("room").child (roomLiveNow).child ("viewqueue").child ("typepicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_q.png?alt=media&token=cf77e22b-9ad7-4528-b7fe-5f26d6962560");
                                 }
 
                                 @Override
@@ -318,7 +318,7 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                     mDatabase.child("room").child(roomLiveNow).child("notification").child("detailOfFeture").setValue("เตือนในกลุ่ม");
                                     mDatabase.child("room").child(roomLiveNow).child("notification").child("typeOfFeture").setValue("notification");
                                     mDatabase.child("room").child(roomLiveNow).child("notification").child("typeOfFetureShow").setValue("admin");
-                                    mDatabase.child ("room").child (roomLiveNow).child ("notification").child ("typePicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_alert.png?alt=media&token=1df69419-0753-463d-bbee-52d4f24e7b48");
+                                    mDatabase.child ("room").child (roomLiveNow).child ("notification").child ("typepicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_alert.png?alt=media&token=1df69419-0753-463d-bbee-52d4f24e7b48");
                                 }
 
                                 @Override
@@ -391,7 +391,7 @@ public class AddFeatureAdapter extends RecyclerView.Adapter<AddFeatureViewHolder
                                     mDatabase.child("room").child(roomLiveNow).child("calender_event").child("detailOfFeture").setValue("สร้างกิจกรรม");
                                     mDatabase.child("room").child(roomLiveNow).child("calender_event").child("typeOfFeture").setValue("calender_event");
                                     mDatabase.child("room").child(roomLiveNow).child("calender_event").child("typeOfFetureShow").setValue("admin");
-                                    mDatabase.child ("room").child (roomLiveNow).child ("calender_event").child ("typepicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_q.png?alt=media&token=cf77e22b-9ad7-4528-b7fe-5f26d6962560");
+                                    mDatabase.child ("room").child (roomLiveNow).child ("calender_event").child ("typepicture").setValue ("https://firebasestorage.googleapis.com/v0/b/tangwong-862c9.appspot.com/o/Photos%2Fic_poll.png?alt=media&token=154f5b7d-a6aa-4b59-946d-863e8128829f");
                                 }
 
                                 @Override
