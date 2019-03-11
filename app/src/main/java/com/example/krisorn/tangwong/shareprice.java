@@ -80,6 +80,7 @@ public class shareprice extends AppCompatActivity {
                         b = dataSnapshot.child("room").child(id).child("money").child("list").child("+").child(String.valueOf(i)).getValue(String.class);
                         Arr.add(b);
                     }
+                    Arr.add("   ");
                     Arr.add("รายจ่าย");
                     int j=1;
                     int count2 = (int) dataSnapshot.child("room").child(id).child("money").child("list").child("-").getChildrenCount();
@@ -93,7 +94,8 @@ public class shareprice extends AppCompatActivity {
 
 
                      String c = dataSnapshot.child("room").child(id).child("money").child("total").getValue(String.class);
-                    Arr.add("****");
+                    Arr.add("   ");
+                   Arr.add("****");
                     Arr.add("****");
                     Arr.add("total : " + c);
                     int num = 1;
