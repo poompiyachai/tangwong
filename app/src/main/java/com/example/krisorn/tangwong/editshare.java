@@ -78,6 +78,10 @@ public class editshare extends AppCompatActivity {
         {
             aa = false;
         }
+        if(view.getId () == R.id.plus)
+        {
+            aa = true;
+        }
 
         if(view.getId () == R.id.edit){
             mDatabase.child("eiei").setValue("asdasd");
