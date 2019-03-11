@@ -16,6 +16,7 @@ import com.example.krisorn.tangwong.AddminListItemView;
 import com.example.krisorn.tangwong.R;
 import com.example.krisorn.tangwong.StatusCostomer;
 import com.example.krisorn.tangwong.create_event;
+import com.example.krisorn.tangwong.editshare;
 import com.example.krisorn.tangwong.notification;
 import com.example.krisorn.tangwong.ownRoom.carlender;
 import com.example.krisorn.tangwong.pool_interface;
@@ -163,6 +164,11 @@ public class AdminDashBoradAdapter extends RecyclerView.Adapter<AdminDashBoradVi
                                                     context.startActivity(i);
                                                     Log.d("statuspage","can calender_event");
 
+                                                } else if(dataSnapshot.child("typeOfFeture").getValue(String.class).equals("share_money")) {
+                                                    Log.d("statusPage", "can calender_event");
+                                                    Intent i = new Intent(v.getContext(), editshare.class);
+                                                    context.startActivity(i);
+                                                    Log.d("statuspage", "can calender_event");
                                                 }
                                                 Log.d("statusPage","can click admin dash borad");
                                             }catch (Exception e){Log.d("statuspage", String.valueOf(e));
